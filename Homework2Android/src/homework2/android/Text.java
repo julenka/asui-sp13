@@ -51,6 +51,8 @@ public class Text extends GraphicalObjectBase {
 		m_y += dy;
 		updateBoundaryRect();
 	}	
+	
+	// TODO: should I implement getWidth, setWidth?
 
 	private Point getUpperLeft()
 	{

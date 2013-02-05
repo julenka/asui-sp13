@@ -15,6 +15,7 @@ public class Homework2AndroidActivity extends Activity {
 	private Button bTestTestFrame;
 	private Button bTestOutlineRect;
 	private Button bTestFilledRect;
+	private Button bTestText;
 	private Button bTestAll;
 	private Button bTestSimpleGroup;
 	private Button bTestLayoutGroup;
@@ -57,7 +58,17 @@ public class Homework2AndroidActivity extends Activity {
         		startActivity(i);
         	}
         });
-        	
+
+        bTestText = (Button) findViewById(R.id.testFillRect);
+        bTestText.setEnabled(true);
+        bTestText.setText("TestText");
+        bTestText.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		Intent i = new Intent(context, TestText.class);      
+        		startActivity(i);
+        	}
+        });
+        
         
         bTestAll = (Button) findViewById(R.id.testAll);
         bTestAll.setEnabled(true);
