@@ -80,11 +80,13 @@ public class TestFrame extends Activity implements Group {
 			println("no clip rectangle");
 
 	}
-
+    /* Since Android wants the right and bottom to be OUTSIDE of the rectangle,
+       we use x+width rather than x+width-1.
+     */
 	public void addClipRect(final BoundaryRectangle r) {
 		if(savedClipRect == null)
 			savedClipRect = new Path();
-		savedClipRect.addRect(r.x, r.y, r.x+r.width-1, r.y+r.height-1, Path.Direction.CCW);		
+		savedClipRect.addRect(r.x, r.y, r.x+r.width, r.y+r.height, Path.Direction.CCW);		
 	}
 
 	//
