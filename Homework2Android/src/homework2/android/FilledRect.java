@@ -20,11 +20,12 @@ public class FilledRect extends GraphicalObjectBase {
 	public FilledRect(int x, int y, int width, int height, int color)
 	{
 		m_paint.setStyle(Style.FILL);
-		setX(x);
-		setY(y);
-		setWidth(width);
-		setHeight(height);
-		setColor(color);
+		m_rect.left = x;
+		m_rect.top = y;
+		m_rect.right = x + width;
+		m_rect.bottom = y + height;
+		m_paint.setColor(color);
+		updateBoundaryRect();
 	}
 	
 	// Getters and setters
@@ -39,11 +40,18 @@ public class FilledRect extends GraphicalObjectBase {
 	@Override
 	public void moveTo(int x, int y) {
 		// todo: check this
-		setX(x);
-		setY(y);
+		int dx = x - m_rect.left;
+		m_rect.left = x;
+		m_rect.right += dx;
+		int dy = y - m_rect.top;
+		m_rect.top = y;
+		m_rect.bottom += dy;
+		
+		updateBoundaryRect();
+		
 	}
 
-	protected void updateAndDamage()
+	protected void updateBoundaryRect()
 	{
 		// TODO: fix to match specification (outline should be entirely in the box)
 		m_boundaryRect.x =  m_rect.left - (int)(m_paint.getStrokeWidth() / 2);
@@ -63,7 +71,8 @@ public class FilledRect extends GraphicalObjectBase {
 		int dx = x - m_rect.left;
 		m_rect.left = x;
 		m_rect.right += dx;
-		updateAndDamage();
+		
+		updateBoundaryRect();
 	}
 
 	public int getY() {
@@ -74,7 +83,7 @@ public class FilledRect extends GraphicalObjectBase {
 		int dy = y - m_rect.top;
 		m_rect.top = y;
 		m_rect.bottom += dy;
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 	public int getWidth() {
@@ -83,7 +92,7 @@ public class FilledRect extends GraphicalObjectBase {
 
 	public void setWidth(int width) {
 		m_rect.right = m_rect.left + width;
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 	public int getHeight() {
@@ -92,7 +101,7 @@ public class FilledRect extends GraphicalObjectBase {
 
 	public void setHeight(int height) {
 		m_rect.bottom = m_rect.top + height;
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 	public int getColor() {
@@ -101,7 +110,7 @@ public class FilledRect extends GraphicalObjectBase {
 
 	public void setColor(int color) {
 		m_paint.setColor(color);
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 }
