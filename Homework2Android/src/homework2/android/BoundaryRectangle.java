@@ -50,8 +50,8 @@ public class BoundaryRectangle {
      *                 along the X axis
      * @param dy the distance to move this <code>Rectangle</code>
      *                 along the Y axis
-     * @see       java.awt.Rectangle#setLocation(int, int)
-     * @see       java.awt.Rectangle#setLocation(java.awt.Point)
+     * @see       java.awt.FilledRect#setLocation(int, int)
+     * @see       java.awt.FilledRect#setLocation(java.awt.Point)
      */
     public void translate(int dx, int dy) {
         int oldv = this.x;

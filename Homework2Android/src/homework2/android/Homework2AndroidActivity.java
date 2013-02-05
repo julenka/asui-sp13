@@ -14,6 +14,7 @@ public class Homework2AndroidActivity extends Activity {
 	
 	private Button bTestTestFrame;
 	private Button bTestOutlineRect;
+	private Button bTestFilledRect;
 	private Button bTestAll;
 	private Button bTestSimpleGroup;
 	private Button bTestLayoutGroup;
@@ -37,12 +38,22 @@ public class Homework2AndroidActivity extends Activity {
         });
         
         bTestOutlineRect = (Button) findViewById(R.id.testRect);
-        bTestOutlineRect.setEnabled(false);
+        bTestOutlineRect.setEnabled(true);
         bTestOutlineRect.setText("TestOutlineRect");
         bTestOutlineRect.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		Intent i = new Intent(context, TestOutlineRect.class);      
-        		i.putExtra("lineThickness", "");
+        		i.putExtra("lineThickness", "10");
+        		startActivity(i);
+        	}
+        });
+        
+        bTestFilledRect = (Button) findViewById(R.id.testFillRect);
+        bTestFilledRect.setEnabled(true);
+        bTestFilledRect.setText("TestFilledRect");
+        bTestFilledRect.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		Intent i = new Intent(context, TestFilledRect.class);      
         		startActivity(i);
         	}
         });

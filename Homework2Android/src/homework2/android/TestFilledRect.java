@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 
-public class TestOutlineRect extends TestFrame {
+public class TestFilledRect extends TestFrame {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		Thread t = new Thread(new Runnable() {
@@ -23,29 +23,13 @@ public class TestOutlineRect extends TestFrame {
 		t.start();
 	 }
 	
-	private void testOutlineRect()
-	{
-		
-	
-	}
-	
 	private void test(){
 		
 		// After implementing OutlineRect, uncomment the testing code 
 			 
-		int lineThickness = 1;
-		try {
-			Bundle extras = getIntent().getExtras();  			
-			lineThickness = Integer.parseInt(extras.getString("lineThickness"));
-			println("line thickness = " + lineThickness);
-		} catch (Exception e) {
-			println("usage:  TestRect [line thickness]\n"
-			+ "using line thickness = "
-			+ lineThickness + " by default");
-		}
-		println("creating OutlineRect");
+		println("creating FilledRect");
 		
-		OutlineRect r = new OutlineRect(10, 10, 50, 50, Color.RED, lineThickness);
+		FilledRect r = new FilledRect(10, 10, 50, 50, Color.RED);
 		addChild(r);
 		pause();
 		println("moving rectangle with setX(), setY()");
@@ -77,8 +61,21 @@ public class TestOutlineRect extends TestFrame {
 		println("final x/y position is "
 		+ r.getX() + "," + r.getY());
 		pause();
-		println("doubling line thickness to " + lineThickness * 2);
-		r.setLineThickness(lineThickness * 2);
+		println("doubling width  to 100");
+		r.setWidth(100);
+		redraw(r);
+		pause();
+		println("moving rectangle with moveTo ()");
+		for (int x = 10; x < 150; x += 30) {
+			for (int y = 10; y < 150; y += 30) {
+				r.moveTo(x, y);
+				redraw(r);
+				sleep(100);
+			}
+		}
+		
+		println("changing height  to 200");
+		r.setHeight(200);
 		redraw(r);
 		pause();
 		println("moving rectangle with moveTo ()");

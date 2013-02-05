@@ -24,6 +24,8 @@
              android:label="TestTestFrame" />
          <activity android:name="homework2.android.TestOutlineRect"
              android:label="TestRect" />
+         <activity android:name="homework2.android.TestFilledRect"
+             android:label="TestRect" />
          <activity android:name=".TestAllObjects"
              android:label="TestAllObjects" />
          <activity android:name=".TestSimpleGroup"
