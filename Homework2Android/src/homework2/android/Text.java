@@ -4,9 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.util.Log;
 
 public class Text extends GraphicalObjectBase {
 
@@ -42,24 +42,34 @@ public class Text extends GraphicalObjectBase {
 
 	@Override
 	public void moveTo(int x, int y) {
-		// todo: this actually damages a little bit more than necessary, consider setting m_x, m_y directly 
-		m_x = x;
-		m_y = y;
+		// TODO: test this
+		// move the upper left corner
+		Point upperLeft = getUpperLeft();
+		int dx = x - upperLeft.x;
+		int dy = y - upperLeft.y;
+		m_x += dx;
+		m_y += dy;
 		updateBoundaryRect();
-	}
+	}	
 
+	private Point getUpperLeft()
+	{
+		Point result = new Point(m_x, m_y);
+		m_paint.getTextBounds(m_text, 0, m_text.length(), m_rect);
+		result.y += m_rect.top;
+		// TODO: should we draw text 1 px out?
+		return result;
+	}
+	
 	private void updateBoundaryRect()
 	{
-		// broken
-		m_paint.getTextBounds(m_text, 0, m_text.length(), m_rect);
+		// modifies m_rect
+		Point upperLeft = getUpperLeft();
 		int width = (int)m_paint.measureText(m_text);
-		m_boundaryRect.x = m_x;
-		m_boundaryRect.y = m_y + m_rect.top;
+		m_boundaryRect.x = upperLeft.x;
+		m_boundaryRect.y = upperLeft.y;
 		m_boundaryRect.width = width;
 		m_boundaryRect.height = m_rect.height();
-		
-//		Log.v("Text",  String.format("(%d,%d,%d,%d)", m_rect.left, m_rect.top, m_rect.width(), m_rect.height()));
-		// update bounding box
 		doDamage();
 	}
 	
