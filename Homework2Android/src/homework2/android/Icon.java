@@ -1,63 +1,75 @@
 package homework2.android;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
 
-public class Icon implements GraphicalObject {
+public class Icon extends GraphicalObjectBase {
 
-	// TODO: public Icon (Bitmap image, int x, int y);
+	private Bitmap m_image;
+	private int m_x;
+	private int m_y;
+	
+	public Icon (Bitmap image, int x, int y)
+	{
+		m_image = image;
+		m_x = x;
+		m_y = y;
+		updateBoundingBox();
+	}
 	
 	public Icon() {
-		// TODO Auto-generated constructor stub
+		this(Bitmap.createBitmap(0, 0, null), 0, 0);
 	}
 
+	private void updateBoundingBox()
+	{
+		// TODO: account affine transformation
+		m_boundaryRect.x = m_x;
+		m_boundaryRect.y = m_y;
+		m_boundaryRect.width = m_image.getWidth();
+		m_boundaryRect.height = m_image.getHeight();
+	}
+	
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
-		// TODO Auto-generated method stub
-
+		graphics.clipPath(clipShape);
+		graphics.drawBitmap(m_image,m_x, m_y, m_paint);
 	}
-
-	@Override
-	public BoundaryRectangle getBoundingBox() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void moveTo(int x, int y) {
-		// TODO Auto-generated method stub
-
+		m_x = x;
+		m_y = y;
+		updateBoundingBox();
 	}
 
-	@Override
-	public Group getGroup() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getX() {
+		return m_x;
 	}
 
-	@Override
-	public void setGroup(Group group) {
-		// TODO Auto-generated method stub
-
+	public void setX(int x) {
+		m_x = x;
+		updateBoundingBox();
 	}
 
-	@Override
-	public boolean contains(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+	public int getY() {
+		return m_y;
 	}
 
-	@Override
-	public void setAffineTransform(Matrix af) {
-		// TODO Auto-generated method stub
-
+	public void setY(int y) {
+		m_y = y;
+		updateBoundingBox();
 	}
 
-	@Override
-	public Matrix getAffineTransform() {
-		// TODO Auto-generated method stub
-		return null;
+	public Bitmap getImage() {
+		return m_image;
+	}
+
+	public void setImage(Bitmap image) {
+		m_image = image;
+		updateBoundingBox();
 	}
 
 }

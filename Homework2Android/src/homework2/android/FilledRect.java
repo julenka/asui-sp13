@@ -32,6 +32,7 @@ public class FilledRect extends GraphicalObjectBase {
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
 		graphics.clipPath(clipShape);
+		// TODO: fix to match specification (outline should be entirely in the box)
 		graphics.drawRect(m_rect, m_paint);
 	}
 
@@ -44,6 +45,7 @@ public class FilledRect extends GraphicalObjectBase {
 
 	protected void updateAndDamage()
 	{
+		// TODO: fix to match specification (outline should be entirely in the box)
 		m_boundaryRect.x =  m_rect.left - (int)(m_paint.getStrokeWidth() / 2);
 		m_boundaryRect.y = m_rect.top - (int)(m_paint.getStrokeWidth() / 2);
 		m_boundaryRect.width = m_rect.width() + (int)m_paint.getStrokeWidth();

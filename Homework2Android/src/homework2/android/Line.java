@@ -1,65 +1,132 @@
 package homework2.android;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
+import android.graphics.Point;
 
-public class Line implements GraphicalObject {
-	int m_x;
-	int m_y;
+public class Line extends GraphicalObjectBase {
+	private int m_x1;
+	private int m_y1;
+	private int m_x2;
+	private int m_y2;
 	
-	// TODO:public Line (int x1, int y1, int x2, int y2, Color color, int lineThickness);
+	public Line (int x1, int y1, int x2, int y2, int color, int lineThickness)
+	{
+		m_x1 = x1;
+		m_x2 = x2;
+		m_y1 = y1;
+		m_y2 = y2;
+		m_paint.setColor(color);
+		m_paint.setStrokeWidth(lineThickness);
+		updateBoundingBox();
+	}
 	
 	public Line() {
-		// TODO Auto-generated constructor stub
+		this(0,0, 10, 10, Color.BLACK, 2);
 	}
 
+	private void updateBoundingBox()
+	{
+		Point upperLeft = getUpperLeft();
+		upperLeft.x -= Math.ceil(m_paint.getStrokeWidth() / 2.0);
+		upperLeft.y -= Math.ceil(m_paint.getStrokeWidth() / 2.0);
+
+		Point lowerRight = getLowerRight();
+		lowerRight.x += Math.ceil(m_paint.getStrokeWidth() / 2.0);
+		lowerRight.y += Math.ceil(m_paint.getStrokeWidth() / 2.0);
+		
+		m_boundaryRect.x = upperLeft.x;
+		m_boundaryRect.y = upperLeft.y;
+		m_boundaryRect.width = lowerRight.x - upperLeft.x;
+		m_boundaryRect.height = lowerRight.y - upperLeft.y;
+		doDamage();
+	}
+	
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
-		// TODO Auto-generated method stub
+		graphics.clipPath(clipShape);
+		graphics.drawLine(m_x1, m_y1, m_x2, m_y2, m_paint);
+	}
+
+	private Point getUpperLeft()
+	{
+		return new Point(Math.min(m_x1, m_x2), Math.min(m_y1, m_y2));
+	}
+	
+	private Point getLowerRight()
+	{
+		return new Point(Math.max(m_x1, m_x2), Math.max(m_y1, m_y2));
 		
 	}
-
-	@Override
-	public BoundaryRectangle getBoundingBox() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void moveTo(int x, int y) {
-		// TODO Auto-generated method stub
-
+		Point upperLeft = getUpperLeft();
+		int dy = y - upperLeft.y;
+		int dx = x - upperLeft.x;
+		m_x1 += dx;
+		m_x2 += dx;
+		m_y1 += dy;
+		m_y2 += dy;
+		updateBoundingBox();
 	}
 
-	@Override
-	public Group getGroup() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getColor() {
+		return m_paint.getColor();
 	}
 
-	@Override
-	public void setGroup(Group group) {
-		// TODO Auto-generated method stub
-
+	public void setColor(int color) {
+		m_paint.setColor(color);
+		doDamage();
 	}
 
-	@Override
-	public boolean contains(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+	public int getLineThickness()
+	{
+		return (int)m_paint.getStrokeWidth();
+	}
+	
+	public void setLineThickenss(int t)
+	{
+		m_paint.setStrokeWidth(t);
+		updateBoundingBox();
+	}
+	
+	public int getX1() {
+		return m_x1;
 	}
 
-	@Override
-	public void setAffineTransform(Matrix af) {
-		// TODO Auto-generated method stub
-
+	public void setX1(int x1) {
+		m_x1 = x1;
+		updateBoundingBox();
 	}
 
-	@Override
-	public Matrix getAffineTransform() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getY1() {
+		return m_y1;
+	}
+
+	public void setY1(int y1) {
+		m_y1 = y1;
+		updateBoundingBox();
+	}
+
+	public int getX2() {
+		return m_x2;
+	}
+
+	public void setX2(int x2) {
+		m_x2 = x2;
+		updateBoundingBox();
+	}
+
+	public int getY2() {
+		return m_y2;
+	}
+
+	public void setY2(int y2) {
+		m_y2 = y2;
+		updateBoundingBox();
 	}
 
 }

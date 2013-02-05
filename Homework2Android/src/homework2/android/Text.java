@@ -18,12 +18,13 @@ public class Text extends GraphicalObjectBase {
 	public Text (String text, int x, int y, Typeface font, int fontSize, int color)
 	{
 		m_paint.setTextAlign(Align.LEFT);
-		setText(text);
-		setX(x);
-		setY(y);
-		setFontSize(fontSize);
-		setFont(font);
-		setColor(color);
+		m_text = text;
+		m_x = x;
+		m_y = y;
+		m_paint.setTextSize(fontSize);
+		m_paint.setTypeface(font);
+		m_paint.setColor(color);
+		updateBoundaryRect();
 	}
 	
 	public Text() {
@@ -35,28 +36,29 @@ public class Text extends GraphicalObjectBase {
 	public void draw(Canvas graphics, Path clipShape) {
 		// draw so that m_x is in upper left hand corner
 		// todo: apply affine transformation
-		//graphics.clipPath(clipShape);
+		graphics.clipPath(clipShape);
 		graphics.drawText(m_text, m_x, m_y, m_paint );
 	}
 
 	@Override
 	public void moveTo(int x, int y) {
 		// todo: this actually damages a little bit more than necessary, consider setting m_x, m_y directly 
-		setX(x);
-		setY(y);
+		m_x = x;
+		m_y = y;
+		updateBoundaryRect();
 	}
 
-	private void updateAndDamage()
+	private void updateBoundaryRect()
 	{
 		// broken
 		m_paint.getTextBounds(m_text, 0, m_text.length(), m_rect);
 		int width = (int)m_paint.measureText(m_text);
 		m_boundaryRect.x = m_x;
-		m_boundaryRect.y = m_y - m_rect.height() - 10;
+		m_boundaryRect.y = m_y + m_rect.top;
 		m_boundaryRect.width = width;
-		m_boundaryRect.height = m_rect.height() + 10;
+		m_boundaryRect.height = m_rect.height();
 		
-		Log.v("Text",  String.format("(%d,%d,%d,%d", m_rect.left, m_rect.top, m_rect.width(), m_rect.height()));
+//		Log.v("Text",  String.format("(%d,%d,%d,%d)", m_rect.left, m_rect.top, m_rect.width(), m_rect.height()));
 		// update bounding box
 		doDamage();
 	}
@@ -69,7 +71,7 @@ public class Text extends GraphicalObjectBase {
 	public void setColor(int color)
 	{
 		m_paint.setColor(color);
-		updateAndDamage();
+		doDamage();
 	}
 	
 	public int getFontSize()
@@ -80,7 +82,7 @@ public class Text extends GraphicalObjectBase {
 	public void setFontSize(int size)
 	{
 		m_paint.setTextSize(size);
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 	public Typeface getFont()
@@ -91,7 +93,7 @@ public class Text extends GraphicalObjectBase {
 	public void setFont(Typeface f)
 	{
 		m_paint.setTypeface(f);
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 	
 	public int getY() {
@@ -100,7 +102,7 @@ public class Text extends GraphicalObjectBase {
 
 	public void setY(int y) {
 		m_y = y;
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 	public int getX() {
@@ -109,7 +111,7 @@ public class Text extends GraphicalObjectBase {
 
 	public void setX(int x) {
 		m_x = x;
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 	public String getText() {
@@ -118,7 +120,7 @@ public class Text extends GraphicalObjectBase {
 
 	public void setText(String text) {
 		m_text = text;
-		updateAndDamage();
+		updateBoundaryRect();
 	}
 
 }
