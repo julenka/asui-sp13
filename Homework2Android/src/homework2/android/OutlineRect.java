@@ -1,13 +1,12 @@
 package homework2.android;
 
+import android.graphics.Color;
 import android.graphics.Paint.Style;
 
 public class OutlineRect extends FilledRect {
 	public OutlineRect()
 	{
-		super();
-		m_paint.setStyle(Style.STROKE);
-		setLineThickness(1);
+		this(0,0,10,10,Color.BLACK,1);
 	}
 	
 	public OutlineRect(int x, int y, int width, int height, int color, int lineThickness)

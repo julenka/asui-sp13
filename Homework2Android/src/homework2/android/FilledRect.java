@@ -10,17 +10,11 @@ import android.graphics.Rect;
 
 public class FilledRect extends GraphicalObjectBase {
 
-	protected Paint m_paint = new Paint();
 	protected Rect m_rect = new Rect();
 	
 	public FilledRect() 
 	{
-		m_paint.setStyle(Style.FILL);
-		m_paint.setColor(Color.BLACK);
-		setX(0);
-		setY(0);
-		setWidth(10);
-		setHeight(10);
+		this(0,0,10,10, Color.BLACK);
 	}
 	
 	public FilledRect(int x, int y, int width, int height, int color)
@@ -63,7 +57,7 @@ public class FilledRect extends GraphicalObjectBase {
 		return m_rect.left;
 	}
 
-	public void setX(int x) {
+	protected void setX(int x) {
 		int dx = x - m_rect.left;
 		m_rect.left = x;
 		m_rect.right += dx;

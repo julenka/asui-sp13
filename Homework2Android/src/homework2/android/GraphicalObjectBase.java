@@ -2,6 +2,7 @@ package homework2.android;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
 
 public class GraphicalObjectBase implements GraphicalObject {
@@ -9,6 +10,7 @@ public class GraphicalObjectBase implements GraphicalObject {
 	protected Group m_group;
 	protected Matrix m_transform;
 	protected BoundaryRectangle m_boundaryRect = new BoundaryRectangle();
+	protected Paint m_paint = new Paint();
 	
 	public GraphicalObjectBase() {
 		// TODO Auto-generated constructor stub

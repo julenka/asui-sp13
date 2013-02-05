@@ -60,7 +60,7 @@ public class Homework2AndroidActivity extends Activity {
         	
         
         bTestAll = (Button) findViewById(R.id.testAll);
-        bTestAll.setEnabled(false);
+        bTestAll.setEnabled(true);
         bTestAll.setText("TestAllObject");
         bTestAll.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
