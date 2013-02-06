@@ -81,7 +81,7 @@ public class Homework2AndroidActivity extends Activity {
         });
         
         bTestLayoutGroup = (Button) findViewById(R.id.testLayoutGroup);
-        bTestLayoutGroup.setEnabled(false);
+        bTestLayoutGroup.setEnabled(true);
         bTestLayoutGroup.setText("TestLayoutGroup");
         bTestLayoutGroup.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
@@ -92,7 +92,7 @@ public class Homework2AndroidActivity extends Activity {
         });
         
         bTestSimpleGroup = (Button) findViewById(R.id.testSimpleGroup);
-        bTestSimpleGroup.setEnabled(false);
+        bTestSimpleGroup.setEnabled(true);
         bTestSimpleGroup.setText("TestSimpleGroup");
         bTestSimpleGroup.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
