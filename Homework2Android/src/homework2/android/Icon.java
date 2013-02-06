@@ -34,8 +34,10 @@ public class Icon extends GraphicalObjectBase {
 	
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
+		graphics.save();
 		graphics.clipPath(clipShape);
 		graphics.drawBitmap(m_image,m_x, m_y, m_paint);
+		graphics.restore();
 	}
 	
 	@Override

@@ -8,7 +8,7 @@ import android.graphics.Path;
 public class GraphicalObjectBase implements GraphicalObject {
 
 	protected Group m_group;
-	protected Matrix m_transform;
+	protected Matrix m_transform = new Matrix();
 	protected BoundaryRectangle m_boundaryRect = new BoundaryRectangle();
 	protected Paint m_paint = new Paint();
 	
@@ -65,4 +65,6 @@ public class GraphicalObjectBase implements GraphicalObject {
 		return m_transform;
 	}
 
+	// TODO: setX, setY
+	
 }

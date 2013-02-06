@@ -36,8 +36,10 @@ public class Text extends GraphicalObjectBase {
 	public void draw(Canvas graphics, Path clipShape) {
 		// draw so that m_x is in upper left hand corner
 		// todo: apply affine transformation
+		graphics.save();
 		graphics.clipPath(clipShape);
 		graphics.drawText(m_text, m_x, m_y, m_paint );
+		graphics.restore();
 	}
 
 	@Override

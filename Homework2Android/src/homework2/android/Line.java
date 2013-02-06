@@ -46,8 +46,10 @@ public class Line extends GraphicalObjectBase {
 	
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
+		graphics.save();
 		graphics.clipPath(clipShape);
 		graphics.drawLine(m_x1, m_y1, m_x2, m_y2, m_paint);
+		graphics.restore();
 	}
 
 	private Point getUpperLeft()
