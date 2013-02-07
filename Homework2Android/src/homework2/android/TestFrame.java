@@ -60,33 +60,37 @@ public class TestFrame extends Activity implements Group {
 	}
 
 
-	Path savedClipRect;
+	BoundaryRectangle savedClipRect;
 	public void redraw(final GraphicalObject child) {	
-
 		// if savedClipRect is not null, redraw the canvas
 		// else, print a message		
-
 		if (savedClipRect != null) {
 			drawView.setGraphicalObject(child, savedClipRect);
-			runOnUiThread(new Runnable() {
+			drawView.redraw();
+			savedClipRect = null;			
+
+				/* runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
 					drawView.redraw();
 					savedClipRect = null;			
 				}
 			});	
-
+			 */
 		} else
 			println("no clip rectangle");
 
 	}
-    /* Since Android wants the right and bottom to be OUTSIDE of the rectangle,
-       we use x+width rather than x+width-1.
-     */
+    
+	// note that clipRect is a BoundaryRectangle, and is therefore the size of the area to be drawn
+	// it is NOT 1 pixel bigger (unlike Android's rectangles)
 	public void addClipRect(final BoundaryRectangle r) {
-		if(savedClipRect == null)
-			savedClipRect = new Path();
-		savedClipRect.addRect(r.x, r.y, r.x+r.width, r.y+r.height, Path.Direction.CCW);		
+		if (savedClipRect != null)
+			savedClipRect.add(r);
+		else if (r==null)
+			savedClipRect = null;
+		else
+			savedClipRect = new BoundaryRectangle(r);
 	}
 
 	//
@@ -238,7 +242,7 @@ public class TestFrame extends Activity implements Group {
 
 	//
 	// Load image
-	// load an image file from sdcard/disk to draw on canvas? need testing
+	// load an image file from the "assets" part of the project
 	//
 	public Bitmap loadImageFully(final String filename) throws IOException {
 		Bitmap myBitmap = BitmapFactory.decodeStream(this.getAssets().open(filename));

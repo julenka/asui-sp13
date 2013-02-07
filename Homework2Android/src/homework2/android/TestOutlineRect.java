@@ -1,7 +1,7 @@
 package homework2.android;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.graphics.Color;
 
 
 public class TestOutlineRect extends TestFrame {
@@ -23,16 +23,9 @@ public class TestOutlineRect extends TestFrame {
 		t.start();
 	 }
 	
-	private void testOutlineRect()
-	{
-		
-	
-	}
-	
 	private void test(){
 		
 		// After implementing OutlineRect, uncomment the testing code 
-			 
 		int lineThickness = 1;
 		try {
 			Bundle extras = getIntent().getExtras();  			

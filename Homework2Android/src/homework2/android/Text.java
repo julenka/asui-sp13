@@ -67,6 +67,7 @@ public class Text extends GraphicalObjectBase {
 	
 	private void updateBoundaryRect()
 	{
+		doDamage();
 		// modifies m_rect
 		Point upperLeft = getUpperLeft();
 		int width = (int)m_paint.measureText(m_text);

@@ -29,6 +29,7 @@ public class Line extends GraphicalObjectBase {
 
 	private void updateBoundingBox()
 	{
+		doDamage();
 		Point upperLeft = getUpperLeft();
 		upperLeft.x -= Math.ceil(m_paint.getStrokeWidth() / 2.0);
 		upperLeft.y -= Math.ceil(m_paint.getStrokeWidth() / 2.0);

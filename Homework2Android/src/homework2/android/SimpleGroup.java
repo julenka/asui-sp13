@@ -5,9 +5,9 @@ import java.util.List;
 
 import android.graphics.Canvas;
 import android.graphics.Path;
+import android.graphics.Path.Direction;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.graphics.Path.Direction;
 
 public class SimpleGroup extends GraphicalObjectBase implements Group {
 

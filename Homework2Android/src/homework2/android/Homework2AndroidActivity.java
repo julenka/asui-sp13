@@ -15,7 +15,6 @@ public class Homework2AndroidActivity extends Activity {
 	private Button bTestTestFrame;
 	private Button bTestOutlineRect;
 	private Button bTestFilledRect;
-	private Button bTestText;
 	private Button bTestAll;
 	private Button bTestSimpleGroup;
 	private Button bTestLayoutGroup;
@@ -44,35 +43,26 @@ public class Homework2AndroidActivity extends Activity {
         bTestOutlineRect.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		Intent i = new Intent(context, TestOutlineRect.class);      
-        		i.putExtra("lineThickness", "10");
+        		i.putExtra("lineThickness", "");
         		startActivity(i);
         	}
         });
         
         bTestFilledRect = (Button) findViewById(R.id.testFillRect);
         bTestFilledRect.setEnabled(true);
-        bTestFilledRect.setText("TestFilledRect");
+        bTestFilledRect.setText("TestFillRect");
         bTestFilledRect.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		Intent i = new Intent(context, TestFilledRect.class);      
+        		i.putExtra("lineThickness", "");
         		startActivity(i);
         	}
         });
-
-        bTestText = (Button) findViewById(R.id.testFillRect);
-        bTestText.setEnabled(true);
-        bTestText.setText("TestText");
-        bTestText.setOnClickListener(new OnClickListener(){
-        	public void onClick(View v){
-        		Intent i = new Intent(context, TestText.class);      
-        		startActivity(i);
-        	}
-        });
-        
+        	
         
         bTestAll = (Button) findViewById(R.id.testAll);
         bTestAll.setEnabled(true);
-        bTestAll.setText("TestAllObject");
+        bTestAll.setText("TestAllObjects");
         bTestAll.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		Intent i = new Intent(context, TestAllObjects.class);      

@@ -25,11 +25,13 @@ public class Icon extends GraphicalObjectBase {
 
 	private void updateBoundingBox()
 	{
+		doDamage();
 		// TODO: account affine transformation
 		m_boundaryRect.x = m_x;
 		m_boundaryRect.y = m_y;
 		m_boundaryRect.width = m_image.getWidth();
 		m_boundaryRect.height = m_image.getHeight();
+		doDamage();
 	}
 	
 	@Override
@@ -75,3 +77,4 @@ public class Icon extends GraphicalObjectBase {
 	}
 
 }
+

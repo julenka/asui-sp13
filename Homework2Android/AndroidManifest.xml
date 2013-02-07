@@ -25,7 +25,7 @@
          <activity android:name="homework2.android.TestOutlineRect"
              android:label="TestRect" />
          <activity android:name="homework2.android.TestFilledRect"
-             android:label="TestRect" />
+             android:label="TestFilledRect" />
                   <activity android:name="homework2.android.TestText"
              android:label="TestText" />
          <activity android:name=".TestAllObjects"
