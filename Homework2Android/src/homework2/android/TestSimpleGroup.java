@@ -1,6 +1,7 @@
 package homework2.android;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 public class TestSimpleGroup extends TestFrame{
@@ -25,7 +26,7 @@ public class TestSimpleGroup extends TestFrame{
 	private void test(){
 		// After implementing OutlineRect and SimpleGroup, uncomment the testing code
 		
-		/* int nObjects = 4;
+		int nObjects = 4;
 		try {
 			Bundle extras = getIntent().getExtras();
 			nObjects = Integer.parseInt(extras.getString("nObject"));
@@ -47,7 +48,7 @@ public class TestSimpleGroup extends TestFrame{
 		int[] colors = { Color.BLACK, Color.RED, Color.BLUE };
 		for (int i = 0; i < nObjects; ++i) {
 			objects[i] = new OutlineRect(-20 + random(200), -20 + random(200),
-					random(100), random(100), (Color) random(colors), 1);
+					random(100), random(100), random(colors), 1);
 			try {
 				group.addChild(objects[i]);
 			} catch (Exception e) {
@@ -67,6 +68,6 @@ public class TestSimpleGroup extends TestFrame{
 			redraw(group);
 			sleep(500);
 		}
-		*/
+		
 	}
 }
