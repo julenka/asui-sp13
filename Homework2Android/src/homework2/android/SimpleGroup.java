@@ -33,6 +33,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	
 	private void updateBoundaryRect()
 	{
+		doDamage();
 		// update the transform as well
 		m_transform.setTranslate(m_x, m_y);
 		
@@ -83,13 +84,12 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	public void removeChild(GraphicalObject child) {
 		child.setGroup(null);
 		m_children.remove(child);
-
 	}
 
 	@Override
 	public void resizeChild(GraphicalObject child) {
-		// TODO Auto-generated method stub
-		
+		// do I need to do anything else here?
+		resizeToChildren();
 	}
 
 	@Override
@@ -102,11 +102,20 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 
 	@Override
 	public void resizeToChildren() {
-		// TODO Auto-generated method stub
-		
+		int w = 0;
+		int h = 0;
+		for (GraphicalObject child : m_children) {
+			BoundaryRectangle r = child.getBoundingBox();
+			int right = r.x + r.width;
+			int bottom = r.y + r.height;
+			if(right > w) w = right;
+			if(bottom > h) h = bottom;
+		}
+		m_width = w;
+		m_height = h;
+		updateBoundaryRect();
 	}
 
-	@Override
 	public void damage(BoundaryRectangle rectangle) {
 		// TODO Do I need to do anything else here?
 		if(m_group != null)
