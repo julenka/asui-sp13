@@ -16,6 +16,25 @@ public class GraphicalObjectBase implements GraphicalObject {
 		// TODO Auto-generated constructor stub
 	}
 
+	protected void boundsChanged()
+	{
+		doDamage();
+		updateBounds();
+		doDamage();
+		doResized();
+	}
+	
+	protected void updateBounds()
+	{
+		// implement updateBounds here
+	}
+	
+	protected void doResized()
+	{
+		if(m_group != null)
+			m_group.resizeChild(this);
+	}
+	
 	protected void doDamage()
 	{
 		if(m_group != null)

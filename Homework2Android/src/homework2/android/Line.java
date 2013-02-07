@@ -20,16 +20,15 @@ public class Line extends GraphicalObjectBase {
 		m_y2 = y2;
 		m_paint.setColor(color);
 		m_paint.setStrokeWidth(lineThickness);
-		updateBoundingBox();
+		boundsChanged();
 	}
 	
 	public Line() {
 		this(0,0, 10, 10, Color.BLACK, 2);
 	}
 
-	private void updateBoundingBox()
+	protected void updateBounds()
 	{
-		doDamage();
 		Point upperLeft = getUpperLeft();
 		upperLeft.x -= Math.ceil(m_paint.getStrokeWidth() / 2.0);
 		upperLeft.y -= Math.ceil(m_paint.getStrokeWidth() / 2.0);
@@ -42,7 +41,6 @@ public class Line extends GraphicalObjectBase {
 		m_boundaryRect.y = upperLeft.y;
 		m_boundaryRect.width = lowerRight.x - upperLeft.x;
 		m_boundaryRect.height = lowerRight.y - upperLeft.y;
-		doDamage();
 	}
 	
 	@Override
@@ -73,7 +71,7 @@ public class Line extends GraphicalObjectBase {
 		m_x2 += dx;
 		m_y1 += dy;
 		m_y2 += dy;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 	public int getColor() {
@@ -93,7 +91,7 @@ public class Line extends GraphicalObjectBase {
 	public void setLineThickenss(int t)
 	{
 		m_paint.setStrokeWidth(t);
-		updateBoundingBox();
+		boundsChanged();
 	}
 	
 	public int getX1() {
@@ -102,7 +100,7 @@ public class Line extends GraphicalObjectBase {
 
 	public void setX1(int x1) {
 		m_x1 = x1;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 	public int getY1() {
@@ -111,7 +109,7 @@ public class Line extends GraphicalObjectBase {
 
 	public void setY1(int y1) {
 		m_y1 = y1;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 	public int getX2() {
@@ -120,7 +118,7 @@ public class Line extends GraphicalObjectBase {
 
 	public void setX2(int x2) {
 		m_x2 = x2;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 	public int getY2() {
@@ -129,7 +127,7 @@ public class Line extends GraphicalObjectBase {
 
 	public void setY2(int y2) {
 		m_y2 = y2;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 }

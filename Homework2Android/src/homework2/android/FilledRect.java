@@ -24,7 +24,7 @@ public class FilledRect extends GraphicalObjectBase {
 		m_rect.right = x + width;
 		m_rect.bottom = y + height;
 		m_paint.setColor(color);
-		updateBoundaryRect();
+		boundsChanged();
 	}
 	
 	// Getters and setters
@@ -47,23 +47,18 @@ public class FilledRect extends GraphicalObjectBase {
 		int dy = y - m_rect.top;
 		m_rect.top = y;
 		m_rect.bottom += dy;
-		updateBoundaryRect();
+		boundsChanged();
 		
 	}
 
-	protected void updateBoundaryRect()
+	// todo: pull up to graphicalobjectbase
+	protected void updateBounds()
 	{
-		// damage the area we are moving out of«
-		doDamage();
-		
 		// TODO: fix to match specification (outline should be entirely in the box)
 		m_boundaryRect.x =  m_rect.left - (int)(m_paint.getStrokeWidth() / 2);
 		m_boundaryRect.y = m_rect.top - (int)(m_paint.getStrokeWidth() / 2);
 		m_boundaryRect.width = m_rect.width() + (int)m_paint.getStrokeWidth();
 		m_boundaryRect.height = m_rect.height() + (int)m_paint.getStrokeWidth();
-		
-		// damage the area we are moving into
-		doDamage();
 	}
 	
 	// Getters and setters
@@ -76,7 +71,7 @@ public class FilledRect extends GraphicalObjectBase {
 		m_rect.left = x;
 		m_rect.right += dx;
 		
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	public int getY() {
@@ -87,7 +82,7 @@ public class FilledRect extends GraphicalObjectBase {
 		int dy = y - m_rect.top;
 		m_rect.top = y;
 		m_rect.bottom += dy;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	public int getWidth() {
@@ -96,7 +91,7 @@ public class FilledRect extends GraphicalObjectBase {
 
 	public void setWidth(int width) {
 		m_rect.right = m_rect.left + width;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	public int getHeight() {
@@ -105,7 +100,7 @@ public class FilledRect extends GraphicalObjectBase {
 
 	public void setHeight(int height) {
 		m_rect.bottom = m_rect.top + height;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	public int getColor() {
@@ -114,7 +109,7 @@ public class FilledRect extends GraphicalObjectBase {
 
 	public void setColor(int color) {
 		m_paint.setColor(color);
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 }

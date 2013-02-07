@@ -24,7 +24,7 @@ public class Text extends GraphicalObjectBase {
 		m_paint.setTextSize(fontSize);
 		m_paint.setTypeface(font);
 		m_paint.setColor(color);
-		updateBoundaryRect();
+		boundsChanged();
 	}
 	
 	public Text() {
@@ -51,7 +51,7 @@ public class Text extends GraphicalObjectBase {
 		int dy = y - upperLeft.y;
 		m_x += dx;
 		m_y += dy;
-		updateBoundaryRect();
+		boundsChanged();
 	}	
 	
 	// TODO: should I implement getWidth, setWidth?
@@ -65,9 +65,8 @@ public class Text extends GraphicalObjectBase {
 		return result;
 	}
 	
-	private void updateBoundaryRect()
+	protected void updateBounds()
 	{
-		doDamage();
 		// modifies m_rect
 		Point upperLeft = getUpperLeft();
 		int width = (int)m_paint.measureText(m_text);
@@ -75,7 +74,6 @@ public class Text extends GraphicalObjectBase {
 		m_boundaryRect.y = upperLeft.y;
 		m_boundaryRect.width = width;
 		m_boundaryRect.height = m_rect.height();
-		doDamage();
 	}
 	
 	public int getColor()
@@ -97,7 +95,7 @@ public class Text extends GraphicalObjectBase {
 	public void setFontSize(int size)
 	{
 		m_paint.setTextSize(size);
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	public Typeface getFont()
@@ -108,7 +106,7 @@ public class Text extends GraphicalObjectBase {
 	public void setFont(Typeface f)
 	{
 		m_paint.setTypeface(f);
-		updateBoundaryRect();
+		boundsChanged();
 	}
 	
 	public int getY() {
@@ -117,7 +115,7 @@ public class Text extends GraphicalObjectBase {
 
 	public void setY(int y) {
 		m_y = y;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	public int getX() {
@@ -126,7 +124,7 @@ public class Text extends GraphicalObjectBase {
 
 	public void setX(int x) {
 		m_x = x;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	public String getText() {
@@ -135,7 +133,7 @@ public class Text extends GraphicalObjectBase {
 
 	public void setText(String text) {
 		m_text = text;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 }

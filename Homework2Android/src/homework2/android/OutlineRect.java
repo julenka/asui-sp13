@@ -22,7 +22,7 @@ public class OutlineRect extends FilledRect {
 	
 	public void setLineThickness(int lineThickness) {
 		m_paint.setStrokeWidth(lineThickness);
-		updateBoundaryRect();
+		boundsChanged();
 	}
 	
 	

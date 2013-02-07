@@ -16,22 +16,20 @@ public class Icon extends GraphicalObjectBase {
 		m_image = image;
 		m_x = x;
 		m_y = y;
-		updateBoundingBox();
+		boundsChanged();
 	}
 	
 	public Icon() {
 		this(Bitmap.createBitmap(0, 0, null), 0, 0);
 	}
 
-	private void updateBoundingBox()
+	protected void updateBounds()
 	{
-		doDamage();
 		// TODO: account affine transformation
 		m_boundaryRect.x = m_x;
 		m_boundaryRect.y = m_y;
 		m_boundaryRect.width = m_image.getWidth();
 		m_boundaryRect.height = m_image.getHeight();
-		doDamage();
 	}
 	
 	@Override
@@ -46,7 +44,7 @@ public class Icon extends GraphicalObjectBase {
 	public void moveTo(int x, int y) {
 		m_x = x;
 		m_y = y;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 	public int getX() {
@@ -55,7 +53,7 @@ public class Icon extends GraphicalObjectBase {
 
 	public void setX(int x) {
 		m_x = x;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 	public int getY() {
@@ -64,7 +62,7 @@ public class Icon extends GraphicalObjectBase {
 
 	public void setY(int y) {
 		m_y = y;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 	public Bitmap getImage() {
@@ -73,7 +71,7 @@ public class Icon extends GraphicalObjectBase {
 
 	public void setImage(Bitmap image) {
 		m_image = image;
-		updateBoundingBox();
+		boundsChanged();
 	}
 
 }
