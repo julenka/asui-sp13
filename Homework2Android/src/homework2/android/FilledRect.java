@@ -2,11 +2,10 @@ package homework2.android;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class FilledRect extends GraphicalObjectBase {
 
@@ -48,14 +47,13 @@ public class FilledRect extends GraphicalObjectBase {
 		int dy = y - m_rect.top;
 		m_rect.top = y;
 		m_rect.bottom += dy;
-		
 		updateBoundaryRect();
 		
 	}
 
 	protected void updateBoundaryRect()
 	{
-		// damage the area we are moving out of
+		// damage the area we are moving out of«
 		doDamage();
 		
 		// TODO: fix to match specification (outline should be entirely in the box)
