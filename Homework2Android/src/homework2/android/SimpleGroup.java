@@ -26,7 +26,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	private int m_width;
 	private int m_height;
 	private Path m_clipPath = new Path();
-	private BoundaryRectangle m_rectangleToRedraw;
 	
 	public SimpleGroup() {
 		this(0,0,100,100);
@@ -41,11 +40,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		// special case, 
 		
 		boundsChanged();
-		
-		m_rectangleToRedraw = new BoundaryRectangle();
-		// add the rectangle to redraw here.
-		m_rectangleToRedraw.add(m_boundaryRect);
-		
 	}
 	
 	protected void updateBounds()
@@ -67,12 +61,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 //	public ScaledGroup (int x,int y,int width,int height,double scaleX,double scaleY);
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
-		if(m_rectangleToRedraw == null)
-		{
-			Log.w("SimpleGroup", "redraw rectangle is null");
-			return;
-		}
-		
 		Paint dbgPaint = new Paint();
 		dbgPaint.setStyle(Style.STROKE);
 		dbgPaint.setStrokeWidth(2);
@@ -91,7 +79,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 			child.draw(graphics, m_clipPath);
 		}
 		graphics.restore();
-		m_rectangleToRedraw = null;
 	}
 
 	@Override
@@ -155,12 +142,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	}
 	
 	public void damage(BoundaryRectangle rectangle) {
-		if(m_rectangleToRedraw == null)
-			m_rectangleToRedraw = new BoundaryRectangle();
-
-		// add the rectangle to redraw here.
-		m_rectangleToRedraw.add(rectangle);
-		
 		if(m_group != null)
 		{
 			Rect container = new Rect(0,0,m_width, m_height);

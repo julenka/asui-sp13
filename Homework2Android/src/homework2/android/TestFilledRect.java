@@ -37,7 +37,7 @@ public class TestFilledRect extends BetterTestFrame {
 		println("click to continue...");
 		pause();
 		println("moving rectangle with setX(), setY() across entire screen");
-		TestMoveTo(0,0,drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r);
+		TestMoveTo(0,0,drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r,r);
 		
 		pause();
 		println("changing to blue");
@@ -45,7 +45,7 @@ public class TestFilledRect extends BetterTestFrame {
 		redraw(r);
 		pause();
 		println("moving rectangle with moveTo ()");
-		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r);
+		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r,r);
 		
 		pause();
 		println("doubling width  to 100");
@@ -62,7 +62,7 @@ public class TestFilledRect extends BetterTestFrame {
 		redraw(r);
 		pause();
 		println("moving rectangle with moveTo ()");
-		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r);
+		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r,r);
 		
 		println("hit back key to exit");
 		

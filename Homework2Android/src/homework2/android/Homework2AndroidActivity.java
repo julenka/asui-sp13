@@ -86,7 +86,7 @@ public class Homework2AndroidActivity extends Activity {
         bTestSimpleGroup.setText("TestSimpleGroup");
         bTestSimpleGroup.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		Intent i = new Intent(context, TestSimpleGroup.class);      
+        		Intent i = new Intent(context, BetterTestSimpleGroup.class);      
         		i.putExtra("nObject", "");
         		startActivity(i); 
         	}

@@ -40,7 +40,7 @@ public class BetterTestFrame extends TestFrame {
 
 	
 
-	protected void TestMoveTo(int startx, int starty, int endx, int endy, int numsteps, GraphicalObject o)
+	protected void TestMoveTo(int startx, int starty, int endx, int endy, int numsteps, GraphicalObject o, GraphicalObject toRedraw)
 	{
 		int step = (endx - startx) / numsteps;
 		for(int y = starty; y <= endy; y += step)
@@ -48,7 +48,7 @@ public class BetterTestFrame extends TestFrame {
 			for(int x = startx; x <= endx; x += step)
 			{
 				o.moveTo(x, y);
-				redraw(o);
+				redraw(toRedraw);
 				sleep(100);
 			}
 		}
@@ -56,7 +56,6 @@ public class BetterTestFrame extends TestFrame {
 		printActual(o);
 	}
 
-	// Implement this
 	protected void test()
 	{
 		println("Empty test method, implement your test method!");
