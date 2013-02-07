@@ -4,20 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Path.Direction;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class SimpleGroup extends GraphicalObjectBase implements Group {
 
 	private List<GraphicalObject> m_children = new ArrayList<GraphicalObject>();
+	// TODO: use boundaryrect operations!
+	// TODO: don't draw if out of width
 	
 	private int m_x;
 	private int m_y;
 	private int m_width;
 	private int m_height;
 	private Path m_clipPath = new Path();
+	private BoundaryRectangle m_rectangleToRedraw;
 	
 	public SimpleGroup() {
 		this(0,0,100,100);
@@ -28,12 +37,19 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		m_y = y;
 		m_width = width;
 		m_height = height;
-		updateBoundaryRect();
+		
+		// special case, 
+		
+		boundsChanged();
+		
+		m_rectangleToRedraw = new BoundaryRectangle();
+		// add the rectangle to redraw here.
+		m_rectangleToRedraw.add(m_boundaryRect);
+		
 	}
 	
-	private void updateBoundaryRect()
+	protected void updateBounds()
 	{
-		doDamage();
 		// update the transform as well
 		m_transform.setTranslate(m_x, m_y);
 		
@@ -42,33 +58,47 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		m_boundaryRect.width = m_width;
 		m_boundaryRect.height = m_height;
 		
-		// update clip path
 		m_clipPath.reset();
-		m_clipPath.addRect(new RectF(0,0, m_width, m_height), Direction.CCW);
-		doDamage();
+		m_clipPath.addRect(new RectF(0, 0, m_width, m_height), Direction.CCW);
+		
 	}
 	
-//	public LayoutGroup (int x, int y, int width, int height,int layout, int offset);  
+//	public LayoutGroup (int x, itnt y, int width, int height,int layout, int offset);  
 //	public ScaledGroup (int x,int y,int width,int height,double scaleX,double scaleY);
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
-		// TODO Auto-generated method stub
+		if(m_rectangleToRedraw == null)
+		{
+			Log.w("SimpleGroup", "redraw rectangle is null");
+			return;
+		}
+		
+		Paint dbgPaint = new Paint();
+		dbgPaint.setStyle(Style.STROKE);
+		dbgPaint.setStrokeWidth(2);
+		dbgPaint.setColor(Color.GREEN);
+//		graphics.drawPath(clipShape, dbgPaint);
+		// update clip path to draw to
 		graphics.save();
-		graphics.translate(m_x, m_y);
+
 		graphics.clipPath(clipShape);
+		graphics.concat(m_transform);
+		
+		// draw the rectangle to redraw
 		for (GraphicalObject child : m_children) {
 			// draw to the clipshape of the child
+			// don't redraw if nothing to redraw
 			child.draw(graphics, m_clipPath);
 		}
 		graphics.restore();
-
+		m_rectangleToRedraw = null;
 	}
 
 	@Override
 	public void moveTo(int x, int y) {
 		m_x = x;
 		m_y = y;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 	@Override
@@ -78,6 +108,9 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 			throw new AlreadyHasGroupRunTimeException("SimpleGroup addChild: child already has group");
 		child.setGroup(this);
 		m_children.add(child);
+		
+		// damage the region defined by the child
+		damage(child.getBoundingBox());
 	}
 
 	@Override
@@ -89,7 +122,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	@Override
 	public void resizeChild(GraphicalObject child) {
 		// do I need to do anything else here?
-		resizeToChildren();
+		// resizeToChildren();
 	}
 
 	@Override
@@ -113,15 +146,35 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		}
 		m_width = w;
 		m_height = h;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
+	private Rect boundaryRectangleToRect(BoundaryRectangle r)
+	{
+		return new Rect(r.x, r.y, r.x + r.width, r.y + r.height);
+	}
+	
 	public void damage(BoundaryRectangle rectangle) {
-		// TODO Do I need to do anything else here?
+		if(m_rectangleToRedraw == null)
+			m_rectangleToRedraw = new BoundaryRectangle();
+
+		// add the rectangle to redraw here.
+		m_rectangleToRedraw.add(rectangle);
+		
 		if(m_group != null)
 		{
-			m_group.damage(rectangle);
+			Rect container = new Rect(0,0,m_width, m_height);
+			Rect damagedArea = boundaryRectangleToRect(rectangle);
+			if(damagedArea.intersect(container))
+			{
+				Point parentSpace = childToParent(new Point(damagedArea.left, damagedArea.top));
+				m_group.damage(new BoundaryRectangle(parentSpace.x, parentSpace.y, damagedArea.width(), damagedArea.height()));
+//				Log.v("SimpleGroup", String.format("Damage child x:%d y:%d parent x:%d y:%d", rectangle.x, rectangle.y, parentSpace.x, parentSpace.y));
+//				m_group.damage(m_boundaryRect);
+			}
+
 		}
+		
 	}
 
 	@Override
@@ -129,44 +182,64 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		return m_children;
 	}
 
+	private Point applyTransform(Point pt, Matrix tfrm)
+	{
+        // Create new float[] to hold the rotated coordinates
+        float[] pts = new float[2];
+
+        // Initialize the array with our Coordinate
+        pts[0] = pt.x;
+        pts[1] = pt.y;
+
+        // Use the Matrix to map the points
+        tfrm.mapPoints(pts);
+		return new Point((int)pts[0],(int)pts[1]);
+	}
+	
 	@Override
 	public Point parentToChild(Point pt) {
-		// TODO Auto-generated method stub
+		// apply inverse transform
+		Matrix inv = new Matrix(m_transform);
+		if(m_transform.invert(inv))
+		{
+			return applyTransform(pt, inv);
+		}
+		Log.w("SimpleGroup", "Error: cannot invert matrix!");
 		return null;
 	}
 
 	@Override
 	public Point childToParent(Point pt) {
-		// TODO Auto-generated method stub
-		return null;
+		return applyTransform(pt, m_transform);
 	}
 	public int getX() {
 		return m_x;
 	}
 	public void setX(int x) {
 		m_x = x;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 	public int getY() {
 		return m_y;
 	}
 	public void setY(int y) {
 		m_y = y;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 	public int getWidth() {
 		return m_width;
 	}
 	public void setWidth(int width) {
 		m_width = width;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 	public int getHeight() {
 		return m_height;
 	}
 	public void setHeight(int height) {
 		m_height = height;
-		updateBoundaryRect();
+		boundsChanged();
 	}
 
 }
+

@@ -48,7 +48,7 @@ public class GraphicalObjectBase implements GraphicalObject {
 
 	@Override
 	public BoundaryRectangle getBoundingBox() {
-		return m_boundaryRect;
+		return new BoundaryRectangle(m_boundaryRect);
 	}
 
 	@Override

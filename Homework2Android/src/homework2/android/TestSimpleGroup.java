@@ -59,15 +59,17 @@ public class TestSimpleGroup extends TestFrame{
 		redraw(group);
 		pause();
 
-		println("moving rectangles 1000 times");
+		println("moving rectangles 50 times");
 		println("hit back key to stop");
-		for (int i = 0; i < 1000; ++i) {
+		for (int i = 0; i < 50; ++i) {
 			GraphicalObject gobj = (GraphicalObject) random(objects);
 			gobj.moveTo(-20 + random(200), -20 + random(200));
 			group.bringChildToFront(gobj);
 			redraw(group);
-			sleep(500);
+//			pause();
+			sleep(50);
 		}
+		
 		
 	}
 }
