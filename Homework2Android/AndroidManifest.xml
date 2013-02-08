@@ -36,7 +36,8 @@
              android:label="BetterTestSimpleGroup" />
          <activity android:name=".TestLayoutGroup"
              android:label="TestLayoutGroup" />
-                     
+         <activity android:name=".TestAllTests"
+             android:label="TestAllTests" />       
     </application>
 
 </manifest>

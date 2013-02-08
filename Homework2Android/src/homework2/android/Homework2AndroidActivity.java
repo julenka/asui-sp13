@@ -18,7 +18,8 @@ public class Homework2AndroidActivity extends Activity {
 	private Button bTestAll;
 	private Button bTestSimpleGroup;
 	private Button bTestLayoutGroup;
-
+	private Button bTestAllTests;
+	
 	private Context context;   
 	
     @Override
@@ -91,7 +92,16 @@ public class Homework2AndroidActivity extends Activity {
         		startActivity(i); 
         	}
         });
-        
+        bTestSimpleGroup = (Button) findViewById(R.id.runAllTests);
+        bTestSimpleGroup.setEnabled(true);
+        bTestSimpleGroup.setText("RunAllTests");
+        bTestSimpleGroup.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		Intent i = new Intent(context, TestAllTests.class);      
+        		i.putExtra("nObject", "");
+        		startActivity(i); 
+        	}
+        });
         
         
     }

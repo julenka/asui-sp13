@@ -21,11 +21,11 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	// TODO: use boundaryrect operations!
 	// TODO: don't draw if out of width
 	
-	private int m_x;
-	private int m_y;
-	private int m_width;
-	private int m_height;
-	private Path m_clipPath = new Path();
+	protected int m_x;
+	protected int m_y;
+	protected int m_width;
+	protected int m_height;
+	protected Path m_clipPath = new Path();
 	
 	public SimpleGroup() {
 		this(0,0,100,100);
@@ -65,10 +65,11 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		dbgPaint.setStyle(Style.STROKE);
 		dbgPaint.setStrokeWidth(2);
 		dbgPaint.setColor(Color.GREEN);
-//		graphics.drawPath(clipShape, dbgPaint);
+		graphics.drawPath(clipShape, dbgPaint);
 		// update clip path to draw to
 		graphics.save();
-
+		dbgPaint.setColor(Color.MAGENTA);
+		graphics.drawPath(m_clipPath, dbgPaint);
 		graphics.clipPath(clipShape);
 		graphics.concat(m_transform);
 		
@@ -136,22 +137,23 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		boundsChanged();
 	}
 
-	private Rect boundaryRectangleToRect(BoundaryRectangle r)
+	
+	
+	private RectF boundaryRectangleToRect(BoundaryRectangle r)
 	{
-		return new Rect(r.x, r.y, r.x + r.width, r.y + r.height);
+		return new RectF(r.x, r.y, r.x + r.width, r.y + r.height);
 	}
 	
 	public void damage(BoundaryRectangle rectangle) {
 		if(m_group != null)
 		{
-			Rect container = new Rect(0,0,m_width, m_height);
-			Rect damagedArea = boundaryRectangleToRect(rectangle);
+			RectF container = new RectF(0,0,m_width, m_height);
+			RectF damagedArea = boundaryRectangleToRect(rectangle);
+			
 			if(damagedArea.intersect(container))
 			{
-				Point parentSpace = childToParent(new Point(damagedArea.left, damagedArea.top));
-				m_group.damage(new BoundaryRectangle(parentSpace.x, parentSpace.y, damagedArea.width(), damagedArea.height()));
-//				Log.v("SimpleGroup", String.format("Damage child x:%d y:%d parent x:%d y:%d", rectangle.x, rectangle.y, parentSpace.x, parentSpace.y));
-//				m_group.damage(m_boundaryRect);
+				m_transform.mapRect(damagedArea);
+				m_group.damage(new BoundaryRectangle((int)damagedArea.left, (int)damagedArea.top, (int)damagedArea.width(), (int)damagedArea.height()));
 			}
 
 		}
@@ -176,6 +178,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
         tfrm.mapPoints(pts);
 		return new Point((int)pts[0],(int)pts[1]);
 	}
+
 	
 	@Override
 	public Point parentToChild(Point pt) {

@@ -16,7 +16,7 @@ public class BetterTestSimpleGroup extends BetterTestFrame {
 
 		SimpleGroup root = new SimpleGroup(0,0, drawView.getWidth(), drawView.getHeight());
 		addChild(root);
-		int nObjects = 4;
+		int nObjects = 10;
 		try {
 			Bundle extras = getIntent().getExtras();
 			nObjects = Integer.parseInt(extras.getString("nObject"));
@@ -66,7 +66,7 @@ public class BetterTestSimpleGroup extends BetterTestFrame {
 			cur = child;
 		}
 		redraw(root);
-		
+		pause();
 		println("moving rectangles 50 times");
 		println("hit back key to stop");
 		for (int i = 0; i < 50; ++i) {
@@ -78,7 +78,7 @@ public class BetterTestSimpleGroup extends BetterTestFrame {
 		}
 		println("done moving");
 		pause();
-		TestMoveTo(0, 0, drawView.getWidth() - group.getWidth(), drawView.getHeight() - group.getHeight(), 10, group, root);
+		TestMoveTo(0, 0, drawView.getWidth() - group.getWidth(), drawView.getHeight() - group.getHeight(), 5, group, root);
 	}
 
 }

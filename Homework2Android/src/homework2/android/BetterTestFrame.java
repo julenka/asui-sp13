@@ -49,7 +49,7 @@ public class BetterTestFrame extends TestFrame {
 			{
 				o.moveTo(x, y);
 				redraw(toRedraw);
-				sleep(100);
+				sleep(50);
 			}
 		}
 		expectedState(endx, endy);
