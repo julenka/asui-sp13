@@ -10,7 +10,7 @@ public class TestAllTests extends BetterTestFrame {
 	private List<BetterTestFrame> m_allTests = new ArrayList<BetterTestFrame>();
 	private BetterTestFrame m_curFrame;
 	public TestAllTests() {
-//		m_allTests.add(new BetterTestOutlineRect());
+		m_allTests.add(new BetterTestOutlineRect());
 //		m_allTests.add(new TestFilledRect());
 //		m_allTests.add(new BetterTestSimpleGroup());
 		m_allTests.add(new TestScaledGroup());

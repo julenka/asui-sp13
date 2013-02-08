@@ -2,15 +2,18 @@ package homework2.android;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.util.Log;
+import android.graphics.RectF;
 
 public class FilledRect extends GraphicalObjectBase {
 
+	// stores x, y, width height of rectangle
 	protected Rect m_rect = new Rect();
-	
+	private RectF m_rectToDraw = new RectF();
+	private Path m_rectClipPath = new Path();
 	public FilledRect() 
 	{
 		this(0,0,10,10, Color.BLACK);
@@ -34,7 +37,26 @@ public class FilledRect extends GraphicalObjectBase {
 		graphics.save();
 		graphics.clipPath(clipShape);
 		// TODO: fix to match specification (outline should be entirely in the box)
-		graphics.drawRect(m_rect, m_paint);
+		
+		// need to actually draw the rectangle inside the rect, accounting for stroke width
+		float delta = m_paint.getStrokeWidth() / 2;
+		m_rectToDraw.left = m_rect.left + delta;
+		m_rectToDraw.right = m_rect.right - delta;
+		m_rectToDraw.bottom = m_rect.bottom - delta;
+		m_rectToDraw.top = m_rect.top + delta;
+		
+		if(m_rectToDraw.left >= m_rectToDraw.right || m_rectToDraw.top > m_rectToDraw.bottom)
+		{
+			// if the line thickness is so big that we would fill a rectangle, just fill the rectangle
+			Paint p = new Paint(m_paint);
+			p.setStyle(Style.FILL);
+			graphics.drawRect(m_rect, p);
+		} else
+		{
+			graphics.drawRect(m_rectToDraw, m_paint);	
+		}
+		
+		
 		graphics.restore();   
 	}
 
@@ -55,10 +77,10 @@ public class FilledRect extends GraphicalObjectBase {
 	protected void updateBounds()
 	{
 		// TODO: fix to match specification (outline should be entirely in the box)
-		m_boundaryRect.x =  m_rect.left - (int)(m_paint.getStrokeWidth() / 2);
-		m_boundaryRect.y = m_rect.top - (int)(m_paint.getStrokeWidth() / 2);
-		m_boundaryRect.width = m_rect.width() + (int)m_paint.getStrokeWidth();
-		m_boundaryRect.height = m_rect.height() + (int)m_paint.getStrokeWidth();
+		m_boundaryRect.x =  m_rect.left;
+		m_boundaryRect.y = m_rect.top;
+		m_boundaryRect.width = m_rect.width();
+		m_boundaryRect.height = m_rect.height();
 	}
 	
 	// Getters and setters

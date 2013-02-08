@@ -11,23 +11,19 @@ public class BetterTestOutlineRect extends BetterTestFrame {
 
 	@Override
 	protected void test(){
-
-		// After implementing OutlineRect, uncomment the testing code 
-		int lineThickness = 1;
-		try {
-			Bundle extras = getIntent().getExtras();  			
-			lineThickness = Integer.parseInt(extras.getString("lineThickness"));
-			println("line thickness = " + lineThickness);
-		} catch (Exception e) {
-			println("usage:  TestRect [line thickness]\n"
-					+ "using line thickness = "
-					+ lineThickness + " by default");
-		}
 		println("creating OutlineRect");
-
+		int lineThickness = 1;
 		OutlineRect r = new OutlineRect(10, 10, 50, 50, Color.RED, lineThickness);
 		addChild(r);
 		pause();
+		println("changing line thickness from 1 to 100");
+		for (int i = 1; i <= 100; i++) {
+			r.setLineThickness(i);
+			redraw(r);
+			sleep(50);
+		}
+		pause();
+		
 		println("moving rectangle with setX(), setY()");
 		for (int x = 10; x < 150; x += 30) {
 			r.setX(x);

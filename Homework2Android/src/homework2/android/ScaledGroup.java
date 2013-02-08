@@ -27,7 +27,7 @@ public class ScaledGroup extends SimpleGroup {
 		m_transform.setTranslate(m_x, m_y);
 		m_transform.preScale((float)m_scaleX, (float)m_scaleY);
 		
-		Log.v("ScaledGroup", "new width: " + m_width + " new height: " + m_height);
+//		Log.v("ScaledGroup", "new width: " + m_width + " new height: " + m_height);
 		
 		m_boundaryRect.x = m_x;
 		m_boundaryRect.y = m_y;
