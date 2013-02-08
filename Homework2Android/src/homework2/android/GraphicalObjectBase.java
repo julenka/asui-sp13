@@ -18,10 +18,13 @@ public class GraphicalObjectBase implements GraphicalObject {
 
 	protected void boundsChanged()
 	{
+		int oldWidth = m_boundaryRect.width;
+		int oldHeight = m_boundaryRect.height;
 		doDamage();
 		updateBounds();
 		doDamage();
-		doResized();
+		if(m_boundaryRect.width != oldWidth || m_boundaryRect.height != oldHeight)
+			doResized();
 	}
 	
 	protected void updateBounds()

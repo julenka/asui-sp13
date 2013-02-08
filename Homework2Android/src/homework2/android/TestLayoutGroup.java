@@ -1,5 +1,6 @@
 package homework2.android;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 public class TestLayoutGroup extends TestFrame{
@@ -25,7 +26,7 @@ public class TestLayoutGroup extends TestFrame{
 		
 		// After implementing OutlineRect and LayoutGroup, uncomment the testing code
 		
-		/*int nObjects = 4;
+		int nObjects = 4;
 		try {
 			Bundle extras = getIntent().getExtras();
 			nObjects = Integer.parseInt(extras.getString("nObject"));
@@ -47,7 +48,7 @@ public class TestLayoutGroup extends TestFrame{
 		int[] colors = { Color.BLACK, Color.RED, Color.BLUE };
 		for (int i = 0; i < nObjects; ++i) {
 			objects[i] = new OutlineRect(random(200), random(200), 30 + random(20),
-					30 + random(20), (Color) random(colors), 1 + random(5));
+					30 + random(20), random(colors), 1 + random(5));
 			group.addChild(objects[i]);
 		}
 
@@ -76,6 +77,6 @@ public class TestLayoutGroup extends TestFrame{
 			sleep(1000);
 		}
 		println("close the window to exit");
-		*/
+		
 	}
 }

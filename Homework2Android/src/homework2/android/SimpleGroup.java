@@ -17,7 +17,7 @@ import android.util.Log;
 
 public class SimpleGroup extends GraphicalObjectBase implements Group {
 
-	private List<GraphicalObject> m_children = new ArrayList<GraphicalObject>();
+	protected List<GraphicalObject> m_children = new ArrayList<GraphicalObject>();
 	// TODO: use boundaryrect operations!
 	// TODO: don't draw if out of width
 	
@@ -57,8 +57,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		
 	}
 	
-//	public LayoutGroup (int x, itnt y, int width, int height,int layout, int offset);  
-//	public ScaledGroup (int x,int y,int width,int height,double scaleX,double scaleY);
+
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
 		Paint dbgPaint = new Paint();
