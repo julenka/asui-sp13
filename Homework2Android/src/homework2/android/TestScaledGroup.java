@@ -41,34 +41,28 @@ public class TestScaledGroup extends BetterTestFrame {
 			}
 		}
 		redraw(root);
-		pause();
 		println("setting scale to 2,2");
 		group.setScaleX(2);
 		group.setScaleY(2);
 		redraw(root);
-		pause();
 		
 		println("setting scale to 1,2");
 		group.setScaleX(1);
 		group.setScaleY(2);
 		redraw(root);
-		pause();
-		
+
 		println("setting scale to 3,1");
 		group.setScaleX(3);
 		group.setScaleY(1);
 		redraw(root);
-		pause();
 		
 		println("setting width, height to 200, 200");
 		group.setWidth(200);
 		group.setHeight(200);
 		redraw(root);
-		pause();
 		
 		println("Testing MoveTo on group");
 		TestMoveTo(0, 0, drawView.getWidth() - group.getWidth(), drawView.getHeight() - group.getHeight(), 5, group, root);
-		pause();
 		
 		
 		println("Created nested rectangles, 20 deep");
@@ -85,7 +79,6 @@ public class TestScaledGroup extends BetterTestFrame {
 			cur = child;
 		}
 		redraw(root);
-		pause();
 		
 		println("Changing nested scale factor from 0.1 to 2 with a step of 0.1");
 		for (double i = 0.1; i <= 2; i+=0.1) {

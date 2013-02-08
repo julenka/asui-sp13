@@ -59,7 +59,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	
 
 	@Override
-	public void draw(Canvas graphics, Path clipShape) {
+	public void doDraw(Canvas graphics, Path clipShape) {
 		Paint dbgPaint = new Paint();
 		dbgPaint.setStyle(Style.STROKE);
 		dbgPaint.setStrokeWidth(2);
@@ -139,11 +139,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	}
 
 	
-	
-	private RectF boundaryRectangleToRect(BoundaryRectangle r)
-	{
-		return new RectF(r.x, r.y, r.x + r.width, r.y + r.height);
-	}
+
 	
 	public void damage(BoundaryRectangle rectangle) {
 		if(m_group != null)

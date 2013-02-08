@@ -33,7 +33,7 @@ public class FilledRect extends GraphicalObjectBase {
 	// Getters and setters
 
 	@Override
-	public void draw(Canvas graphics, Path clipShape) {
+	public void doDraw(Canvas graphics, Path clipShape) {
 		graphics.save();
 		graphics.clipPath(clipShape);
 		// TODO: fix to match specification (outline should be entirely in the box)

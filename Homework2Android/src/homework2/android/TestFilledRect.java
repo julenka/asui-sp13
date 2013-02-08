@@ -34,35 +34,28 @@ public class TestFilledRect extends BetterTestFrame {
 		int curHeight = 10;
 		FilledRect r = new FilledRect(0, 0, curWidth, curHeight, Color.RED);
 		addChild(r);
-		println("click to continue...");
-		pause();
 		println("moving rectangle with setX(), setY() across entire screen");
-		TestMoveTo(0,0,drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r,r);
+		TestMoveTo(0,0,drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 5, r,r);
 		
-		pause();
 		println("changing to blue");
 		r.setColor(Color.BLUE);
 		redraw(r);
-		pause();
 		println("moving rectangle with moveTo ()");
-		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r,r);
+		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 5, r,r);
 		
-		pause();
 		println("doubling width  to 100");
 		curWidth = 100;
 		r.setWidth(curWidth);
 		redraw(r);
-		pause();
 		println("moving rectangle with set ()");
-		TestSet(0,0,drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r);
+		TestSet(0,0,drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 5, r);
 		
 		println("changing height  to 200");
 		curHeight = 200;
 		r.setHeight(curHeight);
 		redraw(r);
-		pause();
 		println("moving rectangle with moveTo ()");
-		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 10, r,r);
+		TestMoveTo(0, 0, drawView.getWidth() - curWidth, drawView.getHeight() - curHeight, 5, r,r);
 		
 		println("hit back key to exit");
 		

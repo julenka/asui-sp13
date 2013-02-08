@@ -49,8 +49,14 @@ public class BetterTestSimpleGroup extends BetterTestFrame {
 		}
 
 		redraw(root);
-		pause();
 
+		pause();
+		println("click to resize to children");
+		group.resizeToChildren();
+		background.setWidth(group.getBoundingBox().width);
+		background.setHeight(group.getBoundingBox().height);
+		redraw(root);
+		pause();
 		
 		println("Created nested rectangles, 10 deep");
 		SimpleGroup nested = new SimpleGroup(200, 200, 200, 200);
@@ -66,7 +72,7 @@ public class BetterTestSimpleGroup extends BetterTestFrame {
 			cur = child;
 		}
 		redraw(root);
-		pause();
+
 		println("moving rectangles 50 times");
 		println("hit back key to stop");
 		for (int i = 0; i < 50; ++i) {
@@ -77,7 +83,6 @@ public class BetterTestSimpleGroup extends BetterTestFrame {
 			sleep(50);
 		}
 		println("done moving");
-		pause();
 		TestMoveTo(0, 0, drawView.getWidth() - group.getWidth(), drawView.getHeight() - group.getHeight(), 5, group, root);
 	}
 

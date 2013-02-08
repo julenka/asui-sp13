@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
+import android.util.Log;
 
 public class GraphicalObjectBase implements GraphicalObject {
 
@@ -12,10 +14,17 @@ public class GraphicalObjectBase implements GraphicalObject {
 	protected BoundaryRectangle m_boundaryRect = new BoundaryRectangle();
 	protected Paint m_paint = new Paint();
 	
+	private RectF m_clipBounds = new RectF();
 	public GraphicalObjectBase() {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	protected RectF boundaryRectangleToRect(BoundaryRectangle r)
+	{
+		return new RectF(r.x, r.y, r.x + r.width, r.y + r.height);
+	}
+	
 	protected void boundsChanged()
 	{
 		int oldWidth = m_boundaryRect.width;
@@ -44,9 +53,22 @@ public class GraphicalObjectBase implements GraphicalObject {
 			m_group.damage(m_boundaryRect);		
 	}
 	
+	protected void doDraw(Canvas graphics, Path clipShape)
+	{
+		Log.v("GraphicalObject", "Oops, you forgot to implement doDraw for class " + this.getClass());
+		// override this
+		// nop
+	}
+	
 	@Override
 	public void draw(Canvas graphics, Path clipShape) {
-		// nop
+		// do not draw if the boundaryrect is completely out of the clipShape
+		clipShape.computeBounds(m_clipBounds, true);
+		RectF boundary = boundaryRectangleToRect(m_boundaryRect);
+		if(!RectF.intersects(boundary, m_clipBounds)) return;
+		
+		doDraw(graphics, clipShape);
+		
 	}
 
 	@Override

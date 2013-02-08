@@ -3,6 +3,8 @@ package homework2.android;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 public class TestAllTests extends BetterTestFrame {
@@ -11,9 +13,10 @@ public class TestAllTests extends BetterTestFrame {
 	private BetterTestFrame m_curFrame;
 	public TestAllTests() {
 		m_allTests.add(new BetterTestOutlineRect());
-//		m_allTests.add(new TestFilledRect());
-//		m_allTests.add(new BetterTestSimpleGroup());
+		m_allTests.add(new TestFilledRect());
+		m_allTests.add(new BetterTestSimpleGroup());
 		m_allTests.add(new TestScaledGroup());
+		m_allTests.add(new BetterTestLayoutGropu());
 
 	}
 	
@@ -24,7 +27,9 @@ public class TestAllTests extends BetterTestFrame {
 		for (TestFrame test : m_allTests) {
 			test.drawView = drawView;
 			test.debugTextView = debugTextView;
+			
 		}
+		
 	}
 	
 	
@@ -38,6 +43,12 @@ public class TestAllTests extends BetterTestFrame {
 			println("Click to move to next test");
 			pause();
 		}
+		
+		Text done = new Text("DONE!", 0,0, Typeface.create("Helvetica", Typeface.BOLD), 72, Color.GREEN);
+		done.moveTo(drawView.getWidth() / 2 - done.getBoundingBox().width / 2, drawView.getHeight() / 2 - done.getBoundingBox().height / 2);
+		addChild(done);
+		redraw(done);
+		
 	}
 	
 	@Override

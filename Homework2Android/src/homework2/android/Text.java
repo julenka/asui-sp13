@@ -33,7 +33,7 @@ public class Text extends GraphicalObjectBase {
 
 	
 	@Override
-	public void draw(Canvas graphics, Path clipShape) {
+	public void doDraw(Canvas graphics, Path clipShape) {
 		// draw so that m_x is in upper left hand corner
 		// todo: apply affine transformation
 		graphics.save();
