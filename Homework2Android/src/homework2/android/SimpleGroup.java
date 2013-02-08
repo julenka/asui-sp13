@@ -65,13 +65,15 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		dbgPaint.setStyle(Style.STROKE);
 		dbgPaint.setStrokeWidth(2);
 		dbgPaint.setColor(Color.GREEN);
-		graphics.drawPath(clipShape, dbgPaint);
+//		graphics.drawPath(clipShape, dbgPaint);
 		// update clip path to draw to
 		graphics.save();
-		dbgPaint.setColor(Color.MAGENTA);
-		graphics.drawPath(m_clipPath, dbgPaint);
+
 		graphics.clipPath(clipShape);
 		graphics.concat(m_transform);
+		dbgPaint.setColor(Color.MAGENTA);
+//		graphics.drawPath(m_clipPath, dbgPaint);	
+		
 		
 		// draw the rectangle to redraw
 		for (GraphicalObject child : m_children) {

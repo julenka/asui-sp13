@@ -1,9 +1,15 @@
 package homework2.android;
 
+import java.io.IOException;
+
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 public class BetterTestFrame extends TestFrame {
-
+	
+	// todo: figure out how to load images
 	public BetterTestFrame() {
 		// TODO Auto-generated constructor stub
 	}
@@ -49,7 +55,7 @@ public class BetterTestFrame extends TestFrame {
 			{
 				o.moveTo(x, y);
 				redraw(toRedraw);
-				sleep(50);
+				sleep(100);
 			}
 		}
 		expectedState(endx, endy);

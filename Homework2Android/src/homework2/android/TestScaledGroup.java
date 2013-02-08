@@ -1,5 +1,7 @@
 package homework2.android;
 
+import java.io.IOException;
+
 import android.graphics.Color;
 
 public class TestScaledGroup extends BetterTestFrame {
@@ -16,14 +18,16 @@ public class TestScaledGroup extends BetterTestFrame {
 		int nObjects = 10;
 		
 		println("creating black frame");
-		root.addChild(new OutlineRect(9, 9, 182, 182, Color.BLACK, 1));
+		
+		
 
 		println("creating ScaledGroup inside black frame, scale 1,1");
-		ScaledGroup group = new ScaledGroup(10, 10, 180, 180,1,1);
+		ScaledGroup group = new ScaledGroup(0, 0, drawView.getWidth(), drawView.getHeight(),1,1);
 		root.addChild(group);
 		
-		FilledRect background = new FilledRect(0,0,180,180, Color.LTGRAY);
+		FilledRect background = new FilledRect(0,0,group.getWidth(), group.getHeight(), Color.LTGRAY);
 		group.addChild(background);
+		group.addChild(new OutlineRect(0, 0, group.getWidth(), group.getHeight(), Color.BLACK, 1));
 		println("creating Rects at random places");
 		GraphicalObject[] objects = new GraphicalObject[nObjects];
 		int[] colors = { Color.BLACK, Color.RED, Color.BLUE };
@@ -56,10 +60,41 @@ public class TestScaledGroup extends BetterTestFrame {
 		redraw(root);
 		pause();
 		
+		println("setting width, height to 200, 200");
+		group.setWidth(200);
+		group.setHeight(200);
+		redraw(root);
+		pause();
 		
 		println("Testing MoveTo on group");
 		TestMoveTo(0, 0, drawView.getWidth() - group.getWidth(), drawView.getHeight() - group.getHeight(), 5, group, root);
 		pause();
+		
+		
+		println("Created nested rectangles, 20 deep");
+		ScaledGroup nested = new ScaledGroup(0, 0, drawView.getWidth(), drawView.getHeight(),1,1);
+		int levels = 20;
+		int step = 10;
+		SimpleGroup cur = nested;
+		root.addChild(cur);
+		for (int i = 0; i < levels; i++) {
+			// Add and outlinerect in this group
+			cur.addChild(new FilledRect(0,0, cur.getWidth(), cur.getHeight(), colors[i % colors.length]));
+			SimpleGroup child = new SimpleGroup(step, step, cur.getWidth() - 2 * step, cur.getHeight() - 2 * step);
+			cur.addChild(child);
+			cur = child;
+		}
+		redraw(root);
+		pause();
+		
+		println("Changing nested scale factor from 0.1 to 2 with a step of 0.1");
+		for (double i = 0.1; i <= 2; i+=0.1) {
+			nested.setScaleX(i);
+			nested.setScaleY(i);
+			redraw(root);
+			sleep(100);
+		}
+
 	}
 
 }
