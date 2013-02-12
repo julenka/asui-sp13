@@ -40,7 +40,7 @@ public class TestLayoutGroup extends TestFrame{
 		addChild(new OutlineRect(9, 9, 481, 181, Color.BLACK, 1));
 
 		println("creating LayoutGroup inside black frame");
-		Group group = new LayoutGroup(10, 10, 479, 179, Group.HORIZONTAL, 0);
+		Group group = new LayoutGroup(10, 10, 480, 180, Group.HORIZONTAL, 0);
 		addChild(group);
 
 		println("creating random Rects");

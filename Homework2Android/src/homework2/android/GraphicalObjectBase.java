@@ -7,24 +7,41 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.Log;
 
+/**
+ * Base class for all graphical objects, including groups (which are also graphical objects). 
+ * Almost all of the objects implemented in this assignment
+ * have a lot of common code so I made this base class to factor out all of the common code)
+ * @author julenka
+ *
+ */
 public class GraphicalObjectBase implements GraphicalObject {
 
+	// the parent group
 	protected Group m_group;
+	
+	// the transformation matrix to use 
 	protected Matrix m_transform = new Matrix();
+	
+	// rectangle specifying the bounds of this object
 	protected BoundaryRectangle m_boundaryRect = new BoundaryRectangle();
+	
 	protected Paint m_paint = new Paint();
 	
+	// rectangle specifying what to clip to
 	private RectF m_clipBounds = new RectF();
+	
 	public GraphicalObjectBase() {
-		// TODO Auto-generated constructor stub
 	}
 
-	
 	protected RectF boundaryRectangleToRect(BoundaryRectangle r)
 	{
 		return new RectF(r.x, r.y, r.x + r.width, r.y + r.height);
 	}
-	
+
+	/**
+	 * Call this method whenever the bounds of the graphical object changes.
+	 * Does damange, makes call to update bounds, and calls doResized if appropriate
+	 */
 	protected void boundsChanged()
 	{
 		int oldWidth = m_boundaryRect.width;
@@ -36,9 +53,12 @@ public class GraphicalObjectBase implements GraphicalObject {
 			doResized();
 	}
 	
+	/**
+	 * Implement code here to update the bounds of you m_boundaryRect 
+	 */
 	protected void updateBounds()
 	{
-		// implement updateBounds here
+		Log.v("GraphicalObjectBase", "Oops, you forgot to implement updateBounds() for class " + this.getClass());
 	}
 	
 	protected void doResized()
@@ -53,14 +73,22 @@ public class GraphicalObjectBase implements GraphicalObject {
 			m_group.damage(m_boundaryRect);		
 	}
 	
+	/**
+	 * Implement drawing code here, draw() calls this method after doing some basic computation
+	 * @param graphics
+	 * @param clipShape
+	 */
 	protected void doDraw(Canvas graphics, Path clipShape)
 	{
 		Log.v("GraphicalObject", "Oops, you forgot to implement doDraw for class " + this.getClass());
 		// override this
-		// nop
 	}
 	
 	@Override
+	/**
+	 * Computes whether the object is within bounds of clipped region. If not, don't draw
+	 * the object. Otherwise draw the object
+	 */
 	public void draw(Canvas graphics, Path clipShape) {
 		// do not draw if the boundaryrect is completely out of the clipShape
 		clipShape.computeBounds(m_clipBounds, true);
@@ -78,7 +106,7 @@ public class GraphicalObjectBase implements GraphicalObject {
 
 	@Override
 	public void moveTo(int x, int y) {
-		// nop
+		Log.v("GraphicalObjectBase", "Oops, you forgot to implement moveTo() for class " + this.getClass());
 	}
 
 	@Override
@@ -101,14 +129,10 @@ public class GraphicalObjectBase implements GraphicalObject {
 	@Override
 	public void setAffineTransform(Matrix af) {
 		m_transform = af;
-
 	}
 
 	@Override
 	public Matrix getAffineTransform() {
 		return m_transform;
 	}
-
-	// TODO: setX, setY
-	
 }

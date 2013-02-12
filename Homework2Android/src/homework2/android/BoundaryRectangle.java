@@ -1,7 +1,5 @@
 package homework2.android;
 
-// TODO: use BoundaryRectangle to do translations
-
 // based on code from java.awt.rectangle, copied from here:
 // http://grepcode.com/file_/repository.grepcode.com/java/root/jdk/openjdk/6-b14/java/awt/Rectangle.java/?v=source
 public class BoundaryRectangle {

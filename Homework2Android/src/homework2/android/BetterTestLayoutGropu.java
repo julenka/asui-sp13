@@ -3,10 +3,14 @@ package homework2.android;
 import android.graphics.Color;
 import android.os.Bundle;
 
+/**
+ * More thorough TestLayoutGroup, also doesn't clip the outline rect as occurs in the TestLayoutGroup code.
+ * @author julenka
+ *
+ */
 public class BetterTestLayoutGropu extends BetterTestFrame {
 
 	public BetterTestLayoutGropu() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	private void runLayoutTest(int nObjects, int layoutType)

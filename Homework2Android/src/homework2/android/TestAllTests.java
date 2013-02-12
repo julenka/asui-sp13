@@ -6,7 +6,11 @@ import java.util.List;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
+/**
+ * A class that runs a series of BetterTestFrame tests
+ * @author julenka
+ *
+ */
 public class TestAllTests extends BetterTestFrame {
 
 	private List<BetterTestFrame> m_allTests = new ArrayList<BetterTestFrame>();
@@ -22,7 +26,6 @@ public class TestAllTests extends BetterTestFrame {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		for (TestFrame test : m_allTests) {
 			test.drawView = drawView;

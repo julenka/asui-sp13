@@ -4,13 +4,17 @@ import android.graphics.Path.Direction;
 import android.graphics.RectF;
 import android.util.Log;
 
+/**
+ * Implements a group where all objects are scaled by an x and y factor
+ * @author julenka
+ *
+ */
 public class ScaledGroup extends SimpleGroup {
 
 	private double m_scaleX;
 	private double m_scaleY;
 	
 	public ScaledGroup() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ScaledGroup(int x, int y, int width, int height, double scaleX, double scaleY) {
@@ -20,14 +24,15 @@ public class ScaledGroup extends SimpleGroup {
 		boundsChanged();
 	}
 	
+	/**
+	 * update the bounds of the rectangle and also of our affine transform
+	 */
 	protected void updateBounds()
 	{
 		// update the transform as well
 		m_transform.reset();
 		m_transform.setTranslate(m_x, m_y);
 		m_transform.preScale((float)m_scaleX, (float)m_scaleY);
-		
-//		Log.v("ScaledGroup", "new width: " + m_width + " new height: " + m_height);
 		
 		m_boundaryRect.x = m_x;
 		m_boundaryRect.y = m_y;

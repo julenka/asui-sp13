@@ -7,11 +7,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+/**
+ * A test frame that my custom tests extend. Contains a few utility method. Also allows 
+ * any test that extends this class to be included in my TestAllTests class which runs through
+ * all of my custom tests. Each custom test can also be displayed individually as regular TestFrames.
+ * @author julenka
+ */
 public class BetterTestFrame extends TestFrame {
 	
-	// todo: figure out how to load images
 	public BetterTestFrame() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	protected void expectedState(int x, int y)
@@ -34,7 +38,6 @@ public class BetterTestFrame extends TestFrame {
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -43,8 +46,6 @@ public class BetterTestFrame extends TestFrame {
 		});
 		t.start();
 	 }
-
-	
 
 	protected void TestMoveTo(int startx, int starty, int endx, int endy, int numsteps, GraphicalObject o, GraphicalObject toRedraw)
 	{

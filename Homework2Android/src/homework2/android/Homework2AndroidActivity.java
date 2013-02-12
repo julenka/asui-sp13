@@ -18,6 +18,7 @@ public class Homework2AndroidActivity extends Activity {
 	private Button bTestAll;
 	private Button bTestSimpleGroup;
 	private Button bTestLayoutGroup;
+	private Button bTestScaledGroup;
 	private Button bTestAllTests;
 	
 	private Context context;   
@@ -82,20 +83,33 @@ public class Homework2AndroidActivity extends Activity {
         	}
         });
         
+        bTestScaledGroup = (Button) findViewById(R.id.testLayoutGroup);
+        bTestScaledGroup.setEnabled(true);
+        bTestScaledGroup.setText("TestScaledGroup");
+        bTestScaledGroup.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		Intent i = new Intent(context, TestScaledGroup.class);      
+        		i.putExtra("nObject", "");
+        		startActivity(i);        		
+        	}
+        });
+        
         bTestSimpleGroup = (Button) findViewById(R.id.testSimpleGroup);
         bTestSimpleGroup.setEnabled(true);
         bTestSimpleGroup.setText("TestSimpleGroup");
         bTestSimpleGroup.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
-        		Intent i = new Intent(context, BetterTestSimpleGroup.class);      
+        		Intent i = new Intent(context, TestSimpleGroup.class);      
         		i.putExtra("nObject", "");
         		startActivity(i); 
         	}
         });
-        bTestSimpleGroup = (Button) findViewById(R.id.runAllTests);
-        bTestSimpleGroup.setEnabled(true);
-        bTestSimpleGroup.setText("RunAllTests");
-        bTestSimpleGroup.setOnClickListener(new OnClickListener(){
+        
+        
+        bTestAllTests = (Button) findViewById(R.id.runAllTests);
+        bTestAllTests.setEnabled(true);
+        bTestAllTests.setText("RunAllExtendedTests");
+        bTestAllTests.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		Intent i = new Intent(context, TestAllTests.class);      
         		i.putExtra("nObject", "");

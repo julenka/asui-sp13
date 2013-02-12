@@ -3,10 +3,13 @@ package homework2.android;
 import android.graphics.Color;
 import android.os.Bundle;
 
+/**
+ * Clone of TestOutlineRect execpt can be used in TestAllTests
+ * @author julenka
+ */
 public class BetterTestOutlineRect extends BetterTestFrame {
 
 	public BetterTestOutlineRect() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

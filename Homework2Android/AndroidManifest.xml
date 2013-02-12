@@ -32,7 +32,9 @@
              android:label="TestAllObjects" />
          <activity android:name=".TestSimpleGroup"
              android:label="TestSimpleGroup" />
-                  <activity android:name=".BetterTestSimpleGroup"
+         <activity android:name=".TestScaledGroup"
+             android:label="TestScaledGroup" />
+         <activity android:name=".BetterTestSimpleGroup"
              android:label="BetterTestSimpleGroup" />
          <activity android:name=".TestLayoutGroup"
              android:label="TestLayoutGroup" />

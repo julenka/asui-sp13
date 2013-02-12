@@ -8,12 +8,17 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+/**
+ * Class for drawing filled rectangles.
+ * @author julenka
+ */
 public class FilledRect extends GraphicalObjectBase {
-
-	// stores x, y, width height of rectangle
+	// stores information about our rectangle (x,y,width, height)
 	protected Rect m_rect = new Rect();
+	
+	// stores the actual rectangle we will draw (which can have different dimensions).
 	private RectF m_rectToDraw = new RectF();
-	private Path m_rectClipPath = new Path();
+	
 	public FilledRect() 
 	{
 		this(0,0,10,10, Color.BLACK);
@@ -36,7 +41,6 @@ public class FilledRect extends GraphicalObjectBase {
 	public void doDraw(Canvas graphics, Path clipShape) {
 		graphics.save();
 		graphics.clipPath(clipShape);
-		// TODO: fix to match specification (outline should be entirely in the box)
 		
 		// need to actually draw the rectangle inside the rect, accounting for stroke width
 		float delta = m_paint.getStrokeWidth() / 2;
@@ -55,14 +59,12 @@ public class FilledRect extends GraphicalObjectBase {
 		{
 			graphics.drawRect(m_rectToDraw, m_paint);	
 		}
-		
-		
+
 		graphics.restore();   
 	}
 
 	@Override
 	public void moveTo(int x, int y) {
-		// todo: check this
 		int dx = x - m_rect.left;
 		m_rect.left = x;
 		m_rect.right += dx;
@@ -73,10 +75,8 @@ public class FilledRect extends GraphicalObjectBase {
 		
 	}
 
-	// todo: pull up to graphicalobjectbase
 	protected void updateBounds()
 	{
-		// TODO: fix to match specification (outline should be entirely in the box)
 		m_boundaryRect.x =  m_rect.left;
 		m_boundaryRect.y = m_rect.top;
 		m_boundaryRect.width = m_rect.width();

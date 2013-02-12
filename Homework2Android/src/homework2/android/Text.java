@@ -44,7 +44,6 @@ public class Text extends GraphicalObjectBase {
 
 	@Override
 	public void moveTo(int x, int y) {
-		// TODO: test this
 		// move the upper left corner
 		Point upperLeft = getUpperLeft();
 		int dx = x - upperLeft.x;
@@ -54,14 +53,15 @@ public class Text extends GraphicalObjectBase {
 		boundsChanged();
 	}	
 	
-	// TODO: should I implement getWidth, setWidth?
-
+	/**
+	 * Returns upper left corder of the text.
+	 * @return
+	 */
 	private Point getUpperLeft()
 	{
 		Point result = new Point(m_x, m_y);
 		m_paint.getTextBounds(m_text, 0, m_text.length(), m_rect);
 		result.y += m_rect.top;
-		// TODO: should we draw text 1 px out?
 		return result;
 	}
 	

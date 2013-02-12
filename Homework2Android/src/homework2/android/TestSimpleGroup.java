@@ -37,7 +37,7 @@ public class TestSimpleGroup extends TestFrame{
 		}
 
 		println("creating black frame");
-		addChild(new OutlineRect(9, 9, 282, 282, Color.BLACK, 1));
+		addChild(new OutlineRect(9, 9, 182, 182, Color.BLACK, 1));
 
 		println("creating SimpleGroup inside black frame");
 		SimpleGroup group = new SimpleGroup(10, 10, 180, 180);
@@ -57,11 +57,6 @@ public class TestSimpleGroup extends TestFrame{
 		}
 
 		redraw(group);
-		pause();
-		
-		println("making 100 px smaller");
-		group.setWidth(100);
-		group.setHeight(100);
 		pause();
 		
 		println("moving rectangles 50 times");

@@ -5,6 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
 
+/**
+ * Draws an icon
+ * @author julenka
+ *
+ */
 public class Icon extends GraphicalObjectBase {
 
 	private Bitmap m_image;
@@ -25,7 +30,6 @@ public class Icon extends GraphicalObjectBase {
 
 	protected void updateBounds()
 	{
-		// TODO: account affine transformation
 		m_boundaryRect.x = m_x;
 		m_boundaryRect.y = m_y;
 		m_boundaryRect.width = m_image.getWidth();

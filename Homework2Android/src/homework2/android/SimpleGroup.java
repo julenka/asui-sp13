@@ -15,16 +15,23 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
+/**
+ * Implements a SimpleGroup according to specification. Also acts as a base class for all other specialized groups
+ * @author julenka
+ *
+ */
 public class SimpleGroup extends GraphicalObjectBase implements Group {
 
+	// children in this group
 	protected List<GraphicalObject> m_children = new ArrayList<GraphicalObject>();
-	// TODO: use boundaryrect operations!
-	// TODO: don't draw if out of width
 	
+	// coordinates and dimensions
 	protected int m_x;
 	protected int m_y;
 	protected int m_width;
 	protected int m_height;
+	
+	// clip children to this path
 	protected Path m_clipPath = new Path();
 	
 	public SimpleGroup() {
@@ -36,8 +43,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		m_y = y;
 		m_width = width;
 		m_height = height;
-		
-		// special case, 
 		
 		boundsChanged();
 	}
@@ -60,24 +65,14 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 
 	@Override
 	public void doDraw(Canvas graphics, Path clipShape) {
-		Paint dbgPaint = new Paint();
-		dbgPaint.setStyle(Style.STROKE);
-		dbgPaint.setStrokeWidth(2);
-		dbgPaint.setColor(Color.GREEN);
-//		graphics.drawPath(clipShape, dbgPaint);
-		// update clip path to draw to
 		graphics.save();
 
 		graphics.clipPath(clipShape);
 		graphics.concat(m_transform);
-		dbgPaint.setColor(Color.MAGENTA);
-//		graphics.drawPath(m_clipPath, dbgPaint);	
-		
 		
 		// draw the rectangle to redraw
 		for (GraphicalObject child : m_children) {
 			// draw to the clipshape of the child
-			// don't redraw if nothing to redraw
 			child.draw(graphics, m_clipPath);
 		}
 		graphics.restore();
@@ -110,8 +105,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 
 	@Override
 	public void resizeChild(GraphicalObject child) {
-		// do I need to do anything else here?
-		// resizeToChildren();
 	}
 
 	@Override
@@ -139,16 +132,16 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	}
 
 	
-
-	
 	public void damage(BoundaryRectangle rectangle) {
 		if(m_group != null)
 		{
 			RectF container = new RectF(0,0,m_width, m_height);
 			RectF damagedArea = boundaryRectangleToRect(rectangle);
 			
+			// only damage if the new boundary rectangle is within the bounds of our control
 			if(damagedArea.intersect(container))
 			{
+				// apply the group's current transform to the damaged area before passing damage up
 				m_transform.mapRect(damagedArea);
 				m_group.damage(new BoundaryRectangle((int)damagedArea.left, (int)damagedArea.top, (int)damagedArea.width(), (int)damagedArea.height()));
 			}
@@ -162,9 +155,11 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		return m_children;
 	}
 
+	/**
+	 * Applies a transform to a given point, returns transformed point
+	 */
 	private Point applyTransform(Point pt, Matrix tfrm)
 	{
-        // Create new float[] to hold the rotated coordinates
         float[] pts = new float[2];
 
         // Initialize the array with our Coordinate
