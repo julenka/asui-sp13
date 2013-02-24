@@ -20,6 +20,7 @@ public class Homework2AndroidActivity extends Activity {
 	private Button bTestLayoutGroup;
 	private Button bTestScaledGroup;
 	private Button bTestAllTests;
+	private Button bTestHomework2;
 	
 	private Context context;   
 	
@@ -117,6 +118,16 @@ public class Homework2AndroidActivity extends Activity {
         	}
         });
         
-        
+        bTestHomework2 = (Button) findViewById(R.id.runAllTests);
+        bTestHomework2.setEnabled(true);
+        bTestHomework2.setText("TestHomework2");
+        bTestHomework2.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		Intent i = new Intent(context, TestHomework2.class);      
+        		i.putExtra("nObject", "");
+        		startActivity(i); 
+        	}
+        });
+                
     }
 }

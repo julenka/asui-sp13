@@ -39,7 +39,9 @@
          <activity android:name=".TestLayoutGroup"
              android:label="TestLayoutGroup" />
          <activity android:name=".TestAllTests"
-             android:label="TestAllTests" />       
+             android:label="TestAllTests" />
+         <activity android:name=".TestHomework2"
+             android:label=".TestHomework2" />          
     </application>
 
 </manifest>
