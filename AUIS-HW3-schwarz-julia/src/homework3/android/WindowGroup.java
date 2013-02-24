@@ -14,6 +14,8 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.Path.Direction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,10 +30,13 @@ public class WindowGroup extends Activity implements Group {
 	private static final boolean useConsole = false; // false -> use a TextView at the bottom of the window
 	private static final String LOG_TAG = "WindowGroup";
 
+	private Path m_clipPath = new Path();
  
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+
 		setContentView(R.layout.test);
 
 		// title is set in AndroidManifest.xml
@@ -59,10 +64,12 @@ public class WindowGroup extends Activity implements Group {
 				unpause();
 			}
 		});
-
-
+		
 	}
 
+
+	
+	
 	// note that clipRect is a BoundaryRectangle, and is therefore the size of the area to be drawn
 	// it is NOT 1 pixel bigger (unlike Android's rectangles)
 	public void addClipRect(final BoundaryRectangle r) {
@@ -126,11 +133,33 @@ public class WindowGroup extends Activity implements Group {
 	@Override
     public synchronized void damage (BoundaryRectangle rectangle) {
     	addClipRect(rectangle);
-		drawView.redraw();
+    	
+    	// before we can redraw the drawview we need to make sure that the drawView actually knows
+    	// to draw this group
+    	drawView.setGraphicalObject(this, getBoundingBox());
+    	
+    	drawView.redraw();
     }
     
 	@Override
 	public void draw(final Canvas graphics, final Path clipRect) {
+		
+		
+		graphics.save();
+
+		graphics.clipPath(clipRect);
+		
+		// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
+		// what Brad expects here.
+		m_clipPath.reset();
+		m_clipPath.addRect(new RectF(0, 0, drawView.getWidth(), drawView.getHeight()), Direction.CCW);
+
+		// draw the rectangle to redraw
+		for (GraphicalObject child : children) {
+			// draw to the clipshape of the child
+			child.draw(graphics, m_clipPath);
+		}
+		graphics.restore();
     }
     
 	@Override
