@@ -101,6 +101,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 	public void removeChild(GraphicalObject child) {
 		child.setGroup(null);
 		m_children.remove(child);
+		doDamage();
 	}
 
 	@Override
@@ -113,6 +114,8 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		m_children.remove(child);
 		// add it to the back
 		m_children.add(child);
+		// damage here.
+		doDamage();
 	}
 
 	@Override
