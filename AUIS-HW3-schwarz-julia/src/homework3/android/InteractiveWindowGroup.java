@@ -38,7 +38,7 @@ public class InteractiveWindowGroup extends WindowGroup {
 		// TODO: support multitouch using touchmap (need to totally change, just need to
 		// update the touchmap with valued and look at all of them...
 		int eventId = 0;
-		int modifiers = 0;
+		int modifiers = m_keyModifier;
 		int key = BehaviorEvent.LEFT_MOUSE_KEY;
 		float x = m.getX();
 		float y = m.getY();
@@ -146,26 +146,60 @@ public class InteractiveWindowGroup extends WindowGroup {
 		}
 	}
 	
+	
+	int m_keyModifier = 0x0;
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event)
 	{
+		super.onKeyUp(keyCode, event);
 		// update modifier keys
-		// get behavrio event
-		// send behavrio event
+		updateModifier(keyCode, false);
+		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_UP_ID, m_keyModifier, keyCode);
+		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyUp " + event.getKeyCode());
 		return false;
 	}
 	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
-		// update modifier keys
-		// get behavrio event
-		// send behavrio event
-		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, 0, keyCode);
+		super.onKeyDown(keyCode, event);
+		updateModifier(keyCode, true);
+		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_keyModifier, keyCode);
 		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyDown " + event.getKeyCode());
-		return false;
+		return true;
+	}
+	
+	private void updateModifier(int keyCode, boolean isDown)
+	{
+		int toMask = 0;
+		if(keyCode == KeyEvent.KEYCODE_SHIFT_LEFT || keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
+			toMask = BehaviorEvent.SHIFT_MODIFIER;
+		} else if(keyCode == KeyEvent.KEYCODE_CTRL_LEFT || keyCode == KeyEvent.KEYCODE_CTRL_RIGHT)
+		{
+			toMask = BehaviorEvent.CONTROL_MODIFIER;
+		} else if(keyCode == KeyEvent.KEYCODE_ALT_LEFT || keyCode == KeyEvent.KEYCODE_ALT_RIGHT)
+		{
+			toMask = BehaviorEvent.ALT_MODIFIER;
+		} else if(keyCode == KeyEvent.KEYCODE_WINDOW)
+		{
+			toMask = BehaviorEvent.WINDOWS_KEY_MODIFIER;
+		} else if(keyCode == KeyEvent.KEYCODE_FUNCTION)
+		{
+			toMask = BehaviorEvent.FUNCTION_KEY_MODIFIER;
+		} 
+		// TODO: no command modifier
+		if(!isDown)
+		{
+			toMask = toMask ^ 0xffffff;
+			m_keyModifier = m_keyModifier & toMask;
+		} else
+		{
+			m_keyModifier = m_keyModifier | toMask;	
+		}
+		
 	}
 	
 

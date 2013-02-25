@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 public class MoveBehavior implements Behavior {
 	static final BehaviorEvent DEFAULT_STOP = new BehaviorEvent(BehaviorEvent.MOUSE_UP_ID, 0, BehaviorEvent.LEFT_MOUSE_KEY);
 	static final BehaviorEvent DEFAULT_START = new BehaviorEvent(BehaviorEvent.MOUSE_DOWN_ID, 0, BehaviorEvent.LEFT_MOUSE_KEY);
-	static final BehaviorEvent DEFAULT_CANCEL = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, 0, KeyEvent.KEYCODE_ESCAPE);
+	static final BehaviorEvent DEFAULT_CANCEL = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, 0, KeyEvent.KEYCODE_C);
 	
 	static final String LOG_TAG="Homework3.MoveBehavrior";
 	
