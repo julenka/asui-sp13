@@ -7,6 +7,7 @@ public class BehaviorEvent {
     private int x;
     private int y;
 
+    
     public BehaviorEvent (int id, int modifiers, int key, int x, int y) {
         this.id = id;
         this.modifiers = modifiers;
@@ -15,6 +16,9 @@ public class BehaviorEvent {
         this.y = y;
     }
 
+    public BehaviorEvent (int id, int modifiers, int key) {
+        this(id,modifiers,key,0,0);
+    }
     public int getID () {
         return id;
     }

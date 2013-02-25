@@ -43,7 +43,9 @@
          <activity android:name=".TestHomework2"
              android:label=".TestHomework2" />
          <activity android:name=".TestWindowGroup"
-             android:label=".TestWindowGroup" />               
+             android:label=".TestWindowGroup" />
+         <activity android:name=".TestInteractiveWindowGroup"
+             android:label=".TestInteractiveWindowGroup" />                   
     </application>
 
 </manifest>

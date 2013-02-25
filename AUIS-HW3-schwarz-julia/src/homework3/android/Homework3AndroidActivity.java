@@ -49,9 +49,10 @@ public class Homework3AndroidActivity extends Activity {
         setContentView(R.layout.main);
         context = this;
         root = (LinearLayout) findViewById(R.id.root);
-        
+       
+        addTestButton(TestInteractiveWindowGroup.class);
         addTestButton(TestWindowGroup.class);
-        
+       
         addText("Homework 2 Tests");
         addTestButton("TestTestFrame", TestTestFrame.class);
         addTestButton(TestOutlineRect.class);
