@@ -66,7 +66,7 @@ public class DrawView extends View {
 			savedPaint.setStyle(Paint.Style.FILL);
 			savedPath.reset();
 			savedPath.addRect(r.x,r.y,r.x+r.width,r.y+r.height, android.graphics.Path.Direction.CCW);
-			Log.d("Homework3.DrawView", "setGraphicalObject: erasing white rect == "+r.x + " " + r.y + " " +(r.x+r.width) + " " + (r.y+r.height));				
+//			Log.d("Homework3.DrawView", "setGraphicalObject: erasing white rect == "+r.x + " " + r.y + " " +(r.x+r.width) + " " + (r.y+r.height));				
 			backingCanvas.clipPath(savedPath, android.graphics.Region.Op.REPLACE);
 			backingCanvas.drawRect(r.x,r.y, r.x+r.width,r.y+r.height, savedPaint);
 			
@@ -99,7 +99,7 @@ public class DrawView extends View {
 	}
 
 	public void redraw(){
-		Log.d("Homework3.DrawView", "redraw: called; postInvalidate");				
+//		Log.d("Homework3.DrawView", "redraw: called; postInvalidate");				
 		postInvalidate();  // do the whole area
 	}
 	
@@ -107,6 +107,6 @@ public class DrawView extends View {
 	public void invalidate() {
 		// TODO Auto-generated method stub
 		super.invalidate();
-		Log.v("Homework3.DrawView", "invalidating...");
+//		Log.v("Homework3.DrawView", "invalidating...");
 	}
 }

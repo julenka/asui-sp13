@@ -142,11 +142,11 @@ public abstract class WindowGroup extends Activity implements Group {
 	@Override
 	public void removeChild (GraphicalObject child) {
 		BoundaryRectangle b = child.getBoundingBox();
-		Log.v(LOG_TAG, String.format("removing child %d %d %d %d", 
-				b.x, 
-				b.y, 
-				b.width, 
-				b.height));
+//		Log.v(LOG_TAG, String.format("removing child %d %d %d %d", 
+//				b.x, 
+//				b.y, 
+//				b.width, 
+//				b.height));
 		child.setGroup(null);
 		m_children.remove (child);	
 		
@@ -163,7 +163,7 @@ public abstract class WindowGroup extends Activity implements Group {
 
 	@Override
 	public synchronized void damage (BoundaryRectangle rectangle) {
-		Log.v(LOG_TAG, "damaged");
+//		Log.v(LOG_TAG, "damaged");
 		addClipRect(rectangle);
 		m_screenDirty = true;
 		
@@ -173,11 +173,11 @@ public abstract class WindowGroup extends Activity implements Group {
 	public void draw(final Canvas graphics, final Path clipRect) {
 		// lock the dirty bit, make sure nobody damges the canvas while drawing
 		graphics.save();
-		Paint dbgP = new Paint();
-		dbgP.setStrokeWidth(10.0f);
-		dbgP.setStyle(Style.STROKE);
-		dbgP.setColor(Color.RED);
-		graphics.drawPath(clipRect, dbgP);
+//		Paint dbgP = new Paint();
+//		dbgP.setStrokeWidth(10.0f);
+//		dbgP.setStyle(Style.STROKE);
+//		dbgP.setColor(Color.RED);
+//		graphics.drawPath(clipRect, dbgP);
 		graphics.clipPath(clipRect);
 
 		// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
@@ -185,8 +185,8 @@ public abstract class WindowGroup extends Activity implements Group {
 		m_clipPath.reset();
 		m_clipPath.addRect(new RectF(0, 0, m_drawView.getWidth(), m_drawView.getHeight()), Direction.CCW);
 
-		dbgP.setColor(Color.GREEN);
-		graphics.drawPath(m_clipPath, dbgP);
+//		dbgP.setColor(Color.GREEN);
+//		graphics.drawPath(m_clipPath, dbgP);
 		
 		for (GraphicalObject child : m_children) {
 			// draw to the clipshape of the child
