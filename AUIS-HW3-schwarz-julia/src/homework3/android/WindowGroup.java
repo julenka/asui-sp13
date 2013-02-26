@@ -2,9 +2,11 @@ package homework3.android;
 
 
 import java.io.IOException;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -13,9 +15,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Path;
+import android.graphics.Path.Direction;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.graphics.Path.Direction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +25,8 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class WindowGroup extends Activity implements Group {
-
+	final int g_drawIntervalMs = 33;
+	
 	public DrawView drawView;
 	public TextView debugTextView;	
 	private String debugString;
@@ -31,11 +34,16 @@ public class WindowGroup extends Activity implements Group {
 	private static final String LOG_TAG = "WindowGroup";
 
 	private Path m_clipPath = new Path();
- 
+	
+	private Timer m_drawTimer = new Timer();
+	
+	private Object m_screenDirtyLock = new Object();
+	private boolean m_screenDirty = false;
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 
 		setContentView(R.layout.test);
 
@@ -64,12 +72,51 @@ public class WindowGroup extends Activity implements Group {
 				unpause();
 			}
 		});
+
+		// draw the window once the drawView has been set up.
+		// this feels very inelegant and I think there's a better way to do this. I feel like the drawView should actually
+		// be handling the drawing, not the activity
+		final GraphicalObject me = this;
+		Thread t = new Thread(new Runnable() {
+			public void run() {
+				while(!drawView.getOnDrawFirstCalled()){
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				setup();
+				redraw(me);
+			}
+		});
+		t.start();
 		
+		// drawloop check if damage has been called. if so, redraws
+		m_drawTimer.scheduleAtFixedRate(new TimerTask(){
+			public void run() {
+				synchronized(m_screenDirtyLock)
+				{
+					if(m_screenDirty) redraw(me);
+					m_screenDirty = false;
+				}
+			}
+		
+		}, 0, g_drawIntervalMs);
+	}
+	
+	
+
+	/*
+	 * Initialize any graphical objects here.
+	 */
+	protected void setup()
+	{
+
 	}
 
 
-	
-	
 	// note that clipRect is a BoundaryRectangle, and is therefore the size of the area to be drawn
 	// it is NOT 1 pixel bigger (unlike Android's rectangles)
 	public void addClipRect(final BoundaryRectangle r) {
@@ -82,73 +129,66 @@ public class WindowGroup extends Activity implements Group {
 	}
 
 	BoundaryRectangle savedClipRect;
-    LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
+	LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
 
 
-   
+
 	public void redraw(final GraphicalObject child) {	
 		// if savedClipRect is not null, redraw the canvas with all my children
 		// else, print a message		
-	if (savedClipRect != null) {
+		if (savedClipRect != null) {
 
-	    for (ListIterator<GraphicalObject> iter = children.listIterator (); iter.hasNext (); ) {
-	    	GraphicalObject gobj = iter.next ();
-	    	BoundaryRectangle r = gobj.getBoundingBox ();
-	    	if (r.intersects (savedClipRect))
-	    		drawView.setGraphicalObject(child, savedClipRect);
-	    	}
-		drawView.redraw();
-	    savedClipRect = null;
+			for (ListIterator<GraphicalObject> iter = children.listIterator (); iter.hasNext (); ) {
+				GraphicalObject gobj = iter.next ();
+				BoundaryRectangle r = gobj.getBoundingBox ();
+				if (r.intersects (savedClipRect))
+					drawView.setGraphicalObject(child, savedClipRect);
+			}
+			drawView.redraw();
+			savedClipRect = null;
+		}
+		else println("no clip rectangle");
 	}
-	else println("no clip rectangle");
-    }
 
 
+	//
+	// Group interface
+	//
+	@Override
+	public void addChild (GraphicalObject child) {
+		child.setGroup (this);
+		children.add (child); 
+		damage (child.getBoundingBox ());
+	}
+	@Override
+	public void removeChild (GraphicalObject child) {
+		children.remove (child);
+		damage (child.getBoundingBox ());
+	}
+	@Override
+	public void bringChildToFront (GraphicalObject child) {
+		children.remove (child);
+		children.add (child);
+	}
+	@Override
+	public void resizeToChildren () {
+	}
 
-    //
-    // Group interface
-    //
+	@Override
+	public synchronized void damage (BoundaryRectangle rectangle) {
+		synchronized (m_screenDirtyLock) {
+			m_screenDirty = true;
+		}
+		addClipRect(rectangle);
+		
+	}
 
-
-	@Override
-   public void addChild (GraphicalObject child) {
-        child.setGroup (this);
-        children.add (child); 
-        damage (child.getBoundingBox ());
-    }
-	@Override
-    public void removeChild (GraphicalObject child) {
-        children.remove (child);
-        damage (child.getBoundingBox ());
-    }
-	@Override
-    public void bringChildToFront (GraphicalObject child) {
-        children.remove (child);
-        children.add (child);
-    }
-	@Override
-   public void resizeToChildren () {
-    }
-    
-	@Override
-    public synchronized void damage (BoundaryRectangle rectangle) {
-    	addClipRect(rectangle);
-    	
-    	// before we can redraw the drawview we need to make sure that the drawView actually knows
-    	// to draw this group
-    	drawView.setGraphicalObject(this, getBoundingBox());
-    	
-    	drawView.redraw();
-    }
-    
 	@Override
 	public void draw(final Canvas graphics, final Path clipRect) {
-		
-		
 		graphics.save();
 
 		graphics.clipPath(clipRect);
-		
+
 		// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
 		// what Brad expects here.
 		m_clipPath.reset();
@@ -160,51 +200,50 @@ public class WindowGroup extends Activity implements Group {
 			child.draw(graphics, m_clipPath);
 		}
 		graphics.restore();
-    }
-    
+	}
+
 	@Override
 	public BoundaryRectangle getBoundingBox() {
 		// return the bounding box of the whole canvas
 		return new BoundaryRectangle(0, 0, drawView.getWidth(), drawView.getHeight());
 	}
-    
-	@Override
-   public void moveTo (int x, int y) {
-    }
-    
-	@Override
-   public Group getGroup () {
-        return null;
-    }
-    
-	@Override
-   public void setGroup (Group group) {
-    }
-    
-	@Override
-   public List<GraphicalObject> getChildren () {
-        return children;
-    }
-    
-	@Override
-    public Point parentToChild (Point pt) {
-        return pt;
-    }
-    
-	@Override
-   public Point childToParent (Point pt) {
-        return pt;
-    }
 
 	@Override
-    public void resizeChild(GraphicalObject child) {
-    }
+	public void moveTo (int x, int y) {
+	}
+
+	@Override
+	public Group getGroup () {
+		return null;
+	}
+
+	@Override
+	public void setGroup (Group group) {
+	}
+
+	@Override
+	public List<GraphicalObject> getChildren () {
+		return children;
+	}
+
+	@Override
+	public Point parentToChild (Point pt) {
+		return pt;
+	}
+
+	@Override
+	public Point childToParent (Point pt) {
+		return pt;
+	}
+
+	@Override
+	public void resizeChild(GraphicalObject child) {
+	}
 
 
-    // 
-    // Message output
-    //
-
+	// 
+	// Message output
+	//
 	@Override
 	public boolean contains(final int x, final int y){
 		// check if x, y is within the canvas
@@ -249,41 +288,41 @@ public class WindowGroup extends Activity implements Group {
 
 	}
 
-    // 
-    // Sleeping
-    //
+	// 
+	// Sleeping
+	//
 
-    public void sleep (int msec) {
-        try {
-            Thread.sleep (msec);
-        } catch (InterruptedException e) {
-        }
-    }
+	public void sleep (int msec) {
+		try {
+			Thread.sleep (msec);
+		} catch (InterruptedException e) {
+		}
+	}
 
-    //
-    // Waiting for mouse clicks
-    //
+	//
+	// Waiting for mouse clicks
+	//
 
-    public void pause () {
-        println ("click to continue...");
-        synchronized (this) {
-            try {
-                wait ();
-            } catch (InterruptedException e) {
-            }
-        }
-    }
+	public void pause () {
+		println ("click to continue...");
+		synchronized (this) {
+			try {
+				wait ();
+			} catch (InterruptedException e) {
+			}
+		}
+	}
 
-    public void unpause () {
-        synchronized (this) {
-            notify ();
-        }
-    }
+	public void unpause () {
+		synchronized (this) {
+			notify ();
+		}
+	}
 
 
-    //
-    // Random selections
-    //
+	//
+	// Random selections
+	//
 
 	private static java.util.Random r = new java.util.Random();
 

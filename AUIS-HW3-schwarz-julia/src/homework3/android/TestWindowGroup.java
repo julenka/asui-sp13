@@ -8,31 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class TestWindowGroup extends WindowGroup {
-
-
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		
-		Thread t = new Thread(new Runnable() {
-			public void run() {
-				while(!drawView.getOnDrawFirstCalled()){
-					try {
-						Thread.sleep(200);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				test();
-			}
-		});
-		t.start();
-		
-	}
-	
-	private void test()
+	protected void setup()
 	{
 		addChild(new OutlineRect(10, 10, 50, 50, Color.BLACK, 1));
 		addChild(new OutlineRect(70, 10, 80, 50, Color.RED, 2));
@@ -58,6 +35,7 @@ public class TestWindowGroup extends WindowGroup {
 		addChild(new Text("gone", 140, 350, Typeface.create(Typeface.SERIF, Typeface.NORMAL), 24, Color.BLACK)); 				
 		addChild(new Line(10, 350, 250, 350, Color.BLACK, 1));
 
+		
 		println("hit back key to exit");
 	}
 

@@ -25,6 +25,8 @@ public class DrawView extends View {
     private Canvas backingCanvas = null; //all drawing done to this off-screen canvas/bitmap
     private Bitmap backingBitmap = null;
 
+
+    
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         if (backingBitmap != null) {
         	backingBitmap .recycle();
@@ -35,6 +37,7 @@ public class DrawView extends View {
         backingCanvas.drawColor(Color.WHITE); 
 		//Log.d("DV", "size changed to "+w+" "+h+" backingCanvas = "+backingCanvas);	
    }
+    
     public void destroy() {
         if (backingBitmap != null) {
         	backingBitmap.recycle();
