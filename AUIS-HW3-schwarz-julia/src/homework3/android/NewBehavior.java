@@ -39,7 +39,7 @@ public abstract class NewBehavior extends BehaviorBase {
 	@Override
 	protected void behaviorStarted(BehaviorEvent event) {
 		m_graphicalObject = make(event.getX(), event.getY(), event.getX(), event.getY());
-		
+		m_graphicalObject.setGroup(m_group);
 		if(m_onePoint)
 		{
 			stop(event);
@@ -67,8 +67,9 @@ public abstract class NewBehavior extends BehaviorBase {
 	@Override
 	protected void onCancelled(BehaviorEvent event) {
 		// TODO add interim feedback via selection handles
-		m_group.removeChild(m_graphicalObject);
 		Log.v(LOG_TAG, "cancelled");
+		m_group.removeChild(m_graphicalObject);
+		
 	}
 	
 	@Override

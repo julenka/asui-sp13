@@ -14,6 +14,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Path.Direction;
 import android.graphics.Point;
@@ -25,9 +27,6 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public abstract class WindowGroup extends Activity implements Group {
-
-	final int g_drawIntervalMs = 33;
-
 	public DrawView m_drawView;
 	public TextView m_debugTextView;	
 	private String debugString;
@@ -87,7 +86,7 @@ public abstract class WindowGroup extends Activity implements Group {
 				}
 				setup();
 				addClipRect(new BoundaryRectangle(0,0, m_drawView.getWidth(), m_drawView.getHeight()));
-				redraw(me);
+				redraw();
 			}
 		});
 		t.start();
@@ -114,21 +113,18 @@ public abstract class WindowGroup extends Activity implements Group {
 	LinkedList<GraphicalObject> m_children = new LinkedList<GraphicalObject> ();
 
 
-	public void redraw(final GraphicalObject child) {	
+	public void redraw() {	
 		// if savedClipRect is not null, redraw the canvas with all my children
 		// else, print a message
 		if (m_savedClipRect != null) {
-
-			for (ListIterator<GraphicalObject> iter = m_children.listIterator (); iter.hasNext (); ) {
-				GraphicalObject gobj = iter.next ();
-				BoundaryRectangle r = gobj.getBoundingBox ();
-				if (r.intersects (m_savedClipRect))
-					m_drawView.setGraphicalObject(child, m_savedClipRect);
-			}	
+			m_drawView.setGraphicalObject(this, m_savedClipRect);
 			m_drawView.redraw();
 			m_savedClipRect = null;
 		}
-		else println("no clip rectangle");
+		else{
+			Log.e(LOG_TAG, "no clip rectangle");
+			println("no clip rectangle");
+		}
 	}
 
 
@@ -145,10 +141,16 @@ public abstract class WindowGroup extends Activity implements Group {
 	}
 	@Override
 	public void removeChild (GraphicalObject child) {
-		Log.v(LOG_TAG, "removing child");
+		BoundaryRectangle b = child.getBoundingBox();
+		Log.v(LOG_TAG, String.format("removing child %d %d %d %d", 
+				b.x, 
+				b.y, 
+				b.width, 
+				b.height));
 		child.setGroup(null);
 		m_children.remove (child);	
-		damage (child.getBoundingBox());
+		
+		damage (getBoundingBox());
 	}
 	@Override
 	public void bringChildToFront (GraphicalObject child) {
@@ -171,7 +173,11 @@ public abstract class WindowGroup extends Activity implements Group {
 	public void draw(final Canvas graphics, final Path clipRect) {
 		// lock the dirty bit, make sure nobody damges the canvas while drawing
 		graphics.save();
-
+		Paint dbgP = new Paint();
+		dbgP.setStrokeWidth(10.0f);
+		dbgP.setStyle(Style.STROKE);
+		dbgP.setColor(Color.RED);
+		graphics.drawPath(clipRect, dbgP);
 		graphics.clipPath(clipRect);
 
 		// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
@@ -179,8 +185,9 @@ public abstract class WindowGroup extends Activity implements Group {
 		m_clipPath.reset();
 		m_clipPath.addRect(new RectF(0, 0, m_drawView.getWidth(), m_drawView.getHeight()), Direction.CCW);
 
-		// dangerous, watch for multithreading issues
-		// draw the rectangle to redraw
+		dbgP.setColor(Color.GREEN);
+		graphics.drawPath(m_clipPath, dbgP);
+		
 		for (GraphicalObject child : m_children) {
 			// draw to the clipshape of the child
 			child.draw(graphics, m_clipPath);

@@ -1,6 +1,7 @@
 package homework3.android;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 
 public class TestNewRectBehavior extends InteractiveWindowGroup {
 	@Override

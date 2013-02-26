@@ -151,10 +151,12 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	
 	private void onDispatchCompleted()
 	{
+		Log.v(LOG_TAG, "dispatch completed");
 		// check if we have damaged the screen
-		if(m_screenDirty)
+		if(m_savedClipRect != null && m_screenDirty)
 		{
-			redraw(this);
+			Log.v(LOG_TAG, "screen dirty, redrawing...");
+			redraw();
 		}
 	}
 	
