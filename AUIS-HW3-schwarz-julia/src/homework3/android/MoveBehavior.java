@@ -14,17 +14,17 @@ public class MoveBehavior extends BehaviorBase{
 	
 
 	public MoveBehavior() {
-		super(DEFAULT_START, DEFAULT_STOP, null);
+		super(DEFAULT_START, DEFAULT_STOP, DEFAULT_RUNNING, null);
 	}
 	
 	public MoveBehavior(Group tiedTo)
 	{
-		super(DEFAULT_START, DEFAULT_STOP, tiedTo);
+		super(DEFAULT_START, DEFAULT_STOP, DEFAULT_RUNNING, tiedTo);
 	}
 	
 	public MoveBehavior(BehaviorEvent start, BehaviorEvent stop, Group tiedTo)
 	{
-		super(start, stop, tiedTo);
+		super(start, stop, DEFAULT_RUNNING, tiedTo);
 	}
 
 	protected boolean startConditionSatisfied(BehaviorEvent event)

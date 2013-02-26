@@ -15,6 +15,10 @@ public interface Behavior {
      public BehaviorEvent getStopEvent ();
      public void setStopEvent (BehaviorEvent mask);
 
+     
+     public BehaviorEvent getRunningEvent();
+     public void setRunningEvent(BehaviorEvent mask);
+     
      // TODO: ask about cancel events
      public BehaviorEvent getCancelEvent ();
      public void setCancelEvent (BehaviorEvent mask);

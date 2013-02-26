@@ -13,68 +13,40 @@ public class NewLineBehavior extends NewBehavior {
 	 where it is.
 	 */
 
-	private Color m_color;
+	private int m_color;
 	private int m_lineThickness;
 
-	public NewLineBehavior(Color c, int t) {
-		super(false);
-		m_color = c;
-		m_lineThickness = t;
+	
+	public NewLineBehavior(int color, int lineThickness, Group g)
+	{
+		super(false, g);
+		m_color = color;
+		m_lineThickness = lineThickness;
+		m_group = g;
+	}
+	public NewLineBehavior(int c, int t) {
+		this(c,t,null);
 	}
 
 	@Override
 	public GraphicalObject make(int x1, int y1, int x2, int y2) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Line(x1, y1, x2, y2, m_color, m_lineThickness);
 	}
 
 	@Override
 	public void resize(GraphicalObject gobj, int x1, int y1, int x2, int y2) {
-		// TODO Auto-generated method stub
-
+		Line l = (Line) gobj;
+		l.setX2(x2);
+		l.setY2(y2);
 	}
 
-	@Override
-	protected void behaviorStarted(BehaviorEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected boolean startConditionSatisfied(BehaviorEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	protected void doRunningInside(BehaviorEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void doRunningOutside(BehaviorEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onStopped(BehaviorEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onCancelled(BehaviorEvent event) {
-		// TODO Auto-generated method stub
-
-	}
 	
-	public Color getColor() {
+	
+	public int getColor() {
 		return m_color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(int color) {
 		m_color = color;
 	}
 

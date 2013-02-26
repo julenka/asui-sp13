@@ -9,6 +9,7 @@ public abstract class BehaviorBase implements Behavior {
 	static final BehaviorEvent DEFAULT_STOP = new BehaviorEvent(BehaviorEvent.MOUSE_UP_ID, 0, BehaviorEvent.LEFT_MOUSE_KEY);
 	static final BehaviorEvent DEFAULT_START = new BehaviorEvent(BehaviorEvent.MOUSE_DOWN_ID, 0, BehaviorEvent.LEFT_MOUSE_KEY);
 	static final BehaviorEvent DEFAULT_CANCEL = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, 0, KeyEvent.KEYCODE_C);
+	static final BehaviorEvent DEFAULT_RUNNING = new BehaviorEvent(BehaviorEvent.MOUSE_MOVE_ID, 0, BehaviorEvent.LEFT_MOUSE_KEY);
 	
 	static final String LOG_TAG="Homework3.BehaviorBase";
 	
@@ -20,23 +21,25 @@ public abstract class BehaviorBase implements Behavior {
 	protected BehaviorEvent m_startEvent;
 	protected BehaviorEvent m_stopEvent;
 	protected BehaviorEvent m_cancelEvent;
+	protected BehaviorEvent m_runningEvent;
 	
 	public BehaviorBase() {
-		this(DEFAULT_START, DEFAULT_STOP, null);
+		this(DEFAULT_START, DEFAULT_STOP, DEFAULT_RUNNING, null);
 	}
 	
 	public BehaviorBase(Group tiedTo)
 	{
-		this(DEFAULT_START, DEFAULT_STOP, tiedTo);
+		this(DEFAULT_START, DEFAULT_STOP, DEFAULT_RUNNING, tiedTo);
 	}
 	
-	public BehaviorBase(BehaviorEvent start, BehaviorEvent stop, Group tiedTo)
+	public BehaviorBase(BehaviorEvent start, BehaviorEvent stop, BehaviorEvent running, Group tiedTo)
 	{
 		m_startEvent = start;
 		m_stopEvent = stop;
 		m_group = tiedTo;
 		m_state = IDLE;
 		m_cancelEvent = DEFAULT_CANCEL;
+		m_runningEvent = running;
 	}
 	
 	//
@@ -94,6 +97,14 @@ public abstract class BehaviorBase implements Behavior {
 	public void setStopEvent(BehaviorEvent mask) {
 		m_stopEvent = mask;
 	}
+	
+	public BehaviorEvent getRunningEvent(){
+		return m_runningEvent;
+	}
+	
+    public void setRunningEvent(BehaviorEvent mask){
+    	m_runningEvent = mask;
+    }
 
 	@Override
 	// start() is called when the start event occurs. It should do everything needed to start the Behavior and 

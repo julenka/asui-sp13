@@ -101,7 +101,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 				
 				if(behavior.getGroup() == null)
 				{
-					Log.w(LOG_TAG, "group for behavior is null!");
+					Log.e(LOG_TAG, "group for behavior is null!");
 					continue;
 				}
 				
@@ -134,7 +134,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 			{
 				m_currentBehavior.cancel(childSpace);
 			}
-			else
+			else if(bEvent.matches(m_currentBehavior.getRunningEvent()))
 			{
 				// give event to current active behavior
 				m_currentBehavior.running(childSpace);

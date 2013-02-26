@@ -50,6 +50,7 @@ public class Homework3AndroidActivity extends Activity {
         context = this;
         root = (LinearLayout) findViewById(R.id.root);
        
+        addTestButton(TestNewRectBehavior.class);
         addTestButton(TestInteractiveWindowGroup.class);
         addTestButton(TestWindowGroup.class);
        
