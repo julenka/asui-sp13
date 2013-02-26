@@ -14,7 +14,7 @@ import android.util.Log;
  * @author julenka
  *
  */
-public class GraphicalObjectBase implements GraphicalObject {
+public abstract class GraphicalObjectBase implements GraphicalObject {
 
 	// the parent group
 	protected Group m_group;
@@ -56,10 +56,7 @@ public class GraphicalObjectBase implements GraphicalObject {
 	/**
 	 * Implement code here to update the bounds of you m_boundaryRect 
 	 */
-	protected void updateBounds()
-	{
-		Log.v("GraphicalObjectBase", "Oops, you forgot to implement updateBounds() for class " + this.getClass());
-	}
+	protected abstract void updateBounds();
 	
 	protected void doResized()
 	{
@@ -78,11 +75,7 @@ public class GraphicalObjectBase implements GraphicalObject {
 	 * @param graphics
 	 * @param clipShape
 	 */
-	protected void doDraw(Canvas graphics, Path clipShape)
-	{
-		Log.v("GraphicalObject", "Oops, you forgot to implement doDraw for class " + this.getClass());
-		// override this
-	}
+	protected abstract void doDraw(Canvas graphics, Path clipShape);
 	
 	@Override
 	/**
