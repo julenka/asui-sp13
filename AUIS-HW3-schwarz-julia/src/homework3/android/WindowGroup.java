@@ -157,12 +157,12 @@ public abstract class WindowGroup extends Activity implements Group {
 	public void addChild (GraphicalObject child) {
 		child.setGroup (this);
 		children.add (child); 
-		damage (child.getBoundingBox ());
+		damage (getBoundingBox());
 	}
 	@Override
 	public void removeChild (GraphicalObject child) {
 		children.remove (child);
-		damage (child.getBoundingBox ());
+		damage (getBoundingBox());
 	}
 	@Override
 	public void bringChildToFront (GraphicalObject child) {
@@ -178,8 +178,6 @@ public abstract class WindowGroup extends Activity implements Group {
 		synchronized (m_screenDirtyLock) {
 			addClipRect(rectangle);
 			m_screenDirty = true;
-			Log.v(LOG_TAG, "screen dirty");
-			// redraw(this);
 		}
 		
 		
