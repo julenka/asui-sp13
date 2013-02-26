@@ -87,6 +87,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		// update modifier keys
 		updateModifier(event.getMetaState());
 		dispatchBehaviorEvent(bEvent);
+		onDispatchCompleted();
 		return true;
 	}
 	
@@ -148,6 +149,13 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		}
 	}
 	
+	private void onDispatchCompleted()
+	{
+		if(REDRAW_METHOD == RedrawMethod.AfterEventDispatch && m_savedClipRect != null)
+		{
+			redraw(this);
+		}
+	}
 	
 	int m_keyModifier = 0x0;
 	@Override
@@ -159,6 +167,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_UP_ID, m_keyModifier, keyCode);
 		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyUp " + event.getKeyCode());
+		onDispatchCompleted();
 		return false;
 	}
 	
@@ -171,6 +180,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_keyModifier, keyCode);
 		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyDown " + event.getKeyCode());
+		onDispatchCompleted();
 		return true;
 	}
 	

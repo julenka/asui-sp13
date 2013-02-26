@@ -29,9 +29,10 @@ public abstract class WindowGroup extends Activity implements Group {
 	enum RedrawMethod
 	{
 		RedrawOnDamage,
-		DrawLoop
+		DrawLoop,
+		AfterEventDispatch
 	}
-	private static final RedrawMethod REDRAW_METHOD = RedrawMethod.DrawLoop;
+	public static final RedrawMethod REDRAW_METHOD = RedrawMethod.AfterEventDispatch;
 	
 	final int g_drawIntervalMs = 33;
 	
