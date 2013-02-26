@@ -84,6 +84,8 @@ public class InteractiveWindowGroup extends WindowGroup {
 	{
 		//TODO: support multitouch
 		BehaviorEvent bEvent = motionToBehaviorEvent(event);
+		// update modifier keys
+		updateModifier(event.getMetaState());
 		dispatchBehaviorEvent(bEvent);
 		return true;
 	}
@@ -153,7 +155,7 @@ public class InteractiveWindowGroup extends WindowGroup {
 	{
 		super.onKeyUp(keyCode, event);
 		// update modifier keys
-		updateModifier(keyCode, false);
+		updateModifier(event.getMetaState());
 		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_UP_ID, m_keyModifier, keyCode);
 		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyUp " + event.getKeyCode());
@@ -165,41 +167,44 @@ public class InteractiveWindowGroup extends WindowGroup {
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		super.onKeyDown(keyCode, event);
-		updateModifier(keyCode, true);
+		updateModifier(event.getMetaState());
 		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_keyModifier, keyCode);
 		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyDown " + event.getKeyCode());
 		return true;
 	}
 	
-	private void updateModifier(int keyCode, boolean isDown)
+	// Updates modifier keys based on getMetaState() returned method
+	private void updateModifier(int metaState)
 	{
+		// TODO: actuall get modifiers to work
 		int toMask = 0;
-		if(keyCode == KeyEvent.KEYCODE_SHIFT_LEFT || keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
-			toMask = BehaviorEvent.SHIFT_MODIFIER;
-		} else if(keyCode == KeyEvent.KEYCODE_CTRL_LEFT || keyCode == KeyEvent.KEYCODE_CTRL_RIGHT)
-		{
-			toMask = BehaviorEvent.CONTROL_MODIFIER;
-		} else if(keyCode == KeyEvent.KEYCODE_ALT_LEFT || keyCode == KeyEvent.KEYCODE_ALT_RIGHT)
-		{
-			toMask = BehaviorEvent.ALT_MODIFIER;
-		} else if(keyCode == KeyEvent.KEYCODE_WINDOW)
-		{
-			toMask = BehaviorEvent.WINDOWS_KEY_MODIFIER;
-		} else if(keyCode == KeyEvent.KEYCODE_FUNCTION)
-		{
-			toMask = BehaviorEvent.FUNCTION_KEY_MODIFIER;
-		} 
-		// TODO: no command modifier
-		if(!isDown)
-		{
-			toMask = toMask ^ 0xffffff;
-			m_keyModifier = m_keyModifier & toMask;
-		} else
-		{
-			m_keyModifier = m_keyModifier | toMask;	
-		}
-		
+		m_keyModifier = metaState;
+//		if(keyCode == KeyEvent.KEYCODE_SHIFT_LEFT || keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
+//			toMask = BehaviorEvent.SHIFT_MODIFIER;
+//		} else if(keyCode == KeyEvent.KEYCODE_CTRL_LEFT || keyCode == KeyEvent.KEYCODE_CTRL_RIGHT)
+//		{
+//			toMask = BehaviorEvent.CONTROL_MODIFIER;
+//		} else if(keyCode == KeyEvent.KEYCODE_ALT_LEFT || keyCode == KeyEvent.KEYCODE_ALT_RIGHT)
+//		{
+//			toMask = BehaviorEvent.ALT_MODIFIER;
+//		} else if(keyCode == KeyEvent.KEYCODE_WINDOW)
+//		{
+//			toMask = BehaviorEvent.WINDOWS_KEY_MODIFIER;
+//		} else if(keyCode == KeyEvent.KEYCODE_FUNCTION)
+//		{
+//			toMask = BehaviorEvent.FUNCTION_KEY_MODIFIER;
+//		} 
+//		// TODO: no command modifier
+//		if(!isDown)
+//		{
+//			toMask = toMask ^ 0xffffff;
+//			m_keyModifier = m_keyModifier & toMask;
+//		} else
+//		{
+//			m_keyModifier = m_keyModifier | toMask;	
+//		}
+		Log.v(LOG_TAG, String.format("new key modifier: %#8x", m_keyModifier) );
 	}
 	
 
