@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 
-public class InteractiveWindowGroup extends WindowGroup {
+public abstract class InteractiveWindowGroup extends WindowGroup {
 	static final String LOG_TAG = "Homework3";
 
 	List<Behavior> m_behaviors = new ArrayList<Behavior>();

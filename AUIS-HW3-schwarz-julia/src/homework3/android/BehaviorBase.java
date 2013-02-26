@@ -1,5 +1,6 @@
 package homework3.android;
 
+import android.graphics.Point;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -14,6 +15,7 @@ public abstract class BehaviorBase implements Behavior {
 	
 	protected Group m_group;
 	protected int m_state;
+	protected Point m_touchStartPoint = new Point();
 	
 	protected BehaviorEvent m_startEvent;
 	protected BehaviorEvent m_stopEvent;
@@ -104,6 +106,8 @@ public abstract class BehaviorBase implements Behavior {
 		if(!startConditionSatisfied(event)) return;
 		
 		m_state = RUNNING_INSIDE;
+		m_touchStartPoint.x = event.getX();
+		m_touchStartPoint.y = event.getY();
 		
 		behaviorStarted(event);
 		Log.v(LOG_TAG, "started ");

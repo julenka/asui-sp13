@@ -10,7 +10,6 @@ public class MoveBehavior extends BehaviorBase{
 		
 	private GraphicalObject m_childToMove;
 	
-	private Point m_touchStartPoint = new Point();
 	private Point m_childStartLocation = new Point();
 	
 
@@ -47,8 +46,7 @@ public class MoveBehavior extends BehaviorBase{
 				m_childToMove = child;
 			}
 		}
-		m_touchStartPoint.x = event.getX();
-		m_touchStartPoint.y = event.getY();
+		
 		m_childStartLocation.x = m_childToMove.getBoundingBox().x;
 		m_childStartLocation.y = m_childToMove.getBoundingBox().y;
 	}

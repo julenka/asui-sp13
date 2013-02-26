@@ -24,14 +24,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class WindowGroup extends Activity implements Group {
+public abstract class WindowGroup extends Activity implements Group {
 	final int g_drawIntervalMs = 33;
 	
 	public DrawView drawView;
 	public TextView debugTextView;	
 	private String debugString;
 	private static final boolean useConsole = false; // false -> use a TextView at the bottom of the window
-	private static final String LOG_TAG = "WindowGroup";
+	private static final String LOG_TAG = "Homework3.WindowGroup";
 
 	private Path m_clipPath = new Path();
 	
@@ -88,11 +88,13 @@ public class WindowGroup extends Activity implements Group {
 					}
 				}
 				setup();
+				addClipRect(new BoundaryRectangle(0,0, drawView.getWidth(), drawView.getHeight()));
 				redraw(me);
 			}
 		});
 		t.start();
 		
+		// TODO fix this since brad doesn't like calls to redraw in damage
 		// drawloop check if damage has been called. if so, redraws
 		m_drawTimer.scheduleAtFixedRate(new TimerTask(){
 			public void run() {
@@ -111,21 +113,18 @@ public class WindowGroup extends Activity implements Group {
 	/*
 	 * Initialize any graphical objects here.
 	 */
-	protected void setup()
-	{
-
-	}
+	protected abstract void setup();
 
 
 	// note that clipRect is a BoundaryRectangle, and is therefore the size of the area to be drawn
 	// it is NOT 1 pixel bigger (unlike Android's rectangles)
 	public void addClipRect(final BoundaryRectangle r) {
-		if (savedClipRect != null)
-			savedClipRect.add(r);
-		else if (r==null)
-			savedClipRect = null;
-		else
-			savedClipRect = new BoundaryRectangle(r);
+			if (savedClipRect != null)
+				savedClipRect.add(r);
+			else if (r==null)
+				savedClipRect = null;
+			else
+				savedClipRect = new BoundaryRectangle(r);	
 	}
 
 	BoundaryRectangle savedClipRect;
@@ -135,7 +134,7 @@ public class WindowGroup extends Activity implements Group {
 
 	public void redraw(final GraphicalObject child) {	
 		// if savedClipRect is not null, redraw the canvas with all my children
-		// else, print a message		
+		// else, print a message
 		if (savedClipRect != null) {
 
 			for (ListIterator<GraphicalObject> iter = children.listIterator (); iter.hasNext (); ) {
@@ -177,9 +176,12 @@ public class WindowGroup extends Activity implements Group {
 	@Override
 	public synchronized void damage (BoundaryRectangle rectangle) {
 		synchronized (m_screenDirtyLock) {
+			addClipRect(rectangle);
 			m_screenDirty = true;
+			Log.v(LOG_TAG, "screen dirty");
+			// redraw(this);
 		}
-		addClipRect(rectangle);
+		
 		
 	}
 

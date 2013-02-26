@@ -1,6 +1,10 @@
 package homework3.android;
 
+import android.util.Log;
+
 public abstract class NewBehavior extends BehaviorBase {
+	static final String LOG_TAG = "Homework3.NewBehavior";
+	
 	/*
 	 When a NewBehavior starts, it should call its own make() method to create 
 	 a new instance of a graphical object. The NewBehavior should add the object 
@@ -14,6 +18,7 @@ public abstract class NewBehavior extends BehaviorBase {
 	// TODO: figure out how to create an abstract constructor
 
 	protected boolean m_onePoint;
+	protected GraphicalObject m_graphicalObject;
 	
 	/**
 	 * If the onePoint parameter to the constructor is true, then the new Behavior needs 
@@ -22,9 +27,54 @@ public abstract class NewBehavior extends BehaviorBase {
 	 * @param onePoint
 	 */
 	public NewBehavior (boolean onePoint){
+		this(onePoint, null);
+	}
+	
+	public NewBehavior (boolean onePoint, Group g)
+	{
+		super(g);
 		m_onePoint = onePoint;
 	}
 	
+	@Override
+	protected void behaviorStarted(BehaviorEvent event) {
+		m_graphicalObject = make(event.getX(), event.getY(), event.getX(), event.getY());
+		
+		if(m_onePoint)
+		{
+			stop(event);
+		} 	
+		m_group.addChild(m_graphicalObject);
+		Log.v(LOG_TAG, "behavior started");
+	}
+	
+	@Override
+	protected boolean startConditionSatisfied(BehaviorEvent event) {
+		return true;
+	}
+	
+	@Override
+	protected void doRunningInside(BehaviorEvent event) {
+		resize(m_graphicalObject, m_touchStartPoint.x, m_touchStartPoint.y, event.getX(), event.getY());
+	}
+	
+	@Override
+	protected void doRunningOutside(BehaviorEvent event) {
+		// do nothing
+		Log.v(LOG_TAG, "running outside");
+	}
+	
+	@Override
+	protected void onCancelled(BehaviorEvent event) {
+		// TODO add interim feedback via selection handles
+		m_group.removeChild(m_graphicalObject);
+		Log.v(LOG_TAG, "cancelled");
+	}
+	
+	@Override
+	protected void onStopped(BehaviorEvent event) {
+		// TODO  get rid eof interim feedback and add the real item.
+	}
 	
     
 	/**
