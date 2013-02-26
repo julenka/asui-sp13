@@ -27,8 +27,8 @@ import android.widget.TextView;
 public abstract class WindowGroup extends Activity implements Group {
 	final int g_drawIntervalMs = 33;
 	
-	public DrawView drawView;
-	public TextView debugTextView;	
+	public DrawView m_drawView;
+	public TextView m_debugTextView;	
 	private String debugString;
 	private static final boolean useConsole = false; // false -> use a TextView at the bottom of the window
 	private static final String LOG_TAG = "Homework3.WindowGroup";
@@ -50,13 +50,13 @@ public abstract class WindowGroup extends Activity implements Group {
 		// title is set in AndroidManifest.xml
 		// canvas is setup in onDraw in DrawView
 
-		debugTextView = (TextView) findViewById(R.id.debugText);	
-		debugTextView.setTextColor(Color.WHITE);
-		debugTextView.setTextSize(16);		
+		m_debugTextView = (TextView) findViewById(R.id.debugText);	
+		m_debugTextView.setTextColor(Color.WHITE);
+		m_debugTextView.setTextSize(16);		
 
 		// if useConsole is true, print of log message in LogCat 
 		if(useConsole){
-			debugTextView.setText("Messages printed in LogCat");					
+			m_debugTextView.setText("Messages printed in LogCat");					
 		}
 		// else, initialize debugString, which is the output string for the debug text area
 		else{					
@@ -65,8 +65,8 @@ public abstract class WindowGroup extends Activity implements Group {
 
 		println("Starting WindowGroup");
 
-		drawView = (DrawView) findViewById(R.id.drawView);		
-		drawView.setOnClickListener(new OnClickListener(){
+		m_drawView = (DrawView) findViewById(R.id.drawView);		
+		m_drawView.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(final View v){
 				unpause();
@@ -79,7 +79,7 @@ public abstract class WindowGroup extends Activity implements Group {
 		final GraphicalObject me = this;
 		Thread t = new Thread(new Runnable() {
 			public void run() {
-				while(!drawView.getOnDrawFirstCalled()){
+				while(!m_drawView.getOnDrawFirstCalled()){
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
@@ -88,7 +88,7 @@ public abstract class WindowGroup extends Activity implements Group {
 					}
 				}
 				setup();
-				addClipRect(new BoundaryRectangle(0,0, drawView.getWidth(), drawView.getHeight()));
+				addClipRect(new BoundaryRectangle(0,0, m_drawView.getWidth(), m_drawView.getHeight()));
 				redraw(me);
 			}
 		});
@@ -141,9 +141,9 @@ public abstract class WindowGroup extends Activity implements Group {
 				GraphicalObject gobj = iter.next ();
 				BoundaryRectangle r = gobj.getBoundingBox ();
 				if (r.intersects (savedClipRect))
-					drawView.setGraphicalObject(child, savedClipRect);
+					m_drawView.setGraphicalObject(child, savedClipRect);
 			}
-			drawView.redraw();
+			m_drawView.redraw();
 			savedClipRect = null;
 		}
 		else println("no clip rectangle");
@@ -194,7 +194,7 @@ public abstract class WindowGroup extends Activity implements Group {
 		// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
 		// what Brad expects here.
 		m_clipPath.reset();
-		m_clipPath.addRect(new RectF(0, 0, drawView.getWidth(), drawView.getHeight()), Direction.CCW);
+		m_clipPath.addRect(new RectF(0, 0, m_drawView.getWidth(), m_drawView.getHeight()), Direction.CCW);
 
 		// draw the rectangle to redraw
 		for (GraphicalObject child : children) {
@@ -207,7 +207,7 @@ public abstract class WindowGroup extends Activity implements Group {
 	@Override
 	public BoundaryRectangle getBoundingBox() {
 		// return the bounding box of the whole canvas
-		return new BoundaryRectangle(0, 0, drawView.getWidth(), drawView.getHeight());
+		return new BoundaryRectangle(0, 0, m_drawView.getWidth(), m_drawView.getHeight());
 	}
 
 	@Override
@@ -249,7 +249,7 @@ public abstract class WindowGroup extends Activity implements Group {
 	@Override
 	public boolean contains(final int x, final int y){
 		// check if x, y is within the canvas
-		if(x>=0 && x <= drawView.getWidth() && y >= 0 && y <= drawView.getHeight()){
+		if(x>=0 && x <= m_drawView.getWidth() && y >= 0 && y <= m_drawView.getHeight()){
 			return true;
 		}
 		else{
@@ -266,7 +266,7 @@ public abstract class WindowGroup extends Activity implements Group {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					debugTextView.setText(debugString);				
+					m_debugTextView.setText(debugString);				
 				}
 			});								
 		}
@@ -283,7 +283,7 @@ public abstract class WindowGroup extends Activity implements Group {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					debugTextView.setText(debugString);				
+					m_debugTextView.setText(debugString);				
 				}
 			});		
 		}

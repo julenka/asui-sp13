@@ -23,7 +23,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		drawView.setOnTouchListener(new OnTouchListener()
+		m_drawView.setOnTouchListener(new OnTouchListener()
 		{
 			public boolean onTouch(View v, MotionEvent event) 
 			{
