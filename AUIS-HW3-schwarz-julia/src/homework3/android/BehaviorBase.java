@@ -3,7 +3,7 @@ package homework3.android;
 import android.util.Log;
 import android.view.KeyEvent;
 
-public class BehaviorBase implements Behavior {
+public abstract class BehaviorBase implements Behavior {
 
 	static final BehaviorEvent DEFAULT_STOP = new BehaviorEvent(BehaviorEvent.MOUSE_UP_ID, 0, BehaviorEvent.LEFT_MOUSE_KEY);
 	static final BehaviorEvent DEFAULT_START = new BehaviorEvent(BehaviorEvent.MOUSE_DOWN_ID, 0, BehaviorEvent.LEFT_MOUSE_KEY);
@@ -36,6 +36,26 @@ public class BehaviorBase implements Behavior {
 		m_state = IDLE;
 		m_cancelEvent = DEFAULT_CANCEL;
 	}
+	
+	//
+	// Abstract methods
+	//
+	
+	protected abstract void behaviorStarted(BehaviorEvent event);
+	
+	protected abstract boolean startConditionSatisfied(BehaviorEvent event);
+	
+	protected abstract void doRunningInside(BehaviorEvent event);
+	
+	protected abstract void doRunningOutside(BehaviorEvent event);
+	
+	protected abstract void onStopped(BehaviorEvent event);
+	
+	protected abstract void onCancelled(BehaviorEvent event);
+	
+	//
+	// Base class methods
+	//
 
 	@Override
 	public Group getGroup() {
@@ -89,16 +109,7 @@ public class BehaviorBase implements Behavior {
 		Log.v(LOG_TAG, "started ");
 	}
 	
-	protected void behaviorStarted(BehaviorEvent event)
-	{
-		Log.e(LOG_TAG, "Oops, you forgot to implement behaviorStarted!");
-	}
 	
-	protected boolean startConditionSatisfied(BehaviorEvent event)
-	{
-		Log.e(LOG_TAG, "Oops, you forgot to implement startConditionSatisfied!");
-		return false;
-	}
 
 	
 	private boolean isInside(BehaviorEvent event)
@@ -107,17 +118,7 @@ public class BehaviorBase implements Behavior {
 				&& event.getY() < m_group.getBoundingBox().getHeight();
 	}
 	
-	// for the base class
-	// override this
-	protected void doRunningInside(BehaviorEvent event)
-	{
-		Log.e(LOG_TAG, "Oops, you forgot to implement doRunningInside");
-	}
-	
-	protected void doRunningOutside(BehaviorEvent event)
-	{
-		Log.e(LOG_TAG, "Oops, you forgot to implement doRunningOutside");
-	}
+
 	
 	@Override
 	//running() is called whenever the mouse moves while the Behavior is running. 
@@ -146,11 +147,6 @@ public class BehaviorBase implements Behavior {
 		onStopped(event);
 	}
 	
-	protected void onStopped(BehaviorEvent event)
-	{
-		Log.e(LOG_TAG, "Oops, you forgot to implement onStopped");
-	}
-	
 
 	@Override
 	// cancel() is called when the cancel event occurs (usually ESC, but you can make it settable). 
@@ -161,11 +157,6 @@ public class BehaviorBase implements Behavior {
 		m_state = IDLE;
 		onCancelled(event);
 
-	}
-
-	protected void onCancelled(BehaviorEvent event)
-	{
-		Log.e(LOG_TAG, "Oops, you forgot to implement onCancelled");
 	}
 	
 	public BehaviorEvent getCancelEvent() {
