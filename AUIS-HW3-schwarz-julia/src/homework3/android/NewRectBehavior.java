@@ -1,10 +1,17 @@
 package homework3.android;
 
+import android.graphics.Color;
+
 public class NewRectBehavior extends NewBehavior {
 
-	public NewRectBehavior(boolean onePoint) {
-		super(onePoint);
-		// TODO Auto-generated constructor stub
+	private Color m_color;
+	private int m_lineThickness;
+	
+	public NewRectBehavior(Color color, int lineThickness)
+	{
+		super(false);
+		m_color = color;
+		m_lineThickness = lineThickness;
 	}
 
 	@Override
@@ -53,6 +60,22 @@ public class NewRectBehavior extends NewBehavior {
 	protected void onCancelled(BehaviorEvent event) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public Color getColor() {
+		return m_color;
+	}
+
+	public void setColor(Color color) {
+		m_color = color;
+	}
+
+	public int getLineThickness() {
+		return m_lineThickness;
+	}
+
+	public void setLineThickness(int lineThickness) {
+		m_lineThickness = lineThickness;
 	}
 
 }

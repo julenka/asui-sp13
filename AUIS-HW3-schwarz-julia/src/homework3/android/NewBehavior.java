@@ -13,13 +13,19 @@ public abstract class NewBehavior extends BehaviorBase {
 	// TODO: can we declare abstract methods in a non-abstract class?
 	// TODO: figure out how to create an abstract constructor
 
+	protected boolean m_onePoint;
+	
 	/**
 	 * If the onePoint parameter to the constructor is true, then the new Behavior needs 
 	 * only one point to create the object. It calls make(x, y, x, y) to create the object, 
 	 * then stops immediately after starting, never calling resize(). This is useful for fixed size objects, like icons.
 	 * @param onePoint
 	 */
-	public NewBehavior (boolean onePoint){}
+	public NewBehavior (boolean onePoint){
+		m_onePoint = onePoint;
+	}
+	
+	
     
 	/**
      * make() creates a graphical object from point (x1, y1) to point (x2, y2). 
@@ -44,4 +50,5 @@ public abstract class NewBehavior extends BehaviorBase {
      * @param y2
      */
     public abstract void resize (GraphicalObject gobj, int x1, int y1, int x2, int y2);
+    
 }
