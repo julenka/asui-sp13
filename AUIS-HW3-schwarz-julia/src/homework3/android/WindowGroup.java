@@ -25,17 +25,9 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public abstract class WindowGroup extends Activity implements Group {
-	
-	enum RedrawMethod
-	{
-		RedrawOnDamage,
-		DrawLoop,
-		AfterEventDispatch
-	}
-	public static final RedrawMethod REDRAW_METHOD = RedrawMethod.AfterEventDispatch;
-	
+
 	final int g_drawIntervalMs = 33;
-	
+
 	public DrawView m_drawView;
 	public TextView m_debugTextView;	
 	private String debugString;
@@ -43,11 +35,8 @@ public abstract class WindowGroup extends Activity implements Group {
 	private static final String LOG_TAG = "Homework3.WindowGroup";
 
 	private Path m_clipPath = new Path();
-	
-	private Timer m_drawTimer = new Timer();
-	
-	private Object m_screenDirtyLock = new Object();
-	private boolean m_screenDirty = false;
+
+	protected boolean m_screenDirty = false;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -102,24 +91,8 @@ public abstract class WindowGroup extends Activity implements Group {
 			}
 		});
 		t.start();
-		
-		// drawloop check if damage has been called. if so, redraws
-		if(REDRAW_METHOD == RedrawMethod.DrawLoop)
-		{
-			m_drawTimer.scheduleAtFixedRate(new TimerTask(){
-				public void run() {
-					synchronized(m_screenDirtyLock)
-					{
-						if(m_screenDirty) redraw(me);
-						m_screenDirty = false;
-					}
-				}
-			
-			}, 0, g_drawIntervalMs);	
-		}
-		
 	}
-	
+
 	/*
 	 * Initialize any graphical objects here.
 	 */
@@ -129,67 +102,58 @@ public abstract class WindowGroup extends Activity implements Group {
 	// note that clipRect is a BoundaryRectangle, and is therefore the size of the area to be drawn
 	// it is NOT 1 pixel bigger (unlike Android's rectangles)
 	public void addClipRect(final BoundaryRectangle r) {
-			if (m_savedClipRect != null)
-				m_savedClipRect.add(r);
-			else if (r==null)
-				m_savedClipRect = null;
-			else
-				m_savedClipRect = new BoundaryRectangle(r);	
+		if (m_savedClipRect != null)
+			m_savedClipRect.add(r);
+		else if (r==null)
+			m_savedClipRect = null;
+		else
+			m_savedClipRect = new BoundaryRectangle(r);	
 	}
 
 	BoundaryRectangle m_savedClipRect;
 	LinkedList<GraphicalObject> m_children = new LinkedList<GraphicalObject> ();
-	private Object m_childrenLock = new Object();
-	
-	
+
+
 	public void redraw(final GraphicalObject child) {	
 		// if savedClipRect is not null, redraw the canvas with all my children
 		// else, print a message
 		if (m_savedClipRect != null) {
 
-			synchronized (m_childrenLock) {
-				for (ListIterator<GraphicalObject> iter = m_children.listIterator (); iter.hasNext (); ) {
-					GraphicalObject gobj = iter.next ();
-					BoundaryRectangle r = gobj.getBoundingBox ();
-					if (r.intersects (m_savedClipRect))
-						m_drawView.setGraphicalObject(child, m_savedClipRect);
-				}	
-			}
-			
+			for (ListIterator<GraphicalObject> iter = m_children.listIterator (); iter.hasNext (); ) {
+				GraphicalObject gobj = iter.next ();
+				BoundaryRectangle r = gobj.getBoundingBox ();
+				if (r.intersects (m_savedClipRect))
+					m_drawView.setGraphicalObject(child, m_savedClipRect);
+			}	
 			m_drawView.redraw();
 			m_savedClipRect = null;
 		}
 		else println("no clip rectangle");
 	}
 
-	
-	
+
+
 
 	//
 	// Group interface
 	//
 	@Override
 	public void addChild (GraphicalObject child) {
-		synchronized (m_childrenLock) {
-			child.setGroup (this);
-			m_children.add (child);	
-		}
-		damage (getBoundingBox());
+		child.setGroup (this);
+		m_children.add (child);	
+		damage (child.getBoundingBox());
 	}
 	@Override
 	public void removeChild (GraphicalObject child) {
-		synchronized (m_childrenLock) {
-			child.setGroup(null);
-			m_children.remove (child);	
-		}
-		damage (getBoundingBox());
+		Log.v(LOG_TAG, "removing child");
+		child.setGroup(null);
+		m_children.remove (child);	
+		damage (child.getBoundingBox());
 	}
 	@Override
 	public void bringChildToFront (GraphicalObject child) {
-		synchronized (m_childrenLock) {
-			m_children.remove (child);
-			m_children.add (child);
-		}
+		m_children.remove (child);
+		m_children.add (child);
 	}
 	@Override
 	public void resizeToChildren () {
@@ -197,16 +161,9 @@ public abstract class WindowGroup extends Activity implements Group {
 
 	@Override
 	public synchronized void damage (BoundaryRectangle rectangle) {
-		synchronized (m_screenDirtyLock) {
-			addClipRect(rectangle);
-			m_screenDirty = true;
-			if(REDRAW_METHOD == RedrawMethod.RedrawOnDamage)
-			{
-				redraw(this);	
-			}
-			
-		}
-		
+		Log.v(LOG_TAG, "damaged");
+		addClipRect(rectangle);
+		m_screenDirty = true;
 		
 	}
 
@@ -215,25 +172,21 @@ public abstract class WindowGroup extends Activity implements Group {
 		// lock the dirty bit, make sure nobody damges the canvas while drawing
 		graphics.save();
 
-		synchronized (m_screenDirtyLock) {
-			graphics.clipPath(clipRect);
+		graphics.clipPath(clipRect);
 
-			// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
-			// what Brad expects here.
-			m_clipPath.reset();
-			m_clipPath.addRect(new RectF(0, 0, m_drawView.getWidth(), m_drawView.getHeight()), Direction.CCW);
+		// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
+		// what Brad expects here.
+		m_clipPath.reset();
+		m_clipPath.addRect(new RectF(0, 0, m_drawView.getWidth(), m_drawView.getHeight()), Direction.CCW);
 
-			// dangerous, watch for multithreading issues
-			synchronized(m_childrenLock){
-				// draw the rectangle to redraw
-				for (GraphicalObject child : m_children) {
-					// draw to the clipshape of the child
-					child.draw(graphics, m_clipPath);
-				}	
-			}
-			
-		}
+		// dangerous, watch for multithreading issues
+		// draw the rectangle to redraw
+		for (GraphicalObject child : m_children) {
+			// draw to the clipshape of the child
+			child.draw(graphics, m_clipPath);
+		}	
 		graphics.restore();
+		m_screenDirty = false;
 	}
 
 	@Override

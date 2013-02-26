@@ -151,7 +151,8 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	
 	private void onDispatchCompleted()
 	{
-		if(REDRAW_METHOD == RedrawMethod.AfterEventDispatch && m_savedClipRect != null)
+		// check if we have damaged the screen
+		if(m_screenDirty)
 		{
 			redraw(this);
 		}
@@ -214,7 +215,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 //		{
 //			m_keyModifier = m_keyModifier | toMask;	
 //		}
-		Log.v(LOG_TAG, String.format("new key modifier: %#8x", m_keyModifier) );
+//		Log.v(LOG_TAG, String.format("new key modifier: %#8x", m_keyModifier) );
 	}
 	
 
