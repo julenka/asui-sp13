@@ -27,15 +27,18 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public abstract class WindowGroup extends Activity implements Group {
-	public DrawView m_drawView;
-	public TextView m_debugTextView;	
+	public DrawView drawView;
+	public TextView debugTextView;	
 	private String debugString;
 	private static final boolean useConsole = false; // false -> use a TextView at the bottom of the window
 	private static final String LOG_TAG = "Homework3.WindowGroup";
 
-	private Path m_clipPath = new Path();
+	private Path clipPath = new Path();
 
-	protected boolean m_screenDirty = false;
+	protected boolean screenDirty = false;
+
+	BoundaryRectangle savedClipRect;
+	LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -47,13 +50,13 @@ public abstract class WindowGroup extends Activity implements Group {
 		// title is set in AndroidManifest.xml
 		// canvas is setup in onDraw in DrawView
 
-		m_debugTextView = (TextView) findViewById(R.id.debugText);	
-		m_debugTextView.setTextColor(Color.WHITE);
-		m_debugTextView.setTextSize(16);		
+		debugTextView = (TextView) findViewById(R.id.debugText);	
+		debugTextView.setTextColor(Color.WHITE);
+		debugTextView.setTextSize(16);		
 
 		// if useConsole is true, print of log message in LogCat 
 		if(useConsole){
-			m_debugTextView.setText("Messages printed in LogCat");					
+			debugTextView.setText("Messages printed in LogCat");					
 		}
 		// else, initialize debugString, which is the output string for the debug text area
 		else{					
@@ -62,21 +65,13 @@ public abstract class WindowGroup extends Activity implements Group {
 
 		println("Starting WindowGroup");
 
-		m_drawView = (DrawView) findViewById(R.id.drawView);		
-		m_drawView.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(final View v){
-				unpause();
-			}
-		});
+		drawView = (DrawView) findViewById(R.id.drawView);		
 
 		// draw the window once the drawView has been set up.
-		// this feels very inelegant and I think there's a better way to do this. I feel like the drawView should actually
-		// be handling the drawing, not the activity
 		final GraphicalObject me = this;
 		Thread t = new Thread(new Runnable() {
 			public void run() {
-				while(!m_drawView.getOnDrawFirstCalled()){
+				while(!drawView.getOnDrawFirstCalled()){
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
@@ -85,7 +80,7 @@ public abstract class WindowGroup extends Activity implements Group {
 					}
 				}
 				setup();
-				addClipRect(new BoundaryRectangle(0,0, m_drawView.getWidth(), m_drawView.getHeight()));
+				addClipRect(new BoundaryRectangle(0,0, drawView.getWidth(), drawView.getHeight()));
 				redraw();
 			}
 		});
@@ -101,25 +96,21 @@ public abstract class WindowGroup extends Activity implements Group {
 	// note that clipRect is a BoundaryRectangle, and is therefore the size of the area to be drawn
 	// it is NOT 1 pixel bigger (unlike Android's rectangles)
 	public void addClipRect(final BoundaryRectangle r) {
-		if (m_savedClipRect != null)
-			m_savedClipRect.add(r);
+		if (savedClipRect != null)
+			savedClipRect.add(r);
 		else if (r==null)
-			m_savedClipRect = null;
+			savedClipRect = null;
 		else
-			m_savedClipRect = new BoundaryRectangle(r);	
+			savedClipRect = new BoundaryRectangle(r);	
 	}
-
-	BoundaryRectangle m_savedClipRect;
-	LinkedList<GraphicalObject> m_children = new LinkedList<GraphicalObject> ();
-
 
 	public void redraw() {	
 		// if savedClipRect is not null, redraw the canvas with all my children
 		// else, print a message
-		if (m_savedClipRect != null) {
-			m_drawView.setGraphicalObject(this, m_savedClipRect);
-			m_drawView.redraw();
-			m_savedClipRect = null;
+		if (savedClipRect != null) {
+			drawView.setGraphicalObject(this, savedClipRect);
+			drawView.redraw();
+			savedClipRect = null;
 		}
 		else{
 			Log.e(LOG_TAG, "no clip rectangle");
@@ -127,79 +118,61 @@ public abstract class WindowGroup extends Activity implements Group {
 		}
 	}
 
-
-
-
 	//
 	// Group interface
 	//
 	@Override
 	public void addChild (GraphicalObject child) {
 		child.setGroup (this);
-		m_children.add (child);	
+		children.add (child);	
 		damage (child.getBoundingBox());
 	}
 	@Override
 	public void removeChild (GraphicalObject child) {
 		BoundaryRectangle b = child.getBoundingBox();
-//		Log.v(LOG_TAG, String.format("removing child %d %d %d %d", 
-//				b.x, 
-//				b.y, 
-//				b.width, 
-//				b.height));
 		child.setGroup(null);
-		m_children.remove (child);	
-		
-		damage (getBoundingBox());
+		children.remove (child);	
+		damage (child.getBoundingBox());
 	}
 	@Override
 	public void bringChildToFront (GraphicalObject child) {
-		m_children.remove (child);
-		m_children.add (child);
+		children.remove (child);
+		children.add (child);
+		damage(getBoundingBox());
 	}
 	@Override
 	public void resizeToChildren () {
+		// not supported for now
 	}
 
 	@Override
 	public synchronized void damage (BoundaryRectangle rectangle) {
-//		Log.v(LOG_TAG, "damaged");
 		addClipRect(rectangle);
-		m_screenDirty = true;
+		screenDirty = true;
 		
 	}
 
 	@Override
 	public void draw(final Canvas graphics, final Path clipRect) {
-		// lock the dirty bit, make sure nobody damges the canvas while drawing
 		graphics.save();
-//		Paint dbgP = new Paint();
-//		dbgP.setStrokeWidth(10.0f);
-//		dbgP.setStyle(Style.STROKE);
-//		dbgP.setColor(Color.RED);
-//		graphics.drawPath(clipRect, dbgP);
 		graphics.clipPath(clipRect);
 
-		// set clip path of this group, which is the same dimensions as the drawView...a bit of a hack...not sure
-		// what Brad expects here.
-		m_clipPath.reset();
-		m_clipPath.addRect(new RectF(0, 0, m_drawView.getWidth(), m_drawView.getHeight()), Direction.CCW);
-
-//		dbgP.setColor(Color.GREEN);
-//		graphics.drawPath(m_clipPath, dbgP);
+		// set clip path of this group, which is the same dimensions as the drawView
+		clipPath.reset();
+		clipPath.addRect(new RectF(0, 0, drawView.getWidth(), drawView.getHeight()), Direction.CCW);
 		
-		for (GraphicalObject child : m_children) {
+		for (GraphicalObject child : children) {
 			// draw to the clipshape of the child
-			child.draw(graphics, m_clipPath);
+			child.draw(graphics, clipPath);
 		}	
 		graphics.restore();
-		m_screenDirty = false;
+		screenDirty = false;
 	}
 
 	@Override
 	public BoundaryRectangle getBoundingBox() {
 		// return the bounding box of the whole canvas
-		return new BoundaryRectangle(0, 0, m_drawView.getWidth(), m_drawView.getHeight());
+		return new BoundaryRectangle(0, 0, drawView.getWidth(), drawView.getHeight());
 	}
 
 	@Override
@@ -217,7 +190,7 @@ public abstract class WindowGroup extends Activity implements Group {
 
 	@Override
 	public List<GraphicalObject> getChildren () {
-		return m_children;
+		return children;
 	}
 
 	@Override
@@ -241,7 +214,7 @@ public abstract class WindowGroup extends Activity implements Group {
 	@Override
 	public boolean contains(final int x, final int y){
 		// check if x, y is within the canvas
-		if(x>=0 && x <= m_drawView.getWidth() && y >= 0 && y <= m_drawView.getHeight()){
+		if(x>=0 && x <= drawView.getWidth() && y >= 0 && y <= drawView.getHeight()){
 			return true;
 		}
 		else{
@@ -258,7 +231,7 @@ public abstract class WindowGroup extends Activity implements Group {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					m_debugTextView.setText(debugString);				
+					debugTextView.setText(debugString);				
 				}
 			});								
 		}
@@ -275,62 +248,11 @@ public abstract class WindowGroup extends Activity implements Group {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					m_debugTextView.setText(debugString);				
+					debugTextView.setText(debugString);				
 				}
 			});		
 		}
 
-	}
-
-	// 
-	// Sleeping
-	//
-
-	public void sleep (int msec) {
-		try {
-			Thread.sleep (msec);
-		} catch (InterruptedException e) {
-		}
-	}
-
-	//
-	// Waiting for mouse clicks
-	//
-
-	public void pause () {
-		println ("click to continue...");
-		synchronized (this) {
-			try {
-				wait ();
-			} catch (InterruptedException e) {
-			}
-		}
-	}
-
-	public void unpause () {
-		synchronized (this) {
-			notify ();
-		}
-	}
-
-
-	//
-	// Random selections
-	//
-
-	private static java.util.Random r = new java.util.Random();
-
-	public int random(final int n) {
-		return r.nextInt(n);
-	}
-
-
-	public int random(final int[] things) {
-		return things[random(things.length)];
-	}
-
-	public Object random(final Object[] things) {
-		return things[random(things.length)];
 	}
 
 	//

@@ -23,7 +23,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		m_drawView.setOnTouchListener(new OnTouchListener()
+		drawView.setOnTouchListener(new OnTouchListener()
 		{
 			public boolean onTouch(View v, MotionEvent event) 
 			{
@@ -153,7 +153,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	{
 		Log.v(LOG_TAG, "dispatch completed");
 		// check if we have damaged the screen
-		if(m_savedClipRect != null && m_screenDirty)
+		if(savedClipRect != null && screenDirty)
 		{
 			Log.v(LOG_TAG, "screen dirty, redrawing...");
 			redraw();

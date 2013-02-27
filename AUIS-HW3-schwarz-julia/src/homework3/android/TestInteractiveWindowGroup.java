@@ -17,7 +17,7 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 	@Override
 	protected void setup()
 	{
-		addChild(new Text("This is just a test", m_drawView.getWidth() / 2, m_drawView.getHeight() / 2, Typeface.create("Helvetica", Typeface.NORMAL), 24, Color.GREEN));
+		addChild(new Text("This is just a test", drawView.getWidth() / 2, drawView.getHeight() / 2, Typeface.create("Helvetica", Typeface.NORMAL), 24, Color.GREEN));
 		
 //		m_behaviors.add(new NewLineBehavior(Color.MAGENTA, 5, this));
 		

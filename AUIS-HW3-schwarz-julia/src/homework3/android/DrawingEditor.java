@@ -46,11 +46,6 @@ public class DrawingEditor extends InteractiveWindowGroup {
 		
 	}
 	
-	private removeSelectionHandles()
-	{
-		
-	}
-	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		m_behaviors.clear();
