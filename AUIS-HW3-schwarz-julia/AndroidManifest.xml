@@ -47,7 +47,9 @@
          <activity android:name=".TestInteractiveWindowGroup"
              android:label=".TestInteractiveWindowGroup" />    
          <activity android:name=".TestNewRectBehavior"
-             android:label=".TestNewRectBehavior" />                   
+             android:label=".TestNewRectBehavior" />
+         <activity android:name=".DrawingEditor"
+             android:label=".DrawingEditor" />                   
     </application>
 
 </manifest>
