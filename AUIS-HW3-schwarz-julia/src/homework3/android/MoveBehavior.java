@@ -1,8 +1,11 @@
 package homework3.android;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.graphics.Point;
 import android.util.Log;
-import android.view.KeyEvent;
 
 public class MoveBehavior extends BehaviorBase{
 	
@@ -38,8 +41,10 @@ public class MoveBehavior extends BehaviorBase{
 	protected void behaviorStarted(BehaviorEvent event)
 	{
 		m_childToMove = null;
-		// TODO: maybe hold a lock on the children to that if a child gets removed this doesn't crash
-		for (GraphicalObject child : m_group.getChildren()) {
+		// traverse in reverse order so that we dispatch to topmost object first 
+		List<GraphicalObject> reversed = new ArrayList<GraphicalObject>(m_group.getChildren());
+		Collections.reverse(reversed);
+		for (GraphicalObject child : reversed) {
 			if(m_childToMove != null) break;
 			if(child.contains(event.getX(), event.getY()))
 			{
