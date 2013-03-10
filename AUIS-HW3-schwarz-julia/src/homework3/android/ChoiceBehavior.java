@@ -94,9 +94,9 @@ public class ChoiceBehavior extends BehaviorBase {
 		{
 			
 			// Toggle the current item, deselect all other items
-			for(GraphicalObject child : m_selectedObjects )
+			for(GraphicalObject child : m_group.getChildren() )
 			{
-				if(child instanceof Selectable)
+				if(child instanceof Selectable && child != m_interimSelectedObject)
 					((Selectable)child).setSelected(false);
 			}
 			m_interimSelectedObject.setSelected(!m_interimSelectedObject.isSelected());

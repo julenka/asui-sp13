@@ -3,9 +3,11 @@ package homework3.android;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 // Base class for testing interactive windows
 public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
+	ChoiceBehavior m_choiceBehavior;
 	
 	private SelectionHandles makeSelectableObject(GraphicalObject child)
 	{
@@ -41,9 +43,25 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 		}
 		
 		addChild(buttons);
-		m_behaviors.add(new ChoiceBehavior(buttons));
+		m_choiceBehavior = new ChoiceBehavior(buttons);
+		m_behaviors.add(m_choiceBehavior);
 		m_behaviors.add(new MoveBehavior(moveGroup));
 		m_behaviors.add(new NewLineBehavior(Color.MAGENTA, 5, this));
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if(keyCode == KeyEvent.KEYCODE_S)
+		{
+			m_choiceBehavior.setType((m_choiceBehavior.getType() + 1) % 3);
+			println("choice behavior is " + m_choiceBehavior.getType());
+		} else if (keyCode == KeyEvent.KEYCODE_F)
+		{
+			m_choiceBehavior.setFirstOnly(!m_choiceBehavior.isFirstOnly());
+			println("first only is " + m_choiceBehavior.isFirstOnly());
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }
