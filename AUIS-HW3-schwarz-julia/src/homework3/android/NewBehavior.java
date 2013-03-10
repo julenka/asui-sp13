@@ -39,12 +39,13 @@ public abstract class NewBehavior extends BehaviorBase {
 	@Override
 	protected void behaviorStarted(BehaviorEvent event) {
 		m_graphicalObject = make(event.getX(), event.getY(), event.getX(), event.getY());
-		m_graphicalObject.setGroup(m_group);
+//		m_graphicalObject.setGroup(m_group);
+		m_group.addChild(m_graphicalObject);
 		if(m_onePoint)
 		{
 			stop(event);
 		} 	
-		m_group.addChild(m_graphicalObject);
+		
 		Log.v(LOG_TAG, "behavior started");
 	}
 	

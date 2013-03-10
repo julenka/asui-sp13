@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-public class DrawingEditor extends TestInteractiveWindowGroup {
+public class DrawingEditor extends InteractiveWindowGroup {
 
 	private Behavior newRect;
 	private Behavior newLine;

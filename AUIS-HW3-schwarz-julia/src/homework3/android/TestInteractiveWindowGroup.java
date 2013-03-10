@@ -31,8 +31,8 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 	{
 		addLabelToGroup(this, "create lines in root");
 		
-		Group moveGroup = new SimpleGroup(10, 300, 300, 300);
-		addBorderToGroup(moveGroup);
+		Group moveGroup = new ScaledGroup(0, 100, drawView.getWidth(), 400, 2,2);
+		
 		addLabelToGroup(moveGroup, "move objects");
 		moveGroup.addChild(new Text("This is just a test", 20, 50, Typeface.create("Helvetica", Typeface.NORMAL), 24, Color.GREEN));
 		addChild(moveGroup);
@@ -46,7 +46,7 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 		m_choiceBehavior = new ChoiceBehavior(buttons);
 		m_behaviors.add(m_choiceBehavior);
 		m_behaviors.add(new MoveBehavior(moveGroup));
-		m_behaviors.add(new NewLineBehavior(Color.MAGENTA, 5, this));
+		m_behaviors.add(new NewLineBehavior(Color.MAGENTA, 5, moveGroup));
 	}
 	
 	@Override
