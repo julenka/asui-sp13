@@ -32,10 +32,9 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		}
 				);
 	}
-	
+
 	private BehaviorEvent motionToBehaviorEvent(MotionEvent m)
 	{
-		// TODO: support multitouch using touchmap (need to totally change, just need to
 		// update the touchmap with valued and look at all of them...
 		int eventId = 0;
 		int modifiers = m_keyModifier;
@@ -57,19 +56,19 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		}
 		return new BehaviorEvent(eventId, modifiers, key, (int)x, (int)y);
 	}
-	
+
 	private BehaviorEvent behaviorEventToGroup(BehaviorEvent in, Group g)
 	{
 		Point parentSpace = new Point(in.getX(), in.getY());
 		Point childSpace = g.parentToChild(parentSpace);
 		return new BehaviorEvent(in.getID(), in.getModifiers(), in.getKey(), childSpace.x, childSpace.y);
 	}
-	
+
 	private boolean isRunning(Behavior b)
 	{
 		return b.getState() == Behavior.RUNNING_INSIDE || b.getState() == Behavior.RUNNING_OUTSIDE;
 	}
-	
+
 	// To start behavior should be in the group and also 
 	// the start behavior
 	// b shoul not be null
@@ -79,18 +78,16 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		if(!bEvent.matches(b.getStartEvent())) return false;
 		return true;
 	}
-	
+
 	public boolean onDrawViewTouchEvent(MotionEvent event)
 	{
 		//TODO: support multitouch
 		BehaviorEvent bEvent = motionToBehaviorEvent(event);
-		// update modifier keys
-		updateModifier(event.getMetaState());
 		dispatchBehaviorEvent(bEvent);
 		onDispatchCompleted();
 		return true;
 	}
-	
+
 	private void dispatchBehaviorEvent(BehaviorEvent bEvent)
 	{
 		if(m_currentBehavior == null)
@@ -99,13 +96,13 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 			for (Behavior behavior : m_behaviors) {
 				// exit once we have found a behavior
 				if(m_currentBehavior != null) break;
-				
+
 				if(behavior.getGroup() == null)
 				{
 					Log.e(LOG_TAG, "group for behavior is null!");
 					continue;
 				}
-				
+
 				if(canStartBehavior(behavior, bEvent))
 				{
 					// try to start the event
@@ -118,6 +115,8 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 			}
 		} else
 		{
+			// we are currently in a behavior
+			
 			if(m_currentBehavior.getGroup() == null)
 			{
 				Log.w(LOG_TAG, "Current behavior's group is null! Setting current behavior to null");
@@ -125,30 +124,34 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 				return;
 			}
 			BehaviorEvent childSpace = behaviorEventToGroup(bEvent, m_currentBehavior.getGroup());
-			if(bEvent.matches(m_currentBehavior.getStopEvent()))
-			{
-				// TODO: check if null currentBehavior's group is null
-
-				// check if should stop
-				m_currentBehavior.stop(childSpace);
-			} else if(bEvent.matches(m_currentBehavior.getCancelEvent()))
+			if(bEvent.matches(m_currentBehavior.getCancelEvent()))
 			{
 				m_currentBehavior.cancel(childSpace);
-			}
-			else if(bEvent.matches(m_currentBehavior.getRunningEvent()))
+			} else if
+			((bEvent.getX() > drawView.getWidth()|| bEvent.getX() < 0 ||
+					bEvent.getY() > drawView.getHeight() || bEvent.getY() < 0)
+					&& bEvent.getID() == BehaviorEvent.MOUSE_UP_ID 
+					)
+			{
+				m_currentBehavior.cancel(childSpace);
+			} else if(bEvent.matches(m_currentBehavior.getStopEvent()))
+			{
+				// check if should stop
+				m_currentBehavior.stop(childSpace);
+			}  else if(bEvent.matches(m_currentBehavior.getRunningEvent()))
 			{
 				// give event to current active behavior
 				m_currentBehavior.running(childSpace);
-			}
+			} 
 			// check if behavior is now idle, if so, set to null
 			if(m_currentBehavior.getState() == Behavior.IDLE)
 			{
 				m_currentBehavior = null;
 			}
-		
+
 		}
 	}
-	
+
 	private void onDispatchCompleted()
 	{
 		Log.v(LOG_TAG, "dispatch completed");
@@ -159,82 +162,46 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 			redraw();
 		}
 	}
-	
+
 	int m_keyModifier = 0x0;
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event)
 	{
 		super.onKeyUp(keyCode, event);
 		// update modifier keys
-		updateModifier(event.getMetaState());
 		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_UP_ID, m_keyModifier, keyCode);
 		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyUp " + event.getKeyCode());
 		onDispatchCompleted();
 		return false;
 	}
-	
+
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		super.onKeyDown(keyCode, event);
-		updateModifier(event.getMetaState());
 		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_keyModifier, keyCode);
 		dispatchBehaviorEvent(toDispatche);
 		Log.v(LOG_TAG, "KeyDown " + event.getKeyCode());
 		onDispatchCompleted();
 		return true;
 	}
-	
-	// Updates modifier keys based on getMetaState() returned method
-	private void updateModifier(int metaState)
-	{
-		// TODO: actuall get modifiers to work
-		int toMask = 0;
-		m_keyModifier = metaState;
-//		if(keyCode == KeyEvent.KEYCODE_SHIFT_LEFT || keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
-//			toMask = BehaviorEvent.SHIFT_MODIFIER;
-//		} else if(keyCode == KeyEvent.KEYCODE_CTRL_LEFT || keyCode == KeyEvent.KEYCODE_CTRL_RIGHT)
-//		{
-//			toMask = BehaviorEvent.CONTROL_MODIFIER;
-//		} else if(keyCode == KeyEvent.KEYCODE_ALT_LEFT || keyCode == KeyEvent.KEYCODE_ALT_RIGHT)
-//		{
-//			toMask = BehaviorEvent.ALT_MODIFIER;
-//		} else if(keyCode == KeyEvent.KEYCODE_WINDOW)
-//		{
-//			toMask = BehaviorEvent.WINDOWS_KEY_MODIFIER;
-//		} else if(keyCode == KeyEvent.KEYCODE_FUNCTION)
-//		{
-//			toMask = BehaviorEvent.FUNCTION_KEY_MODIFIER;
-//		} 
-//		// TODO: no command modifier
-//		if(!isDown)
-//		{
-//			toMask = toMask ^ 0xffffff;
-//			m_keyModifier = m_keyModifier & toMask;
-//		} else
-//		{
-//			m_keyModifier = m_keyModifier | toMask;	
-//		}
-//		Log.v(LOG_TAG, String.format("new key modifier: %#8x", m_keyModifier) );
-	}
-	
 
-	
+
 	public void addBehavior (Behavior inter)
 	{
 		m_behaviors.add(inter);
 	}
-	
-    public void removeBehavior (Behavior inter)
-    {
-    	m_behaviors.remove(inter);
-    	if(m_currentBehavior == inter)
-    	{
-    		m_currentBehavior = null;
-    	}
-    }
+
+	public void removeBehavior (Behavior inter)
+	{
+		m_behaviors.remove(inter);
+		if(m_currentBehavior == inter)
+		{
+			m_currentBehavior = null;
+		}
+	}
 }
 
 

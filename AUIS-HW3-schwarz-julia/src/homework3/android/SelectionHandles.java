@@ -9,7 +9,7 @@ import android.graphics.Path.Direction;
 import android.graphics.Path;
 
 public class SelectionHandles extends SimpleGroup implements Selectable {
-	static final int HANDLE_SIZE = 5;
+	static final int HANDLE_SIZE = 2;
 	private boolean m_interimSelected = false;
 	private boolean m_selected = false;
 
@@ -50,6 +50,7 @@ public class SelectionHandles extends SimpleGroup implements Selectable {
 		super.doDraw(graphics, clipShape);
 		if(m_interimSelected)
 		{
+			// TODO: draw the entire rect inside the region, offsetting corectly
 			m_selectionPaint.setColor(Color.GRAY);
 			graphics.drawRect(boundaryRectangleToRect(m_boundaryRect), m_selectionPaint);	
 		}

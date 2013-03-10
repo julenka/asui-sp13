@@ -41,6 +41,11 @@ public abstract class WindowGroup extends Activity implements Group {
 	LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
 
 	@Override
+	/**
+	 * Sets the content of the page to be the layout defined in layout/text.xml
+	 * Gets the drawView and debugView
+	 * Starts a method which waits until the 
+	 */
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -86,7 +91,7 @@ public abstract class WindowGroup extends Activity implements Group {
 		});
 		t.start();
 	}
-
+	
 	/*
 	 * Initialize any graphical objects here.
 	 */
@@ -105,6 +110,11 @@ public abstract class WindowGroup extends Activity implements Group {
 	}
 
 	public void redraw() {	
+		if(!screenDirty) 
+		{
+			Log.e(LOG_TAG, "redraw called when screen was not dirty!");
+			return;
+		}
 		// if savedClipRect is not null, redraw the canvas with all my children
 		// else, print a message
 		if (savedClipRect != null) {
