@@ -1,10 +1,13 @@
 package homework3.android;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-public class DrawingEditor extends InteractiveWindowGroup {
+public class DrawingEditor extends TestInteractiveWindowGroup {
 
 	private Behavior newRect;
 	private Behavior newLine;
@@ -43,12 +46,34 @@ public class DrawingEditor extends InteractiveWindowGroup {
 	
 	private void addSelectionHandles()
 	{
-		
+		List<GraphicalObject> childrenCopy = new ArrayList<GraphicalObject>(getChildren());
+		for (GraphicalObject child : childrenCopy) {
+			removeChild(child);
+			addChild(makeSelectableObject(child));
+		}
 	}
+	
+	private void removeSelectionHandles()
+	{
+		List<GraphicalObject> childrenCopy = new ArrayList<GraphicalObject>(getChildren());
+		for (GraphicalObject child : childrenCopy) {
+			if(child instanceof SelectionHandles)
+			{
+				SelectionHandles sh = (SelectionHandles)child;
+				removeChild(child);
+				for (GraphicalObject child2 : sh.getChildren()) {
+					addChild(child2);
+				}
+			}
+		}
+	}
+	
+	
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		m_behaviors.clear();
+		removeSelectionHandles();
 		// TODO Auto-generated method stub
 		if(keyCode == KeyEvent.KEYCODE_R)
 		{
@@ -58,6 +83,7 @@ public class DrawingEditor extends InteractiveWindowGroup {
 		{
 			// todo: make all the items selectable
 			m_behaviors.add(choiceBehavior);
+			addSelectionHandles();
 			println("currently selecting items");
 		}else if (keyCode == KeyEvent.KEYCODE_L)
 		{
