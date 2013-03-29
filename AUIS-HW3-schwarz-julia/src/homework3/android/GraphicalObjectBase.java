@@ -1,10 +1,12 @@
 package homework3.android;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Paint.Style;
 import android.util.Log;
 
 /**
@@ -83,9 +85,17 @@ public abstract class GraphicalObjectBase implements GraphicalObject {
 	 * the object. Otherwise draw the object
 	 */
 	public void draw(Canvas graphics, Path clipShape) {
+
+		
 		// do not draw if the boundaryrect is completely out of the clipShape
 		clipShape.computeBounds(m_clipBounds, true);
 		RectF boundary = boundaryRectangleToRect(m_boundaryRect);
+		
+//		Paint dbgPaint = new Paint();
+//		dbgPaint.setStyle(Style.STROKE);
+//		dbgPaint.setColor(Color.MAGENTA);
+//		graphics.drawRect(boundary, dbgPaint);
+		
 		if(!RectF.intersects(boundary, m_clipBounds)) return;
 		
 		doDraw(graphics, clipShape);
@@ -116,6 +126,8 @@ public abstract class GraphicalObjectBase implements GraphicalObject {
 	public boolean contains(int x, int y) {
 		int relx = x - m_boundaryRect.x;
 		int rely = y - m_boundaryRect.y;
+//		Log.v("Homework3.GraphicalObjectBase", "x: " + x + "y: " + y + "relx: " + relx + " rely: " + rely + " width: " + m_boundaryRect.width + " hegiht: " + m_boundaryRect.height);
+		
 		return relx >= 0 && rely >= 0 && relx < m_boundaryRect.width && rely < m_boundaryRect.height;
 	}
 

@@ -42,7 +42,7 @@ public class BehaviorEvent {
     public boolean matches (BehaviorEvent event) {
         return 
             event.id == id
-            && ((modifiers & event.modifiers) == modifiers) //sometimes there are some out of range
+            && event.modifiers == modifiers //sometimes there are some out of range
             && event.key == key;
     }
 

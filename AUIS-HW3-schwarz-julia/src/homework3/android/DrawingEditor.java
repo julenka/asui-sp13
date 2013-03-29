@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 public class DrawingEditor extends InteractiveWindowGroup {
@@ -46,11 +47,13 @@ public class DrawingEditor extends InteractiveWindowGroup {
 	
 	private void addSelectionHandles()
 	{
+		Log.v("Homework3." + getClass().getSimpleName(), "adding selection handles, children size is " + getChildren().size());
 		List<GraphicalObject> childrenCopy = new ArrayList<GraphicalObject>(getChildren());
 		for (GraphicalObject child : childrenCopy) {
 			removeChild(child);
 			addChild(makeSelectableObject(child));
 		}
+		Log.v("Homework3." + getClass().getSimpleName(), "done adding selection handles, children size is " + getChildren().size());
 	}
 	
 	private void removeSelectionHandles()
@@ -72,6 +75,9 @@ public class DrawingEditor extends InteractiveWindowGroup {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(!(keyCode == KeyEvent.KEYCODE_R || keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_L || keyCode == KeyEvent.KEYCODE_M))
+			return super.onKeyDown(keyCode, event);
+		
 		m_behaviors.clear();
 		removeSelectionHandles();
 		// TODO Auto-generated method stub
@@ -94,7 +100,7 @@ public class DrawingEditor extends InteractiveWindowGroup {
 			m_behaviors.add(moveBehavior);
 			println("currently moving items");
 		}
-		return super.onKeyDown(keyCode, event);
+		return true;
 	}
 
 }

@@ -49,7 +49,7 @@ public class Homework3AndroidActivity extends Activity {
         setContentView(R.layout.main);
         context = this;
         root = (LinearLayout) findViewById(R.id.root);
-       
+        addTestButton(TestHomework3.class);
         addTestButton(DrawingEditor.class);
         addTestButton(TestNewRectBehavior.class);
         addTestButton(TestInteractiveWindowGroup.class);

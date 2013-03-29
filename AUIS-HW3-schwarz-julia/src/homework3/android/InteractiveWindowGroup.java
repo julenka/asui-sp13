@@ -9,14 +9,17 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 
 public abstract class InteractiveWindowGroup extends WindowGroup {
 	static final String LOG_TAG = "Homework3";
 
+	float m_lastX;
+	float m_lastY;
 	List<Behavior> m_behaviors = new ArrayList<Behavior>();
 	Behavior m_currentBehavior;
+	int m_modifier = 0x0;
+	
 	public InteractiveWindowGroup() {
 	}
 
@@ -37,24 +40,23 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	{
 		// update the touchmap with valued and look at all of them...
 		int eventId = 0;
-		int modifiers = m_keyModifier;
 		int key = BehaviorEvent.LEFT_MOUSE_KEY;
-		float x = m.getX();
-		float y = m.getY();
+		m_lastX = m.getX();
+		m_lastY = m.getY();
 		switch(m.getAction())
 		{
 		case MotionEvent.ACTION_DOWN:
 			eventId = BehaviorEvent.MOUSE_DOWN_ID;
 			break;
 		case MotionEvent.ACTION_MOVE:
-			Log.v(LOG_TAG, "action_move");
 			eventId = BehaviorEvent.MOUSE_MOVE_ID;
 			break;
 		case MotionEvent.ACTION_UP:
 			eventId = BehaviorEvent.MOUSE_UP_ID;
 			break;
 		}
-		return new BehaviorEvent(eventId, modifiers, key, (int)x, (int)y);
+//		Log.v(LOG_TAG, " key modifiers are " + m_modifier);
+		return new BehaviorEvent(eventId, m_modifier, key, (int)m_lastX, (int)m_lastY);
 	}
 
 	private BehaviorEvent behaviorEventToGroup(BehaviorEvent in, Group g)
@@ -92,6 +94,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	{
 		if(m_currentBehavior == null)
 		{
+//			Log.v(LOG_TAG, "finding new behavior...");
 			// find new behavior
 			for (Behavior behavior : m_behaviors) {
 				// exit once we have found a behavior
@@ -102,9 +105,10 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 					Log.e(LOG_TAG, "group for behavior is null!");
 					continue;
 				}
-
+//				Log.v(LOG_TAG, "checking behavior " + behavior.getClass().getSimpleName());
 				if(canStartBehavior(behavior, bEvent))
 				{
+					Log.v(LOG_TAG, "starting behavior " + behavior.getClass().getSimpleName());
 					// try to start the event
 					behavior.start(behaviorEventToGroup(bEvent, behavior.getGroup()));
 					if(isRunning(behavior))
@@ -116,7 +120,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		} else
 		{
 			// we are currently in a behavior
-			
+//			Log.v(LOG_TAG, "current behavior is " + m_currentBehavior.getClass().getSimpleName());
 			if(m_currentBehavior.getGroup() == null)
 			{
 				Log.w(LOG_TAG, "Current behavior's group is null! Setting current behavior to null");
@@ -126,6 +130,7 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 			BehaviorEvent childSpace = behaviorEventToGroup(bEvent, m_currentBehavior.getGroup());
 			if(bEvent.matches(m_currentBehavior.getCancelEvent()))
 			{
+				Log.v(LOG_TAG, "canceling current behavior");
 				m_currentBehavior.cancel(childSpace);
 			} else if
 			((bEvent.getX() > drawView.getWidth()|| bEvent.getX() < 0 ||
@@ -133,9 +138,11 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 					&& bEvent.getID() == BehaviorEvent.MOUSE_UP_ID 
 					)
 			{
+				Log.v(LOG_TAG, "canceling current behavior");
 				m_currentBehavior.cancel(childSpace);
 			} else if(bEvent.matches(m_currentBehavior.getStopEvent()))
 			{
+				Log.v(LOG_TAG, "stopping current behavior");
 				// check if should stop
 				m_currentBehavior.stop(childSpace);
 			}  else if(bEvent.matches(m_currentBehavior.getRunningEvent()))
@@ -154,24 +161,29 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 
 	private void onDispatchCompleted()
 	{
-		Log.v(LOG_TAG, "dispatch completed");
 		// check if we have damaged the screen
 		if(savedClipRect != null && screenDirty)
 		{
-			Log.v(LOG_TAG, "screen dirty, redrawing...");
 			redraw();
 		}
 	}
 
-	int m_keyModifier = 0x0;
+	void updateKeyModifier(KeyEvent event)
+	{
+		m_modifier = 0x0;
+		if(event.isShiftPressed()) m_modifier |= BehaviorEvent.SHIFT_MODIFIER;
+		
+	}
+	
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event)
 	{
 		super.onKeyUp(keyCode, event);
+		updateKeyModifier(event);
 		// update modifier keys
-		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_UP_ID, m_keyModifier, keyCode);
+		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_UP_ID, m_modifier, keyCode, (int)m_lastX, (int)m_lastY);
 		dispatchBehaviorEvent(toDispatche);
-		Log.v(LOG_TAG, "KeyUp " + event.getKeyCode());
+//		Log.v(LOG_TAG, "KeyUp " + keyCode);
 		onDispatchCompleted();
 		return false;
 	}
@@ -181,9 +193,10 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		super.onKeyDown(keyCode, event);
-		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_keyModifier, keyCode);
+		updateKeyModifier(event);
+		BehaviorEvent toDispatche = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_modifier, keyCode, (int)m_lastX, (int)m_lastY);
 		dispatchBehaviorEvent(toDispatche);
-		Log.v(LOG_TAG, "KeyDown " + event.getKeyCode());
+//		Log.v(LOG_TAG, "KeyDown " + keyCode + " x: " + m_lastX + " y: " + m_lastY);
 		onDispatchCompleted();
 		return true;
 	}

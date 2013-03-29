@@ -15,11 +15,13 @@ public class ChoiceBehavior extends BehaviorBase {
 	private List<GraphicalObject> m_selectedObjects = new ArrayList<GraphicalObject>();
 	private Selectable m_interimSelectedObject;
 	public ChoiceBehavior (int type, boolean firstOnly){
+		super();
 		m_type = type;
 		m_firstOnly = firstOnly;
 	}
 
 	public ChoiceBehavior (int type, boolean firstOnly, Group attachedTo){
+		super(attachedTo);
 		m_type = type;
 		m_firstOnly = firstOnly;
 	}
@@ -36,7 +38,7 @@ public class ChoiceBehavior extends BehaviorBase {
 
 	public ChoiceBehavior(Group tiedTo) {
 		super(tiedTo);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public ChoiceBehavior(BehaviorEvent start, BehaviorEvent stop, Group tiedTo) {
@@ -128,7 +130,7 @@ public class ChoiceBehavior extends BehaviorBase {
 	protected void doRunningInside(BehaviorEvent event) {
 		// ignore future moves if first only
 		if(m_firstOnly) return;
-		
+//		Log.v("Homework3.ChoiceBehavior", "choice behavior running inside: " + m_group.getChildren().size());
 		for (GraphicalObject child : m_group.getChildren()) {
 			if(child.contains(event.getX(), event.getY()) && child instanceof Selectable)
 			{
@@ -157,6 +159,7 @@ public class ChoiceBehavior extends BehaviorBase {
 	        Map.Entry pairs = (Map.Entry)it.next();
 	        Selectable s = (Selectable) pairs.getKey();
 	        s.setSelected((Boolean)pairs.getValue());
+	        s.setInterimSelected(false); // Fix in homework 3 mistake: always set interim selection to be false on calcel
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
 	}

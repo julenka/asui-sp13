@@ -34,7 +34,7 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 		Group moveGroup = new ScaledGroup(0, 100, drawView.getWidth(), 400, 2,2);
 		
 		addLabelToGroup(moveGroup, "move objects");
-		moveGroup.addChild(new Text("This is just a test", 20, 50, Typeface.create("Helvetica", Typeface.NORMAL), 24, Color.GREEN));
+		moveGroup.addChild(new Text("This is just a test", 20, 50, Typeface.create("Helvetica", Typeface.NORMAL), 22, Color.GREEN));
 		addChild(moveGroup);
 		
 		LayoutGroup buttons = new LayoutGroup(10, 10, 700, 400 , HORIZONTAL, 10);

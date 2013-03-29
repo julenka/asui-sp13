@@ -33,7 +33,7 @@ public class NewRectBehavior extends NewBehavior {
 		r.moveTo(Math.min(x1,  x2), Math.min(y1, y2));
 		r.setWidth(width);
 		r.setHeight(height);
-		Log.v(LOG_TAG, String.format("resize (%d, %d)  (%d, %d)", x1, x2, y1, y2));
+//		Log.v(LOG_TAG, String.format("resize (%d, %d)  (%d, %d)", x1, x2, y1, y2));
 	}
 
 	public int getColor() {

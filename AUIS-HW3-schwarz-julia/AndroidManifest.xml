@@ -49,7 +49,9 @@
          <activity android:name=".TestNewRectBehavior"
              android:label=".TestNewRectBehavior" />
          <activity android:name=".DrawingEditor"
-             android:label=".DrawingEditor" />                   
+             android:label=".DrawingEditor" />       
+         <activity android:name=".TestHomework3"
+             android:label=".TestHomework3" />              
     </application>
 
 </manifest>

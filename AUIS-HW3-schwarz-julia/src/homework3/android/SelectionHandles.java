@@ -3,10 +3,11 @@ package homework3.android;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.graphics.Paint.Style;
-import android.graphics.Path.Direction;
 import android.graphics.Path;
+import android.graphics.Path.Direction;
+import android.graphics.RectF;
+import android.util.Log;
 
 public class SelectionHandles extends SimpleGroup implements Selectable {
 	static final int HANDLE_SIZE = 10;
@@ -69,13 +70,30 @@ public class SelectionHandles extends SimpleGroup implements Selectable {
 	}
 	
 	@Override
+	public boolean contains(int x, int y) {
+		int relx = (int) (x - m_boundaryRect.x - m_childrenBoundaryRect.left);
+		int rely = (int) (y - m_boundaryRect.y - m_childrenBoundaryRect.top);
+		
+		return relx >= 0 && rely >= 0 && relx < m_childrenBoundaryRect.width() && rely < m_childrenBoundaryRect.height();
+	}
+	
+	@Override
 	public void doDraw(Canvas graphics, Path clipShape) {
 		super.doDraw(graphics, clipShape);
+		
+
+		
 		
 		graphics.save();
 
 		graphics.clipPath(clipShape);
 		graphics.concat(m_transform);
+		
+//		Paint dbgPaint = new Paint();
+//		dbgPaint.setStyle(Style.STROKE);
+//		dbgPaint.setStrokeWidth(3);
+//		dbgPaint.setColor(Color.MAGENTA);
+//		graphics.drawRect(m_childrenBoundaryRect, dbgPaint);
 		
 		if(m_interimSelected)
 		{
