@@ -7,7 +7,7 @@ import homework4.android.graphicalobject.OutlineRect;
 import android.graphics.Color;
 import android.os.Bundle;
 
-public class TestLayoutGroup extends TestFrame{
+public class MyTestLayoutGroup extends TestFrame{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		Thread t = new Thread(new Runnable() {

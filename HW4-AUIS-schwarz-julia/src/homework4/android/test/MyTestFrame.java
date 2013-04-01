@@ -15,9 +15,9 @@ import android.os.Bundle;
  * all of my custom tests. Each custom test can also be displayed individually as regular TestFrames.
  * @author julenka
  */
-public class BetterTestFrame extends TestFrame {
+public class MyTestFrame extends TestFrame {
 	
-	public BetterTestFrame() {
+	public MyTestFrame() {
 	}
 	
 	protected void expectedState(int x, int y)

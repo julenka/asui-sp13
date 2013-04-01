@@ -65,6 +65,9 @@ public class FilledRect extends GraphicalObjectBase {
 
 	@Override
 	public void moveTo(int x, int y) {
+		int oldX = m_rect.left;
+		int oldY = m_rect.top;
+		
 		int dx = x - m_rect.left;
 		m_rect.left = x;
 		m_rect.right += dx;
@@ -72,7 +75,8 @@ public class FilledRect extends GraphicalObjectBase {
 		m_rect.top = y;
 		m_rect.bottom += dy;
 		boundsChanged();
-		
+		notifyIntPropertyChanged("x", oldX, x);
+		notifyIntPropertyChanged("y", oldY, y);
 	}
 
 	protected void updateBounds()
@@ -89,11 +93,13 @@ public class FilledRect extends GraphicalObjectBase {
 	}
 
 	public void setX(int x) {
+		int oldX = m_rect.left;
 		int dx = x - m_rect.left;
 		m_rect.left = x;
 		m_rect.right += dx;
 		
 		boundsChanged();
+		notifyIntPropertyChanged("x", oldX, x);
 	}
 
 	public int getY() {
@@ -101,10 +107,12 @@ public class FilledRect extends GraphicalObjectBase {
 	}
 
 	public void setY(int y) {
+		int oldY = m_rect.top;
 		int dy = y - m_rect.top;
 		m_rect.top = y;
 		m_rect.bottom += dy;
 		boundsChanged();
+		notifyIntPropertyChanged("y", oldY, y);
 	}
 
 	public int getWidth() {
@@ -112,8 +120,10 @@ public class FilledRect extends GraphicalObjectBase {
 	}
 
 	public void setWidth(int width) {
+		int oldWidth = m_rect.right - m_rect.left;
 		m_rect.right = m_rect.left + width;
 		boundsChanged();
+		notifyIntPropertyChanged("width", oldWidth, width);
 	}
 
 	public int getHeight() {
@@ -121,8 +131,10 @@ public class FilledRect extends GraphicalObjectBase {
 	}
 
 	public void setHeight(int height) {
+		int oldHeight = m_rect.bottom - m_rect.top;
 		m_rect.bottom = m_rect.top + height;
 		boundsChanged();
+		notifyIntPropertyChanged("height", oldHeight, height);
 	}
 
 	public int getColor() {
@@ -130,8 +142,10 @@ public class FilledRect extends GraphicalObjectBase {
 	}
 
 	public void setColor(int color) {
+		int oldColor = m_paint.getColor();
 		m_paint.setColor(color);
 		boundsChanged();
+		notifyIntPropertyChanged("color", oldColor, color);
 	}
 
 }

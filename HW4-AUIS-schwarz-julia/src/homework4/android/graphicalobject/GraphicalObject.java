@@ -1,5 +1,6 @@
 package homework4.android.graphicalobject;
 
+import homework4.android.constraints.IPropertyChangedListener;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Matrix;
@@ -15,4 +16,6 @@ public interface GraphicalObject {
 	
 	public void setAffineTransform(Matrix af);
 	public Matrix getAffineTransform();
+	
+
 }

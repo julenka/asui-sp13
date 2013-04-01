@@ -18,7 +18,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 // Base class for testing interactive windows
-public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
+public class MyTestInteractiveWindowGroup extends InteractiveWindowGroup {
 	ChoiceBehavior m_choiceBehavior;
 	
 	private SelectionHandles makeSelectableObject(GraphicalObject child)

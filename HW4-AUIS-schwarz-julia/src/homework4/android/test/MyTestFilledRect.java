@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-public class TestFilledRect extends BetterTestFrame {
+public class MyTestFilledRect extends MyTestFrame {
 	
 	private void TestSet(int startx, int starty, int endx, int endy, int numSteps, FilledRect r)
 	{

@@ -10,9 +10,9 @@ import java.io.IOException;
 
 import android.graphics.Color;
 
-public class TestScaledGroup extends BetterTestFrame {
+public class MyTestScaledGroup extends MyTestFrame {
 
-	public TestScaledGroup() {
+	public MyTestScaledGroup() {
 		// TODO Auto-generated constructor stub
 	}
 	

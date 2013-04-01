@@ -13,16 +13,16 @@ import android.os.Bundle;
  * @author julenka
  *
  */
-public class TestAllTests extends BetterTestFrame {
+public class MyTestAllTests extends MyTestFrame {
 
-	private List<BetterTestFrame> m_allTests = new ArrayList<BetterTestFrame>();
-	private BetterTestFrame m_curFrame;
-	public TestAllTests() {
-		m_allTests.add(new BetterTestOutlineRect());
-		m_allTests.add(new TestFilledRect());
-		m_allTests.add(new BetterTestSimpleGroup());
-		m_allTests.add(new TestScaledGroup());
-		m_allTests.add(new BetterTestLayoutGropu());
+	private List<MyTestFrame> m_allTests = new ArrayList<MyTestFrame>();
+	private MyTestFrame m_curFrame;
+	public MyTestAllTests() {
+		m_allTests.add(new MyTestOutlineRect());
+		m_allTests.add(new MyTestFilledRect());
+		m_allTests.add(new MyTestSimpleGroup());
+		m_allTests.add(new MyTestScaledGroup());
+		m_allTests.add(new MyTestLayoutGropu());
 
 	}
 	
@@ -41,7 +41,7 @@ public class TestAllTests extends BetterTestFrame {
 	
 	@Override
 	protected void test() {
-		for (BetterTestFrame test : m_allTests) {
+		for (MyTestFrame test : m_allTests) {
 			println("Testing " + test.getClass());
 			m_curFrame = test;
 			test.test();

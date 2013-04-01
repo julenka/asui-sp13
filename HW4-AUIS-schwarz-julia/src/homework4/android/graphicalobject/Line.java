@@ -79,8 +79,10 @@ public class Line extends GraphicalObjectBase {
 	}
 
 	public void setColor(int color) {
+		int oldColor = m_paint.getColor();
 		m_paint.setColor(color);
 		doDamage();
+		notifyIntPropertyChanged("color", oldColor, color);
 	}
 
 	public int getLineThickness()
@@ -90,8 +92,10 @@ public class Line extends GraphicalObjectBase {
 	
 	public void setLineThickenss(int t)
 	{
+		int oldThickness = (int)m_paint.getStrokeWidth();
 		m_paint.setStrokeWidth(t);
 		boundsChanged();
+		notifyIntPropertyChanged("strokethickness", oldThickness, t);
 	}
 	
 	public int getX1() {
@@ -99,8 +103,10 @@ public class Line extends GraphicalObjectBase {
 	}
 
 	public void setX1(int x1) {
+		int oldX1 = m_x1;
 		m_x1 = x1;
 		boundsChanged();
+		notifyIntPropertyChanged("x1", oldX1, x1);
 	}
 
 	public int getY1() {
@@ -108,8 +114,10 @@ public class Line extends GraphicalObjectBase {
 	}
 
 	public void setY1(int y1) {
+		int oldY1 = m_y1;
 		m_y1 = y1;
 		boundsChanged();
+		notifyIntPropertyChanged("y1", oldY1, y1);
 	}
 
 	public int getX2() {
@@ -117,8 +125,10 @@ public class Line extends GraphicalObjectBase {
 	}
 
 	public void setX2(int x2) {
+		int oldX2 = m_x2;
 		m_x2 = x2;
 		boundsChanged();
+		notifyIntPropertyChanged("x2", oldX2, x2);
 	}
 
 	public int getY2() {
@@ -126,8 +136,10 @@ public class Line extends GraphicalObjectBase {
 	}
 
 	public void setY2(int y2) {
+		int oldY2 = m_y2;
 		m_y2 = y2;
 		boundsChanged();
+		notifyIntPropertyChanged("y2", oldY2, y2);
 	}
 
 }

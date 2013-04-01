@@ -1,12 +1,18 @@
 package homework4.android.graphicalobject;
 
+import homework4.android.constraints.IPropertyChangedListener;
+import homework4.android.constraints.IPropertyChangedNotifier;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.Paint.Style;
 import android.util.Log;
 
 /**
@@ -16,8 +22,8 @@ import android.util.Log;
  * @author julenka
  *
  */
-public abstract class GraphicalObjectBase implements GraphicalObject {
-
+public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyChangedNotifier {
+	static final String LOG_TAG = "GraphicalObjectBase";
 	// the parent group
 	protected Group m_group;
 	
@@ -32,9 +38,10 @@ public abstract class GraphicalObjectBase implements GraphicalObject {
 	// rectangle specifying what to clip to
 	private RectF m_clipBounds = new RectF();
 	
+
 	public GraphicalObjectBase() {
 	}
-
+	
 	protected RectF boundaryRectangleToRect(BoundaryRectangle r)
 	{
 		return new RectF(r.x, r.y, r.x + r.width, r.y + r.height);
@@ -101,7 +108,7 @@ public abstract class GraphicalObjectBase implements GraphicalObject {
 		doDraw(graphics, clipShape);
 		
 	}
-
+	
 	@Override
 	public BoundaryRectangle getBoundingBox() {
 		return new BoundaryRectangle(m_boundaryRect);
@@ -139,5 +146,60 @@ public abstract class GraphicalObjectBase implements GraphicalObject {
 	@Override
 	public Matrix getAffineTransform() {
 		return m_transform;
+	}
+	
+	/**
+	 * Constraints
+	 */
+	// for now, only support constraints on int and float properties
+	Map<String, List<IPropertyChangedListener<Integer>>> m_intChangedListeners = new HashMap<String, List<IPropertyChangedListener<Integer>>>();
+	Map<String, List<IPropertyChangedListener<Double>>> m_floatChangedListeners = new HashMap<String, List<IPropertyChangedListener<Double>>>();
+	
+	// TODO: figure out how to support any property changed (not just ints and floats)
+	public void addIntPropertyChangedListener(String propertyName, IPropertyChangedListener<Integer> listener)
+	{
+		addPropertyChangedListener(propertyName, listener, m_intChangedListeners);
+	}
+	
+	public void addDoublePropertyChangedListener(String propertyName, IPropertyChangedListener<Double> listener)
+	{
+		addPropertyChangedListener(propertyName, listener, m_floatChangedListeners);	
+	}
+
+	private  <E> void addPropertyChangedListener(String propertyName, 
+			IPropertyChangedListener<E> listener, 
+			Map<String, List<IPropertyChangedListener<E>>> map)
+	{
+		if(!map.containsKey(propertyName)) map.put(propertyName, new ArrayList<IPropertyChangedListener<E>>());
+		List<IPropertyChangedListener<E>> lst = map.get(propertyName);
+		lst.add(listener);
+		Log.v(LOG_TAG, "added listener for property" + propertyName );
+	}
+
+	protected void notifyIntPropertyChanged(String propertyName, int oldValue, int newValue)
+	{
+		if(oldValue == newValue) return;
+		notifyPropertyChanged(propertyName, oldValue, newValue, m_intChangedListeners);
+	}
+
+	protected void notifyDoublePropertyChanged(String propertyName, double oldValue, double newValue)
+	{
+		if(Math.abs(oldValue - newValue) < 0.000000001) return;
+		notifyPropertyChanged(propertyName, oldValue, newValue, m_floatChangedListeners);
+	}
+
+	private <E> void notifyPropertyChanged(String propertyName, E oldValue, E newValue, 
+			Map<String, List<IPropertyChangedListener<E>>> map)
+	{
+		List<IPropertyChangedListener<E>> lst = map.get(propertyName);
+		if(lst == null)
+		{
+			Log.v(LOG_TAG, "notifyPropertyChanged: no listeners for property name " + propertyName + " registered!");
+			return;
+		}
+		for (IPropertyChangedListener<E> listener : lst) 
+		{
+			listener.onPropertyChanged(oldValue, newValue);
+		}
 	}
 }

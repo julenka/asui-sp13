@@ -2,19 +2,21 @@ package homework4.android.app;
 
 
 import homework4.android.R;
+import homework4.android.test.MyTestNotifyPropertyChanged;
 import homework4.android.test.TestAllObjects;
-import homework4.android.test.TestAllTests;
-import homework4.android.test.TestFilledRect;
+import homework4.android.test.MyTestAllTests;
+import homework4.android.test.MyTestFilledRect;
 import homework4.android.test.TestHomework2;
 import homework4.android.test.TestHomework3;
-import homework4.android.test.TestInteractiveWindowGroup;
-import homework4.android.test.TestLayoutGroup;
-import homework4.android.test.TestNewRectBehavior;
+import homework4.android.test.MyTestInteractiveWindowGroup;
+import homework4.android.test.MyTestLayoutGroup;
+import homework4.android.test.MyTestNewRectBehavior;
+import homework4.android.test.TestHomework4;
 import homework4.android.test.TestOutlineRect;
-import homework4.android.test.TestScaledGroup;
+import homework4.android.test.MyTestScaledGroup;
 import homework4.android.test.TestSimpleGroup;
-import homework4.android.test.TestTestFrame;
-import homework4.android.test.TestWindowGroup;
+import homework4.android.test.MyTestTestFrame;
+import homework4.android.test.MyTestWindowGroup;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -64,23 +66,25 @@ public class Homework4MainActivity extends Activity {
         context = this;
         root = (LinearLayout) findViewById(R.id.root);
         addText("Homework 4 Tests");
+        addTestButton(TestHomework4.class);
+        addTestButton(MyTestNotifyPropertyChanged.class);
         
         addText("Homework 3 Tests");
         addTestButton(TestHomework3.class);
         addTestButton(DrawingEditor.class);
-        addTestButton(TestNewRectBehavior.class);
-        addTestButton(TestInteractiveWindowGroup.class);
-        addTestButton(TestWindowGroup.class);
+        addTestButton(MyTestNewRectBehavior.class);
+        addTestButton(MyTestInteractiveWindowGroup.class);
+        addTestButton(MyTestWindowGroup.class);
        
         addText("Homework 2 Tests");
-        addTestButton("TestTestFrame", TestTestFrame.class);
+        addTestButton("TestTestFrame", MyTestTestFrame.class);
         addTestButton(TestOutlineRect.class);
-        addTestButton(TestFilledRect.class);
+        addTestButton(MyTestFilledRect.class);
         addTestButton(TestAllObjects.class);
-        addTestButton(TestScaledGroup.class);
-        addTestButton(TestLayoutGroup.class);
+        addTestButton(MyTestScaledGroup.class);
+        addTestButton(MyTestLayoutGroup.class);
         addTestButton(TestSimpleGroup.class);
-        addTestButton("RunAllExtendedTests", TestAllTests.class);
+        addTestButton("RunAllExtendedTests", MyTestAllTests.class);
         addTestButton("BradsTestHomework2", TestHomework2.class);
                 
     }

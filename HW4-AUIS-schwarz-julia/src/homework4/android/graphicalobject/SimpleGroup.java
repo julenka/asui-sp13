@@ -80,9 +80,13 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 
 	@Override
 	public void moveTo(int x, int y) {
+		int oldX = m_x;
+		int oldY = m_y;
 		m_x = x;
 		m_y = y;
 		boundsChanged();
+		notifyIntPropertyChanged("x", oldX, x);
+		notifyIntPropertyChanged("y", oldY, y);
 	}
 
 	@Override
@@ -195,29 +199,39 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		return m_x;
 	}
 	public void setX(int x) {
+		int oldX = m_x;
 		m_x = x;
 		boundsChanged();
+		notifyIntPropertyChanged("x", oldX, x);
 	}
 	public int getY() {
 		return m_y;
 	}
 	public void setY(int y) {
+		int oldY = m_y;
 		m_y = y;
 		boundsChanged();
+		notifyIntPropertyChanged("y", oldY, y);
 	}
 	public int getWidth() {
 		return m_width;
 	}
 	public void setWidth(int width) {
+		int oldWidth = m_width;
 		m_width = width;
 		boundsChanged();
+		notifyIntPropertyChanged("width", oldWidth, width);
 	}
 	public int getHeight() {
 		return m_height;
 	}
 	public void setHeight(int height) {
+		int oldHeight = m_height;
+		
 		m_height = height;
 		boundsChanged();
+		
+		notifyIntPropertyChanged("height", oldHeight, height);
 	}
 
 }

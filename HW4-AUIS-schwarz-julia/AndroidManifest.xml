@@ -20,22 +20,24 @@
         </activity>
         
          <activity android:name=".test.TestFrame" />
-         <activity android:name=".test.TestTestFrame" />
+         <activity android:name="homework4.android.test.MyTestTestFrame" />
          <activity android:name=".test.TestOutlineRect" />
-         <activity android:name=".test.TestFilledRect" />
-         <activity android:name=".test.TestText" />
+         <activity android:name="homework4.android.test.MyTestFilledRect" />
+         <activity android:name="homework4.android.test.MyTestText" />
          <activity android:name=".test.TestAllObjects" />
          <activity android:name=".test.TestSimpleGroup" />
-         <activity android:name=".test.TestScaledGroup" />
-         <activity android:name=".test.BetterTestSimpleGroup" />
-         <activity android:name=".test.TestLayoutGroup"  />
-         <activity android:name=".test.TestAllTests" />
+         <activity android:name="homework4.android.test.MyTestScaledGroup" />
+         <activity android:name="homework4.android.test.MyTestSimpleGroup" />
+         <activity android:name="homework4.android.test.MyTestLayoutGroup"  />
+         <activity android:name="homework4.android.test.MyTestAllTests" />
          <activity android:name=".test.TestHomework2"  />
-         <activity android:name=".test.TestWindowGroup"  />
-         <activity android:name=".test.TestInteractiveWindowGroup"  />    
-         <activity android:name=".test.TestNewRectBehavior" />
+         <activity android:name="homework4.android.test.MyTestWindowGroup"  />
+         <activity android:name="homework4.android.test.MyTestInteractiveWindowGroup"  />    
+         <activity android:name="homework4.android.test.MyTestNewRectBehavior" />
          <activity android:name=".app.DrawingEditor" />       
          <activity android:name=".test.TestHomework3" />            
+         <activity android:name=".test.TestHomework4" />   
+         <activity android:name=".test.MyTestNotifyPropertyChanged" />
     </application>
 
 </manifest>

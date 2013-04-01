@@ -7,9 +7,9 @@ import homework4.android.graphicalobject.SimpleGroup;
 import android.graphics.Color;
 import android.os.Bundle;
 
-public class BetterTestSimpleGroup extends BetterTestFrame {
+public class MyTestSimpleGroup extends MyTestFrame {
 
-	public BetterTestSimpleGroup() {
+	public MyTestSimpleGroup() {
 
 
 	}

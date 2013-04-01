@@ -50,8 +50,10 @@ public class ScaledGroup extends SimpleGroup {
 	}
 
 	public void setScaleX(double scaleX) {
+		double oldScale = m_scaleX;
 		m_scaleX = scaleX;
 		boundsChanged();
+		notifyDoublePropertyChanged("scalex", oldScale, scaleX);
 	}
 
 	public double getScaleY() {
@@ -59,7 +61,9 @@ public class ScaledGroup extends SimpleGroup {
 	}
 
 	public void setScaleY(double scaleY) {
+		double oldScale = m_scaleY;
 		m_scaleY = scaleY;
 		boundsChanged();
+		notifyDoublePropertyChanged("scaley", oldScale, scaleY);
 	}
 }

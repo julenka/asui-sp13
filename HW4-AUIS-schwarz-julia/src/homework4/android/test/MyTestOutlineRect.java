@@ -8,9 +8,9 @@ import android.os.Bundle;
  * Clone of TestOutlineRect execpt can be used in TestAllTests
  * @author julenka
  */
-public class BetterTestOutlineRect extends BetterTestFrame {
+public class MyTestOutlineRect extends MyTestFrame {
 
-	public BetterTestOutlineRect() {
+	public MyTestOutlineRect() {
 	}
 
 	@Override

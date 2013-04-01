@@ -46,9 +46,13 @@ public class Icon extends GraphicalObjectBase {
 	
 	@Override
 	public void moveTo(int x, int y) {
+		int oldX = m_x;
+		int oldY = m_y;
 		m_x = x;
 		m_y = y;
 		boundsChanged();
+		notifyIntPropertyChanged("x", oldX, x);
+		notifyIntPropertyChanged("y", oldY, y);
 	}
 
 	public int getX() {
@@ -56,8 +60,10 @@ public class Icon extends GraphicalObjectBase {
 	}
 
 	public void setX(int x) {
+		int oldX = m_x;
 		m_x = x;
 		boundsChanged();
+		notifyIntPropertyChanged("x", oldX, x);
 	}
 
 	public int getY() {
@@ -65,8 +71,10 @@ public class Icon extends GraphicalObjectBase {
 	}
 
 	public void setY(int y) {
+		int oldY = m_y;
 		m_y = y;
 		boundsChanged();
+		notifyIntPropertyChanged("y", oldY, y);
 	}
 
 	public Bitmap getImage() {

@@ -7,7 +7,7 @@ import homework4.android.graphicalobject.SelectionHandles;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
-public class TestSelectionHandles extends InteractiveWindowGroup {
+public class MyTestSelectionHandles extends InteractiveWindowGroup {
 
 	private SelectionHandles makeSelectableObject(GraphicalObject child)
 	{

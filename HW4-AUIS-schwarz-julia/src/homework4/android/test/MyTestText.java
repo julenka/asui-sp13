@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 
 
-public class TestText extends TestFrame {
+public class MyTestText extends TestFrame {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		Thread t = new Thread(new Runnable() {

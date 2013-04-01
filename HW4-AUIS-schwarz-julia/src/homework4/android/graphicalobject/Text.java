@@ -83,8 +83,10 @@ public class Text extends GraphicalObjectBase {
 	
 	public void setColor(int color)
 	{
+		int oldColor = m_paint.getColor();
 		m_paint.setColor(color);
 		doDamage();
+		notifyIntPropertyChanged("color", oldColor, color);
 	}
 	
 	public int getFontSize()
@@ -94,8 +96,10 @@ public class Text extends GraphicalObjectBase {
 	
 	public void setFontSize(int size)
 	{
+		int oldSize = (int)m_paint.getTextSize();
 		m_paint.setTextSize(size);
 		boundsChanged();
+		notifyIntPropertyChanged("fontsize", oldSize, size);
 	}
 
 	public Typeface getFont()
@@ -114,8 +118,10 @@ public class Text extends GraphicalObjectBase {
 	}
 
 	public void setY(int y) {
+		int oldY = m_y;
 		m_y = y;
 		boundsChanged();
+		notifyIntPropertyChanged("y", oldY, y);
 	}
 
 	public int getX() {
@@ -123,8 +129,10 @@ public class Text extends GraphicalObjectBase {
 	}
 
 	public void setX(int x) {
+		int oldX = m_x;
 		m_x = x;
 		boundsChanged();
+		notifyIntPropertyChanged("x", oldX, x);
 	}
 
 	public String getText() {

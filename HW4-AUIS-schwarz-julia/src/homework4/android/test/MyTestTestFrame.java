@@ -16,7 +16,7 @@ import android.util.Log;
 
 import android.graphics.Rect; //just to test
 
-public class TestTestFrame extends TestFrame{
+public class MyTestTestFrame extends TestFrame{
 	 public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		Thread t = new Thread(new Runnable() {

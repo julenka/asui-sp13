@@ -14,7 +14,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 
-public class TestWindowGroup extends WindowGroup {
+public class MyTestWindowGroup extends WindowGroup {
 	@Override
 	protected void setup()
 	{

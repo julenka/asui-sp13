@@ -12,9 +12,9 @@ import android.os.Bundle;
  * @author julenka
  *
  */
-public class BetterTestLayoutGropu extends BetterTestFrame {
+public class MyTestLayoutGropu extends MyTestFrame {
 
-	public BetterTestLayoutGropu() {
+	public MyTestLayoutGropu() {
 	}
 	
 	private void runLayoutTest(int nObjects, int layoutType)
