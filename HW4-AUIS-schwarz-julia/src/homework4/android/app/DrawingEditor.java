@@ -1,0 +1,115 @@
+package homework4.android.app;
+
+import homework4.android.behavior.Behavior;
+import homework4.android.behavior.ChoiceBehavior;
+import homework4.android.behavior.MoveBehavior;
+import homework4.android.behavior.NewLineBehavior;
+import homework4.android.behavior.NewRectBehavior;
+import homework4.android.graphicalobject.GraphicalObject;
+import homework4.android.graphicalobject.SelectionHandles;
+import homework4.android.graphicalobject.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+
+public class DrawingEditor extends InteractiveWindowGroup {
+
+	private Behavior newRect;
+	private Behavior newLine;
+	private Behavior moveBehavior;
+	private Behavior choiceBehavior;
+	private Text status;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void setup() {
+		println("Press 'l' to draw lines");
+		println("Press 'r' to draw rectangles");
+		println("Press 's' to enter selection mode");
+		println("Press 'm' to enter move mode");
+		println("Currently drawing lines");
+		
+		newRect = new NewRectBehavior(Color.RED, 5, this);
+		newLine = new NewLineBehavior(Color.BLUE, 7, this);
+		moveBehavior = new MoveBehavior(this);
+		choiceBehavior = new ChoiceBehavior(this);
+		
+		m_behaviors.add(newLine);
+	}
+
+	private SelectionHandles makeSelectableObject(GraphicalObject child)
+	{
+		SelectionHandles result = new SelectionHandles(0, 0, 100, 100);
+		result.addChild(child);
+		return result;
+	}
+	
+	private void addSelectionHandles()
+	{
+		Log.v("Homework3." + getClass().getSimpleName(), "adding selection handles, children size is " + getChildren().size());
+		List<GraphicalObject> childrenCopy = new ArrayList<GraphicalObject>(getChildren());
+		for (GraphicalObject child : childrenCopy) {
+			removeChild(child);
+			addChild(makeSelectableObject(child));
+		}
+		Log.v("Homework3." + getClass().getSimpleName(), "done adding selection handles, children size is " + getChildren().size());
+	}
+	
+	private void removeSelectionHandles()
+	{
+		List<GraphicalObject> childrenCopy = new ArrayList<GraphicalObject>(getChildren());
+		for (GraphicalObject child : childrenCopy) {
+			if(child instanceof SelectionHandles)
+			{
+				SelectionHandles sh = (SelectionHandles)child;
+				removeChild(child);
+				for (GraphicalObject child2 : sh.getChildren()) {
+					addChild(child2);
+				}
+			}
+		}
+	}
+	
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(!(keyCode == KeyEvent.KEYCODE_R || keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_L || keyCode == KeyEvent.KEYCODE_M))
+			return super.onKeyDown(keyCode, event);
+		
+		m_behaviors.clear();
+		removeSelectionHandles();
+		// TODO Auto-generated method stub
+		if(keyCode == KeyEvent.KEYCODE_R)
+		{
+			m_behaviors.add(newRect);
+			println("currently drawing rectangles");
+		} else if (keyCode == KeyEvent.KEYCODE_S)
+		{
+			// todo: make all the items selectable
+			m_behaviors.add(choiceBehavior);
+			addSelectionHandles();
+			println("currently selecting items");
+		}else if (keyCode == KeyEvent.KEYCODE_L)
+		{
+			m_behaviors.add(newLine);
+			println("currently drawing lines");
+		}else if (keyCode == KeyEvent.KEYCODE_M)
+		{
+			m_behaviors.add(moveBehavior);
+			println("currently moving items");
+		}
+		return true;
+	}
+
+}
