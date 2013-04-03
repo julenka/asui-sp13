@@ -75,8 +75,8 @@ public class FilledRect extends GraphicalObjectBase {
 		m_rect.top = y;
 		m_rect.bottom += dy;
 		boundsChanged();
-		notifyIntPropertyChanged("x", oldX, x);
-		notifyIntPropertyChanged("y", oldY, y);
+		notifyPropertyChanged("X", oldX, x);
+		notifyPropertyChanged("Y", oldY, y);
 	}
 
 	protected void updateBounds()
@@ -99,7 +99,7 @@ public class FilledRect extends GraphicalObjectBase {
 		m_rect.right += dx;
 		
 		boundsChanged();
-		notifyIntPropertyChanged("x", oldX, x);
+		notifyPropertyChanged("X", oldX, x);
 	}
 
 	public int getY() {
@@ -112,7 +112,7 @@ public class FilledRect extends GraphicalObjectBase {
 		m_rect.top = y;
 		m_rect.bottom += dy;
 		boundsChanged();
-		notifyIntPropertyChanged("y", oldY, y);
+		notifyPropertyChanged("Y", oldY, y);
 	}
 
 	public int getWidth() {
@@ -123,7 +123,7 @@ public class FilledRect extends GraphicalObjectBase {
 		int oldWidth = m_rect.right - m_rect.left;
 		m_rect.right = m_rect.left + width;
 		boundsChanged();
-		notifyIntPropertyChanged("width", oldWidth, width);
+		notifyPropertyChanged("Width", oldWidth, width);
 	}
 
 	public int getHeight() {
@@ -134,7 +134,7 @@ public class FilledRect extends GraphicalObjectBase {
 		int oldHeight = m_rect.bottom - m_rect.top;
 		m_rect.bottom = m_rect.top + height;
 		boundsChanged();
-		notifyIntPropertyChanged("height", oldHeight, height);
+		notifyPropertyChanged("Height", oldHeight, height);
 	}
 
 	public int getColor() {
@@ -145,7 +145,7 @@ public class FilledRect extends GraphicalObjectBase {
 		int oldColor = m_paint.getColor();
 		m_paint.setColor(color);
 		boundsChanged();
-		notifyIntPropertyChanged("color", oldColor, color);
+		notifyPropertyChanged("Color", oldColor, color);
 	}
 
 }

@@ -85,8 +85,8 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		m_x = x;
 		m_y = y;
 		boundsChanged();
-		notifyIntPropertyChanged("x", oldX, x);
-		notifyIntPropertyChanged("y", oldY, y);
+		notifyPropertyChanged("x", oldX, x);
+		notifyPropertyChanged("y", oldY, y);
 	}
 
 	@Override
@@ -202,7 +202,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		int oldX = m_x;
 		m_x = x;
 		boundsChanged();
-		notifyIntPropertyChanged("x", oldX, x);
+		notifyPropertyChanged("X", oldX, x);
 	}
 	public int getY() {
 		return m_y;
@@ -211,7 +211,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		int oldY = m_y;
 		m_y = y;
 		boundsChanged();
-		notifyIntPropertyChanged("y", oldY, y);
+		notifyPropertyChanged("Y", oldY, y);
 	}
 	public int getWidth() {
 		return m_width;
@@ -220,7 +220,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		int oldWidth = m_width;
 		m_width = width;
 		boundsChanged();
-		notifyIntPropertyChanged("width", oldWidth, width);
+		notifyPropertyChanged("Width", oldWidth, width);
 	}
 	public int getHeight() {
 		return m_height;
@@ -231,7 +231,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		m_height = height;
 		boundsChanged();
 		
-		notifyIntPropertyChanged("height", oldHeight, height);
+		notifyPropertyChanged("Height", oldHeight, height);
 	}
 
 }

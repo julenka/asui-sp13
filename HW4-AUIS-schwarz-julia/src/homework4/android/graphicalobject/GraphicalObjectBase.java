@@ -152,52 +152,34 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 	 * Constraints
 	 */
 	// for now, only support constraints on int and float properties
-	Map<String, List<IPropertyChangedListener<Integer>>> m_intChangedListeners = new HashMap<String, List<IPropertyChangedListener<Integer>>>();
-	Map<String, List<IPropertyChangedListener<Double>>> m_floatChangedListeners = new HashMap<String, List<IPropertyChangedListener<Double>>>();
-	
-	// TODO: figure out how to support any property changed (not just ints and floats)
-	public void addIntPropertyChangedListener(String propertyName, IPropertyChangedListener<Integer> listener)
-	{
-		addPropertyChangedListener(propertyName, listener, m_intChangedListeners);
-	}
-	
-	public void addDoublePropertyChangedListener(String propertyName, IPropertyChangedListener<Double> listener)
-	{
-		addPropertyChangedListener(propertyName, listener, m_floatChangedListeners);	
-	}
+	Map<String, List<IPropertyChangedListener<Object>>> m_propertyChangedListeners = new HashMap<String, List<IPropertyChangedListener<Object>>>();
 
-	private  <E> void addPropertyChangedListener(String propertyName, 
-			IPropertyChangedListener<E> listener, 
-			Map<String, List<IPropertyChangedListener<E>>> map)
+	public  <E> void addPropertyChangedListener(String propertyName, 
+			IPropertyChangedListener<E> listener)
 	{
-		if(!map.containsKey(propertyName)) map.put(propertyName, new ArrayList<IPropertyChangedListener<E>>());
-		List<IPropertyChangedListener<E>> lst = map.get(propertyName);
-		lst.add(listener);
+		if(!m_propertyChangedListeners.containsKey(propertyName)) m_propertyChangedListeners.put(propertyName, new ArrayList<IPropertyChangedListener<Object>>());
+		List<IPropertyChangedListener<Object>> lst = m_propertyChangedListeners.get(propertyName);
+		
+		lst.add((IPropertyChangedListener<Object>)listener);
+		
 		Log.v(LOG_TAG, "added listener for property" + propertyName );
-	}
-
-	protected void notifyIntPropertyChanged(String propertyName, int oldValue, int newValue)
-	{
-		if(oldValue == newValue) return;
-		notifyPropertyChanged(propertyName, oldValue, newValue, m_intChangedListeners);
 	}
 
 	protected void notifyDoublePropertyChanged(String propertyName, double oldValue, double newValue)
 	{
 		if(Math.abs(oldValue - newValue) < 0.000000001) return;
-		notifyPropertyChanged(propertyName, oldValue, newValue, m_floatChangedListeners);
+		notifyPropertyChanged(propertyName, oldValue, newValue);
 	}
-
-	private <E> void notifyPropertyChanged(String propertyName, E oldValue, E newValue, 
-			Map<String, List<IPropertyChangedListener<E>>> map)
+	
+	public <E> void notifyPropertyChanged(String propertyName, E oldValue, E newValue)
 	{
-		List<IPropertyChangedListener<E>> lst = map.get(propertyName);
+		List<IPropertyChangedListener<Object>> lst = m_propertyChangedListeners.get(propertyName);
 		if(lst == null)
 		{
 			Log.v(LOG_TAG, "notifyPropertyChanged: no listeners for property name " + propertyName + " registered!");
 			return;
 		}
-		for (IPropertyChangedListener<E> listener : lst) 
+		for (IPropertyChangedListener<Object> listener : lst) 
 		{
 			listener.onPropertyChanged(oldValue, newValue);
 		}

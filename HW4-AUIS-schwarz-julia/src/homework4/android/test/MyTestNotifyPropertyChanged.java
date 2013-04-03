@@ -12,7 +12,6 @@ public class MyTestNotifyPropertyChanged extends InteractiveWindowGroup {
 
 	@Override
 	protected void setup() {
-		// TODO Auto-generated method stub
 		final OutlineRect r = new OutlineRect(20, 20, 100, 100, Color.BLUE, 5);
 		addChild(r);
 		
@@ -21,7 +20,7 @@ public class MyTestNotifyPropertyChanged extends InteractiveWindowGroup {
 		
 		final Text t = new Text("box location goes here", 10, 20, Typeface.SANS_SERIF, 18, Color.BLACK);
 		addChild(t);
-		r.addIntPropertyChangedListener("x", new IPropertyChangedListener<Integer>() {
+		r.addPropertyChangedListener("Y", new IPropertyChangedListener<Integer>() {
 			
 			@Override
 			public void onPropertyChanged(Integer oldValue, Integer newValue) {
@@ -31,7 +30,7 @@ public class MyTestNotifyPropertyChanged extends InteractiveWindowGroup {
 		});
 		
 		
-		r.addIntPropertyChangedListener("y", new IPropertyChangedListener<Integer>() {
+		r.addPropertyChangedListener("Y", new IPropertyChangedListener<Integer>() {
 			
 			@Override
 			public void onPropertyChanged(Integer oldValue, Integer newValue) {
@@ -39,9 +38,6 @@ public class MyTestNotifyPropertyChanged extends InteractiveWindowGroup {
 				t.setText(r.getX() + ", " + r.getY());
 			}
 		});
-		// add a move behavior to this rectangle
-		// add a listener to the rectangle
-		// when it changes, change the text
 	}
 	
 	

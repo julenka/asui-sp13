@@ -51,8 +51,8 @@ public class Icon extends GraphicalObjectBase {
 		m_x = x;
 		m_y = y;
 		boundsChanged();
-		notifyIntPropertyChanged("x", oldX, x);
-		notifyIntPropertyChanged("y", oldY, y);
+		notifyPropertyChanged("X", oldX, x);
+		notifyPropertyChanged("Y", oldY, y);
 	}
 
 	public int getX() {
@@ -63,7 +63,7 @@ public class Icon extends GraphicalObjectBase {
 		int oldX = m_x;
 		m_x = x;
 		boundsChanged();
-		notifyIntPropertyChanged("x", oldX, x);
+		notifyPropertyChanged("X", oldX, x);
 	}
 
 	public int getY() {
@@ -74,7 +74,7 @@ public class Icon extends GraphicalObjectBase {
 		int oldY = m_y;
 		m_y = y;
 		boundsChanged();
-		notifyIntPropertyChanged("y", oldY, y);
+		notifyPropertyChanged("Y", oldY, y);
 	}
 
 	public Bitmap getImage() {
