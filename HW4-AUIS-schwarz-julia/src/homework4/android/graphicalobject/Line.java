@@ -90,12 +90,12 @@ public class Line extends GraphicalObjectBase {
 		return (int)m_paint.getStrokeWidth();
 	}
 	
-	public void setLineThickenss(int t)
+	public void setLineThickness(int t)
 	{
 		int oldThickness = (int)m_paint.getStrokeWidth();
 		m_paint.setStrokeWidth(t);
 		boundsChanged();
-		notifyPropertyChanged("StrokeThickness", oldThickness, t);
+		notifyPropertyChanged("LineThickness", oldThickness, t);
 	}
 	
 	public int getX1() {

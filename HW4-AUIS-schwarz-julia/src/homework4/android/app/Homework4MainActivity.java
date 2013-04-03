@@ -66,6 +66,7 @@ public class Homework4MainActivity extends Activity {
         context = this;
         root = (LinearLayout) findViewById(R.id.root);
         addText("Homework 4 Tests");
+        addTestButton(NodeEdgeEditor.class);
         addTestButton(TestHomework4.class);
         addTestButton(MyTestNotifyPropertyChanged.class);
         
