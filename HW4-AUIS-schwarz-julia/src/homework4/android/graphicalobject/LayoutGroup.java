@@ -79,7 +79,7 @@ public class LayoutGroup extends SimpleGroup {
 		int oldOffset = m_offset;
 		m_offset = offset;
 		updateLayout();
-		notifyIntPropertyChanged("offset", oldOffset, offset);
+		notifyIntPropertyChanged("Offset", oldOffset, offset);
 	}
 
 	public int getLayout() {
@@ -87,8 +87,10 @@ public class LayoutGroup extends SimpleGroup {
 	}
 
 	public void setLayout(int layout) {
+		int oldLayout = m_layout;
 		m_layout = layout;
 		updateLayout();
+		notifyIntPropertyChanged("Layout", oldLayout, layout);
 	}
 
 }

@@ -46,7 +46,7 @@ public class TestHomework4 extends TestFrame {
 	private void test(){
 		Log.d("DV", "test()  == "+this);	
 
-		try {
+//		try {
 
 			println ("1. creating blue and red rects");
 			final OutlineRect blueRect = new OutlineRect (0, 0, 50, 80, Color.BLUE, 5);
@@ -69,38 +69,38 @@ public class TestHomework4 extends TestFrame {
 			println ("     red should move to be at 80,30");
 			pause();
 			
-			IIntGetter redYGetter = new IIntGetter() {
-				
-				@Override
-				public int getValue() {
-					return redRect.getY();
-				}
-			}; 
-			IIntSetter redYSetter = new IIntSetter() {
-				
-				@Override
-				public void setValue(int value) {
-					redRect.setY(value);
-				}
-			};
+//			IIntGetter redYGetter = new IIntGetter() {
+//				
+//				@Override
+//				public int getValue() {
+//					return redRect.getY();
+//				}
+//			}; 
+//			IIntSetter redYSetter = new IIntSetter() {
+//				
+//				@Override
+//				public void setValue(int value) {
+//					redRect.setY(value);
+//				}
+//			};
+//			
+//			IIntGetter blueYGetter = new IIntGetter() {
+//				
+//				@Override
+//				public int getValue() {
+//					return blueRect.getY();
+//				}
+//			}; 
+//			IIntSetter blueYSetter = new IIntSetter() {
+//				
+//				@Override
+//				public void setValue(int value) {
+//					blueRect.setY(value);
+//				}
+//			};
 			
-			IIntGetter blueYGetter = new IIntGetter() {
-				
-				@Override
-				public int getValue() {
-					return blueRect.getY();
-				}
-			}; 
-			IIntSetter blueYSetter = new IIntSetter() {
-				
-				@Override
-				public void setValue(int value) {
-					blueRect.setY(value);
-				}
-			};
-			
-			IntVariable redY = new IntProperty((OutlineRect)redRect, "y", redYGetter, redYSetter);
-			IntVariable blueY = new IntProperty((OutlineRect)blueRect, "y", blueYGetter, blueYSetter);
+			IntVariable redY = new IntProperty((OutlineRect)redRect, "y", "getY", "setY");
+			IntVariable blueY = new IntProperty((OutlineRect)blueRect, "y", "getY", "setY");
 			
 			m_constraints.add(new EqualIntConstraint(redY, blueY));
 			
@@ -121,6 +121,6 @@ public class TestHomework4 extends TestFrame {
 
 			println ("DONE. close the window to stop");
 
-		} catch(Exception e) { println ("got an exception " + e); }
+//		} catch(Exception e) { println ("got an exception " + e); }
 	}
 }

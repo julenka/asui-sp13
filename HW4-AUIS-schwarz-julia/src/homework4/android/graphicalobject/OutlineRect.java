@@ -21,7 +21,9 @@ public class OutlineRect extends FilledRect {
 	}
 	
 	public void setLineThickness(int lineThickness) {
+		int oldThickness = (int)m_paint.getStrokeWidth();
 		m_paint.setStrokeWidth(lineThickness);
+		notifyIntPropertyChanged("LineThickness", oldThickness, lineThickness);
 		boundsChanged();
 	}
 	
