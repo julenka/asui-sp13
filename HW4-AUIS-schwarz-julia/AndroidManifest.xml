@@ -39,6 +39,8 @@
          <activity android:name=".test.TestHomework4" />   
          <activity android:name=".test.MyTestNotifyPropertyChanged" />
          <activity android:name=".app.NodeEdgeEditor" />
+         <activity android:name=".test.ValueRectTest"/>
+         <activity android:name=".test.MyConstraintsTest"/>
     </application>
 
 </manifest>

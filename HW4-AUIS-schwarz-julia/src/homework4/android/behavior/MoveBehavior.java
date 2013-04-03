@@ -14,9 +14,9 @@ public class MoveBehavior extends BehaviorBase{
 	
 	static final String LOG_TAG="Homework3.MoveBehavrior";
 		
-	private GraphicalObject m_childToMove;
+	protected GraphicalObject m_childToMove;
 	
-	private Point m_childStartLocation = new Point();
+	protected Point m_childStartLocation = new Point();
 	
 
 	public MoveBehavior() {
@@ -75,7 +75,6 @@ public class MoveBehavior extends BehaviorBase{
 		
 		m_childToMove.moveTo(m_childStartLocation.x + dx, m_childStartLocation.y + dy);
 		
-		Log.v(LOG_TAG, "running inside x: " + event.getX() + " y: " + event.getY());
 	}
 	
 	protected void doRunningOutside(BehaviorEvent event)

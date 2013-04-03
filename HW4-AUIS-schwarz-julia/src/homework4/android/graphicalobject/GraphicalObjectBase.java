@@ -173,6 +173,7 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 	
 	public <E> void notifyPropertyChanged(String propertyName, E oldValue, E newValue)
 	{
+		if(oldValue.equals(newValue)) return;
 		List<IPropertyChangedListener<Object>> lst = m_propertyChangedListeners.get(propertyName);
 		if(lst == null)
 		{

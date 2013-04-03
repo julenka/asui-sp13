@@ -66,7 +66,21 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	private BehaviorEvent behaviorEventToGroup(BehaviorEvent in, Group g)
 	{
 		Point parentSpace = new Point(in.getX(), in.getY());
-		Point childSpace = g.parentToChild(parentSpace);
+		List<Group> parents = new ArrayList<Group>();
+		Group curParent = g.getGroup();
+
+		while(curParent != this && curParent != null)
+		{
+			parents.add(curParent);
+			curParent = curParent.getGroup();
+		}
+		Point childSpace = parentSpace; // g.parentToChild(parentSpace);
+		
+		for (int i = parents.size() - 1; i >=0; i--) {
+			childSpace = parents.get(i).parentToChild(childSpace);
+		}
+		childSpace = g.parentToChild(childSpace);
+		
 		return new BehaviorEvent(in.getID(), in.getModifiers(), in.getKey(), childSpace.x, childSpace.y);
 	}
 
@@ -80,7 +94,8 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 	// b shoul not be null
 	private boolean canStartBehavior(Behavior b, BehaviorEvent bEvent)
 	{
-		if(!b.getGroup().contains(bEvent.getX(), bEvent.getY())) return false;	
+		BehaviorEvent childSpace = behaviorEventToGroup(bEvent, b.getGroup());
+//		if(!b.getGroup().contains(childSpace.getX(), childSpace.getY())) return false;	
 		if(!bEvent.matches(b.getStartEvent())) return false;
 		return true;
 	}
