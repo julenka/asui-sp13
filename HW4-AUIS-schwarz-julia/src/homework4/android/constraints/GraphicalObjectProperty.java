@@ -28,6 +28,7 @@ public class GraphicalObjectProperty<E> extends Variable<E>{
 		updateGetMethod(propertyName);
 		updateSetMethod(propertyName);
 		
+		// when the property we care about changes, invalidate this variable (update all constraints that depend on it)
 		m_graphicalObject.addPropertyChangedListener(propertyName, new IPropertyChangedListener<Integer>() {
 			
 			@Override
