@@ -3,6 +3,11 @@ package homework4.android.constraints;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an simple int value, isn't tied to a constant
+ * @author julenka
+ *
+ */
 public class IntVariable extends Variable<Integer> {
 
 	int m_value = 0;

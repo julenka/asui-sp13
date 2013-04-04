@@ -2,6 +2,11 @@ package homework4.android.constraints;
 
 import java.util.List;
 
+/**
+ * Algorithm that sets a product variable to the the product of an arbitrary number of factors 
+ * @author julenka
+ *
+ */
 public class IntProductConstraint extends Constraint {
 
 	Variable <Integer> m_product;

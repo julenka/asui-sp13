@@ -1,5 +1,10 @@
 package homework4.android.constraints;
 
+/**
+ * Constraint that sets a dependent variable to be the difference of an arbitrary number of variables
+ * @author julenka
+ *
+ */
 public class IntDifferenceConstraint extends Constraint {
 	Variable <Integer> m_difference;
 	Variable<Integer>[] m_factors;

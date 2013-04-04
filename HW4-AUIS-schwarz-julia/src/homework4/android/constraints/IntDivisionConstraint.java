@@ -1,5 +1,9 @@
 package homework4.android.constraints;
-
+/**
+ * Constraints that sets a quotient to be the division of a numerator and denominator.
+ * @author julenka
+ *
+ */
 public class IntDivisionConstraint extends Constraint {
 	Variable <Integer> m_quotient;
 	Variable<Integer> m_numerator;

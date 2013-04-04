@@ -1,5 +1,10 @@
 package homework4.android.constraints;
 
+/**
+ * Constraint that sets a sum variable to be te sum of an arbitrary number of addends
+ * @author julenka
+ *
+ */
 public class IntSumConstraint extends Constraint {
 	Variable <Integer> m_sum;
 	Variable<Integer>[] m_addends;

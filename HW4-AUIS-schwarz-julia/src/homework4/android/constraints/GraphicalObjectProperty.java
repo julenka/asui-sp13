@@ -43,7 +43,6 @@ public class GraphicalObjectProperty<E> extends Variable<E>{
 			m_getMethod = m_graphicalObject.getClass().getMethod("get" + propertyName);
 		} catch (NoSuchMethodException e) {
 			Log.e(LOG_TAG, e.getMessage());
-			e.printStackTrace();
 		}
 	}
 	
@@ -52,8 +51,7 @@ public class GraphicalObjectProperty<E> extends Variable<E>{
 		try {
 			m_setMethod = m_graphicalObject.getClass().getMethod("set" + propertyName, int.class);
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(LOG_TAG, e.getMessage());
 		}
 	}
 
@@ -62,14 +60,11 @@ public class GraphicalObjectProperty<E> extends Variable<E>{
 		try {
 			m_setMethod.invoke(m_graphicalObject, value);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(LOG_TAG, e.getMessage());
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(LOG_TAG, e.getMessage());
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(LOG_TAG, e.getMessage());
 		}
 	}
 
@@ -79,14 +74,11 @@ public class GraphicalObjectProperty<E> extends Variable<E>{
 		try {
 			return (E) m_getMethod.invoke(m_graphicalObject);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(LOG_TAG, e.getMessage());
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(LOG_TAG, e.getMessage());
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(LOG_TAG, e.getMessage());
 		}
 		return null;
 	}
