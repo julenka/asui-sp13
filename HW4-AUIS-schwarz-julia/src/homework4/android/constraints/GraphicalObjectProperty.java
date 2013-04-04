@@ -7,6 +7,15 @@ import java.lang.reflect.Method;
 
 import android.util.Log;
 
+/**
+ * Encapsulates any property of a graphical object as a Variable that can be constrained
+ * Assumes that graphical object properties are accessed using getPropertyName 
+ * and setPropertyName
+ * propertyName can then be specified.
+ * @author Julia
+ *
+ * @param <E>
+ */
 public class GraphicalObjectProperty<E> extends Variable<E>{
 	GraphicalObjectBase m_graphicalObject;
 	
@@ -28,11 +37,12 @@ public class GraphicalObjectProperty<E> extends Variable<E>{
 		});
 	}
 	
+	final String LOG_TAG = "Homework4.GraphicalObjectProperty";
 	private void updateGetMethod(String propertyName){
 		try {
 			m_getMethod = m_graphicalObject.getClass().getMethod("get" + propertyName);
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
+			Log.e(LOG_TAG, e.getMessage());
 			e.printStackTrace();
 		}
 	}

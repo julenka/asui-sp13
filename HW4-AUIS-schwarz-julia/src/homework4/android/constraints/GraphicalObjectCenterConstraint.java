@@ -7,6 +7,15 @@ import java.util.List;
 
 import android.graphics.SumPathEffect;
 
+/**
+ * Provides generalized centering of any graphical object.
+ * Graphical objects can specify which properties are use for the centering.
+ * Centering works as follows:
+ * dependent.x = (independent.x + independent.width - dependent.width)/2
+ * the .x .width properties can be specified (nice and general) 
+ * @author Julia
+ *
+ */
 public class GraphicalObjectCenterConstraint extends Constraint {
 
 	List<Constraint> m_constraints;

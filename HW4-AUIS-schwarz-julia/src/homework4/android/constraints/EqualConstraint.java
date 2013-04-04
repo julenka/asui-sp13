@@ -1,5 +1,12 @@
 package homework4.android.constraints;
 
+/**
+ * Sets one object to be equal to another object. One-way. Dependent variable is 
+ * updated when independent variable changes.
+ * @author Julia
+ *
+ * @param <E>
+ */
 public class EqualConstraint<E> extends Constraint {
 
 	Variable<E> m_dep;

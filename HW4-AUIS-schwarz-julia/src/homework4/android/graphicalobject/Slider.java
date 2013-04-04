@@ -4,6 +4,12 @@ import homework4.android.constraints.EqualConstraint;
 import homework4.android.constraints.GraphicalObjectProperty;
 import android.graphics.Color;
 
+/**
+ * Slider widget implemented for ValueRectTest and MyConstraintsTest
+ * Exposes a value property which can be used to modify properties of other objects
+ * @author Julia
+ *
+ */
 public class Slider extends SimpleGroup
 {
 	int m_value;
