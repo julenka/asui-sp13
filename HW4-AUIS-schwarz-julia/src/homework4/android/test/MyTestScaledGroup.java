@@ -13,7 +13,6 @@ import android.graphics.Color;
 public class MyTestScaledGroup extends MyTestFrame {
 
 	public MyTestScaledGroup() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

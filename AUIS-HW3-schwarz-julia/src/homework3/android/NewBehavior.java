@@ -14,9 +14,6 @@ public abstract class NewBehavior extends BehaviorBase {
 	 where it is.
 	 */
 	
-	// TODO: can we declare abstract methods in a non-abstract class?
-	// TODO: figure out how to create an abstract constructor
-
 	protected boolean m_onePoint;
 	protected GraphicalObject m_graphicalObject;
 	
@@ -67,7 +64,6 @@ public abstract class NewBehavior extends BehaviorBase {
 	
 	@Override
 	protected void onCancelled(BehaviorEvent event) {
-		// TODO add interim feedback via selection handles
 		Log.v(LOG_TAG, "cancelled");
 		m_group.removeChild(m_graphicalObject);
 		
@@ -75,7 +71,6 @@ public abstract class NewBehavior extends BehaviorBase {
 	
 	@Override
 	protected void onStopped(BehaviorEvent event) {
-		// TODO  get rid eof interim feedback and add the real item.
 	}
 	
     

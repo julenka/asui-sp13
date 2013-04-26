@@ -24,7 +24,6 @@ public class MyTestNotifyPropertyChanged extends InteractiveWindowGroup {
 			
 			@Override
 			public void onPropertyChanged(Integer oldValue, Integer newValue) {
-				// TODO Auto-generated method stub
 				t.setText(r.getX() + ", " + r.getY());
 			}
 		});
@@ -34,7 +33,6 @@ public class MyTestNotifyPropertyChanged extends InteractiveWindowGroup {
 			
 			@Override
 			public void onPropertyChanged(Integer oldValue, Integer newValue) {
-				// TODO Auto-generated method stub
 				t.setText(r.getX() + ", " + r.getY());
 			}
 		});

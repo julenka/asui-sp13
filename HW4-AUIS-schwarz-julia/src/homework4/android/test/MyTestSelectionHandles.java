@@ -18,17 +18,12 @@ public class MyTestSelectionHandles extends InteractiveWindowGroup {
 	
 	@Override
 	protected void setup() {
-		// TODO Auto-generated method stub
 		
 		LayoutGroup buttons = new LayoutGroup(10, 10, 700 - 10, 400, HORIZONTAL, 10);
 		
 		for (int i = 0; i < 5; i++) {
 //			buttons.add(makeSelectableObject(new Text("object" + i, 0, 0,Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL) , 14, Color.GREEN)));	
 		}
-		
-		
-		// add selection to the region
-
 	}
 
 }

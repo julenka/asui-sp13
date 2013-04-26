@@ -58,7 +58,6 @@ public class MyTestAllTests extends MyTestFrame {
 	
 	@Override
 	public void unpause() {
-		// TODO Auto-generated method stub
 		super.unpause();
 		m_curFrame.unpause();
 	}

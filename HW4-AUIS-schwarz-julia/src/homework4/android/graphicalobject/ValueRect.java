@@ -29,7 +29,6 @@ public class ValueRect extends OutlineRect
 	}
 	@Override
 	public void doDraw(Canvas graphics, Path clipShape) {
-		// TODO Auto-generated method stub
 		super.doDraw(graphics, clipShape);
 		
 		graphics.save();

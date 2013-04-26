@@ -105,8 +105,6 @@ public class DrawView extends View {
 	
 	@Override
 	public void invalidate() {
-		// TODO Auto-generated method stub
 		super.invalidate();
-//		Log.v("Homework3.DrawView", "invalidating...");
 	}
 }

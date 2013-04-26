@@ -51,7 +51,6 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		if(keyCode == KeyEvent.KEYCODE_S)
 		{
 			m_choiceBehavior.setType((m_choiceBehavior.getType() + 1) % 3);

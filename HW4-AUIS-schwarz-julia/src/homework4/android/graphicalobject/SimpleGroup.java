@@ -114,7 +114,6 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 
 	@Override
 	public void bringChildToFront(GraphicalObject child) {
-		// TODO: what if the child isn't in the list of children?
 		m_children.remove(child);
 		// add it to the back
 		m_children.add(child);

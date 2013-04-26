@@ -30,7 +30,6 @@ public class IntSumConstraint extends Constraint {
 		for (Variable<Integer> f : m_addends) {
 			f.addConstraint(this);
 		}
-		// TODO: factor out evalute()
 		evaluate();
 	}
 

@@ -167,8 +167,6 @@ public abstract class BehaviorBase implements Behavior {
 	// cancel() is called when the cancel event occurs (usually ESC, but you can make it settable). 
 	// It should cancel the Behavior as if it had never started, and return the Behavior to an idle state.
 	public void cancel(BehaviorEvent event) {
-		// TODO: restore everything
-		
 		m_state = IDLE;
 		onCancelled(event);
 

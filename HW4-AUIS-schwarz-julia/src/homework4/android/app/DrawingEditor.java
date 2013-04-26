@@ -27,7 +27,6 @@ public class DrawingEditor extends InteractiveWindowGroup {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
 
@@ -89,14 +88,12 @@ public class DrawingEditor extends InteractiveWindowGroup {
 		
 		m_behaviors.clear();
 		removeSelectionHandles();
-		// TODO Auto-generated method stub
 		if(keyCode == KeyEvent.KEYCODE_R)
 		{
 			m_behaviors.add(newRect);
 			println("currently drawing rectangles");
 		} else if (keyCode == KeyEvent.KEYCODE_S)
 		{
-			// todo: make all the items selectable
 			m_behaviors.add(choiceBehavior);
 			addSelectionHandles();
 			println("currently selecting items");

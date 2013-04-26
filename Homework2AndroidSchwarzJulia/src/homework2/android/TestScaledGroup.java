@@ -7,7 +7,6 @@ import android.graphics.Color;
 public class TestScaledGroup extends BetterTestFrame {
 
 	public TestScaledGroup() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

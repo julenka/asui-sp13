@@ -97,7 +97,6 @@ public class SelectionHandles extends SimpleGroup implements Selectable {
 		
 		if(m_interimSelected)
 		{
-			// TODO: draw the entire rect inside the region, offsetting corectly
 			m_selectionPaint.setColor(Color.GRAY);
 			drawCorners(graphics);
 		}

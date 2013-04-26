@@ -52,7 +52,6 @@ public class NodeEdgeEditor extends InteractiveWindowGroup {
 	List<Constraint> m_constraints = new ArrayList<Constraint>();
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
 
@@ -118,7 +117,6 @@ public class NodeEdgeEditor extends InteractiveWindowGroup {
 
 	@Override
 	public boolean onDrawViewTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub
 		
 		boolean handled = false;
 		if(m_mode == EditorMode.Move) return super.onDrawViewTouchEvent(event);

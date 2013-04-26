@@ -83,7 +83,6 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 
 	public boolean onDrawViewTouchEvent(MotionEvent event)
 	{
-		//TODO: support multitouch
 		BehaviorEvent bEvent = motionToBehaviorEvent(event);
 		dispatchBehaviorEvent(bEvent);
 		onDispatchCompleted();
