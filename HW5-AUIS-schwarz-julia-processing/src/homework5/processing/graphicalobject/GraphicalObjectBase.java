@@ -14,6 +14,7 @@ import java.util.Map;
 import processing.core.PGraphics;
 import processing.core.PGraphicsJava2D;
 import processing.core.PMatrix;
+import processing.core.PMatrix2D;
 
 /**
  * Base class for all graphical objects, including groups (which are also graphical objects). 
@@ -27,7 +28,7 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 
 	// the parent group
 	protected Group m_group;
-	protected PMatrix m_transform;
+	protected PMatrix2D m_transform = new PMatrix2D();
 	
 	// the transformation matrix to use 
 	// protected PMatrix m_transform = new Matrix();
@@ -146,12 +147,12 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 	}
 
 	@Override
-	public void setAffineTransform(PMatrix af) {
+	public void setAffineTransform(PMatrix2D af) {
 		m_transform = af;
 	}
 
 	@Override
-	public PMatrix getAffineTransform() {
+	public PMatrix2D getAffineTransform() {
 		return m_transform;
 	}
 	

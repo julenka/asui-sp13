@@ -4,7 +4,7 @@ import homework5.processing.core.BoundaryRectangle;
 import java.awt.Shape;
 
 import processing.core.PGraphics;
-import processing.core.PMatrix;
+import processing.core.PMatrix2D;
 
 public interface GraphicalObject {
 	public void draw(PGraphics graphics, Shape clipShape);
@@ -15,8 +15,8 @@ public interface GraphicalObject {
 	public void setGroup(Group group);
 	public boolean contains(int x, int y);
 	
-	public void setAffineTransform(PMatrix af);
-	public PMatrix getAffineTransform();
+	public void setAffineTransform(PMatrix2D af);
+	public PMatrix2D getAffineTransform();
 	
 
 }

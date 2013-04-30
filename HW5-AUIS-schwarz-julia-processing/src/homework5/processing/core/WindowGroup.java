@@ -3,7 +3,6 @@ package homework5.processing.core;
 import homework5.processing.graphicalobject.GraphicalObject;
 import homework5.processing.graphicalobject.Group;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -12,9 +11,8 @@ import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.core.PGraphicsJava2D;
 import processing.core.PImage;
-import processing.core.PMatrix;
+import processing.core.PMatrix2D;
 
 public class WindowGroup extends PApplet implements Group  {
 	PImage m_canvasImg;
@@ -27,7 +25,7 @@ public class WindowGroup extends PApplet implements Group  {
 	@Override
 	public void setup() {
 		// TODO update back buffer when the size of the screen changes.
-		size(640, 480, JAVA2D);
+		size(720, 1080, JAVA2D);
 		m_canvas = createGraphics(width, height, JAVA2D);
 		m_canvas.background(255);
 		updateCanvas();
@@ -95,12 +93,12 @@ public class WindowGroup extends PApplet implements Group  {
 	}
 
 	@Override
-	public void setAffineTransform(PMatrix af) {
+	public void setAffineTransform(PMatrix2D af) {
 
 	}
 
 	@Override
-	public PMatrix getAffineTransform() {
+	public PMatrix2D getAffineTransform() {
 		return null;
 	}
 
