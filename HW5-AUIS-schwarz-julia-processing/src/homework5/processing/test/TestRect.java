@@ -16,7 +16,6 @@ public class TestRect extends WindowGroup {
 	
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
 		super.setup();
 		println("creating FilledRect, OutlineRect (click to continue)");
 		m_rect = new FilledRect(10, 10, 50, 50, Color.RED);
@@ -28,7 +27,6 @@ public class TestRect extends WindowGroup {
 
 	@Override
 	public void mouseClicked() {
-		// TODO Auto-generated method stub
 		super.mouseClicked();
 		m_step++;
 		if (m_step == 1)

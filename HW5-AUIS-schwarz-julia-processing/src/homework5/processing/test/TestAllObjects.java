@@ -5,6 +5,7 @@ import homework5.processing.graphicalobject.FilledRect;
 import homework5.processing.graphicalobject.Icon;
 import homework5.processing.graphicalobject.Line;
 import homework5.processing.graphicalobject.OutlineRect;
+import homework5.processing.graphicalobject.Text;
 
 import java.awt.Color;
 
@@ -30,10 +31,10 @@ public class TestAllObjects extends WindowGroup{
 		addChild(new Icon(loadImage("duke.gif"), 10, 200));
 		addChild(new Icon(loadImage("dog.gif"), 80, 200));
 
-//		addChild(new Text("going", 10, 350, Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL), 10, Color.BLACK));
-//		addChild(new Text("going", 70, 350, Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD), 14, Color.RED));
-//		addChild(new Text("gone", 140, 350, Typeface.create(Typeface.SERIF, Typeface.NORMAL), 24, Color.BLACK)); 				
-//		addChild(new Line(10, 350, 250, 350, Color.BLACK, 1));
+		addChild(new Text("going", 10, 350, createFont("Helvetica", 24), 24, Color.BLACK));
+		addChild(new Text("going", 70, 350, createFont("Helvetica", 24), 24, Color.RED));
+		addChild(new Text("gone", 140, 350, createFont("Helvetica", 24), 24, Color.BLUE)); 				
+		addChild(new Line(10, 350, 250, 350, Color.BLACK, 1));
 
 	}
 }
