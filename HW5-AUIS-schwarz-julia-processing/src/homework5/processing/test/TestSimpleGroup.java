@@ -93,13 +93,12 @@ public class TestSimpleGroup extends WindowGroup {
 	public void draw() {
 		// TODO Auto-generated method stub
 		super.draw();
-		int timesToMove = 30;
+		int timesToMove = 50;
 		if(m_step == 4 && m_counter < timesToMove)
 		{
 			int i = m_counter % m_toMove.length;
 			m_toMove[i].moveTo((int)random(200) - 50, (int)random(200) - 50);
 			m_counter++;
-			println(m_counter + "");
 		}
 	}
 	

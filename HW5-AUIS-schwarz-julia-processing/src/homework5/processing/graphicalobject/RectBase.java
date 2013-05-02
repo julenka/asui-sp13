@@ -1,10 +1,9 @@
-package homework5.processing.test;
+package homework5.processing.graphicalobject;
 
 import java.awt.Color;
 import java.awt.Shape;
 
 import processing.core.PGraphics;
-import homework5.processing.graphicalobject.GraphicalObjectBase;
 
 public abstract class RectBase extends GraphicalObjectBase {
 

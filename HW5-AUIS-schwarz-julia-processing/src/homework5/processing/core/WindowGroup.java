@@ -15,9 +15,7 @@ import processing.core.PImage;
 import processing.core.PMatrix2D;
 
 public class WindowGroup extends PApplet implements Group  {
-	PImage m_canvasImg;
-	PGraphics m_canvas;
-	boolean m_screenDirty ;
+	boolean m_screenDirty = true;
 	Rectangle m_clipShape;
 	LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
 
@@ -26,9 +24,7 @@ public class WindowGroup extends PApplet implements Group  {
 	public void setup() {
 		// TODO update back buffer when the size of the screen changes.
 		size(720, 1080, JAVA2D);
-		m_canvas = createGraphics(width, height, JAVA2D);
-		m_canvas.background(255);
-		updateCanvas();
+		background(255);
 		m_clipShape = new Rectangle(0, 0, width, height);
 	}
 
@@ -36,31 +32,17 @@ public class WindowGroup extends PApplet implements Group  {
 	public void draw() {
 		// TODO (extra) If the screen is damaged, redraw all parts that intersect clipping rect
 		if(m_screenDirty) {
-			updateCanvas();
+			fill(g.backgroundColor);
+			noStroke();
+			rect(m_damagedRegion.x, m_damagedRegion.y, m_damagedRegion.width, m_damagedRegion.height);
+			pushStyle();
+			draw(g, m_clipShape);
+			popStyle();
 			m_screenDirty = false;
 			m_damagedRegion = null;
 		}
-
-		// Blit the saved buffer to screen
-		image(m_canvasImg, 0, 0);
 	}
 
-	void updateCanvas() {
-		// draw the buffer
-		m_canvas.beginDraw();
-		m_canvas.pushStyle();
-		// clear damaged region
-		m_canvas.background(m_canvas.backgroundColor);
-		m_canvas.noStroke();
-		m_canvas.rect(m_damagedRegion.x, m_damagedRegion.y, m_damagedRegion.width, m_damagedRegion.height);
-		
-		// draw the region that has been damaged
-		draw(m_canvas, m_clipShape);
-		m_canvas.popStyle();
-		m_canvas.endDraw();
-		m_canvasImg = m_canvas.get(0, 0, m_canvas.width, m_canvas.height);
-	}
-	
 	/// Group interface
 
 	@Override

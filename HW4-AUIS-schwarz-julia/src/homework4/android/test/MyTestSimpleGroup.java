@@ -8,12 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 public class MyTestSimpleGroup extends MyTestFrame {
-
-	public MyTestSimpleGroup() {
-
-
-	}
-
 	@Override
 	protected void test() {
 		// After implementing OutlineRect and SimpleGroup, uncomment the testing code
@@ -39,6 +33,7 @@ public class MyTestSimpleGroup extends MyTestFrame {
 
 		FilledRect background = new FilledRect(0,0,180,180, Color.LTGRAY);
 		group.addChild(background);
+		
 		println("creating Rects at random places");
 		GraphicalObject[] objects = new GraphicalObject[nObjects];
 		int[] colors = { Color.BLACK, Color.RED, Color.BLUE };

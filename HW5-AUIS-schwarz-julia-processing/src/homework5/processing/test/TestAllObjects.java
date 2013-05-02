@@ -31,7 +31,7 @@ public class TestAllObjects extends WindowGroup{
 		addChild(new Icon(loadImage("duke.gif"), 10, 200));
 		addChild(new Icon(loadImage("dog.gif"), 80, 200));
 
-		addChild(new Text("going", 10, 350, createFont("Helvetica", 24), 24, Color.BLACK));
+		addChild(new Text("going", 70, 350, createFont("Helvetica", 24), 24, Color.RED));
 		addChild(new Text("going", 70, 350, createFont("Helvetica", 24), 24, Color.RED));
 		addChild(new Text("gone", 140, 350, createFont("Helvetica", 24), 24, Color.BLUE)); 				
 		addChild(new Line(10, 350, 250, 350, Color.BLACK, 1));

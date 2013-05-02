@@ -1,6 +1,5 @@
 package homework5.processing.graphicalobject;
 
-import homework5.processing.test.RectBase;
 
 import java.awt.Color;
 import java.awt.Shape;

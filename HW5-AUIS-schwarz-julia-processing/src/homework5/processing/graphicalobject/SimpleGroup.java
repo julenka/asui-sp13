@@ -158,7 +158,7 @@ public class SimpleGroup extends GraphicalObjectBase implements Group {
 		PVector in = new PVector(pt.x, pt.y);
 		PVector out = new PVector();
 		tfrm.mult(in, out);
-		return new Point((int)(in.x), (int)(in.y));
+		return new Point((int)(out.x), (int)(out.y));
 	}
 
 	

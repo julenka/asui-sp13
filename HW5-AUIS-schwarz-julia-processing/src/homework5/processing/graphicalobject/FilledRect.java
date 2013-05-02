@@ -1,6 +1,5 @@
 package homework5.processing.graphicalobject;
 
-import homework5.processing.test.RectBase;
 
 import java.awt.Color;
 import java.awt.Shape;
@@ -20,8 +19,8 @@ public class FilledRect extends RectBase {
 	
 	@Override
 	public void doDraw(PGraphics graphics) {
+		graphics.noStroke();
 		graphics.fill(m_color.getRed(), m_color.getGreen(), m_color.getBlue());
-		graphics.stroke(m_color.getRed(), m_color.getGreen(), m_color.getBlue());
 		graphics.rect(m_x, m_y, m_width, m_height);
 		 
 	}
