@@ -112,7 +112,6 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 		graphics.pushMatrix();
 		
 		doDraw(graphics);
-		
 		graphics.popMatrix();
 		graphics.popStyle();
 		restoreClipShape(graphics);

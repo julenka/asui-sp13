@@ -13,7 +13,6 @@ public class IntDivisionConstraint extends Constraint {
 		m_quotient = quotient;
 		m_numerator = numerator;
 		m_denominator = denominator;
-		evaluate();
 	}
 	@Override
 	public void evaluate() {

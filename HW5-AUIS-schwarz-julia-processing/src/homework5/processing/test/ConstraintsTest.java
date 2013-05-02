@@ -17,6 +17,8 @@ import homework5.processing.graphicalobject.Text;
 
 import java.awt.Color;
 
+import processing.core.PApplet;
+
 public class ConstraintsTest extends InteractiveWindowGroup {
 
 	@Override
@@ -64,7 +66,7 @@ public class ConstraintsTest extends InteractiveWindowGroup {
 		new IntProductConstraint(redWidth, blueWidth, new IntVariable(2) ).activate();
 		new IntProductConstraint(redHeight, blueHeight, new IntVariable(2) ).activate();
 		// center blue in red
-		new GraphicalObjectHorizontalCenterConstraint(blueRect, redRect).activate();
+		//new GraphicalObjectHorizontalCenterConstraint(blueRect, redRect).activate();
 		new GraphicalObjectVerticalCenterConstraint(blueRect, redRect).activate();
 		// tie sliders to variable values 
 		new EqualConstraint(redX, new GraphicalObjectProperty<Integer>(s3, "Value")).activate();
@@ -77,4 +79,8 @@ public class ConstraintsTest extends InteractiveWindowGroup {
 		println("blue rectangle will always stay in the center of red rectangle");
 	}
 
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.ConstraintsTest" });
+	}
+	
 }

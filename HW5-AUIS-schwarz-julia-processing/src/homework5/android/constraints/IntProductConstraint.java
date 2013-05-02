@@ -16,8 +16,6 @@ public class IntProductConstraint extends Constraint {
 			Variable<Integer>... factors){
 		m_product = product;
 		m_factors = factors;
-		activate();
-		evaluate();
 	}
 	
 	@Override
@@ -34,6 +32,7 @@ public class IntProductConstraint extends Constraint {
 		for (Variable<Integer> f : m_factors) {
 			f.addConstraint(this);
 		}
+		evaluate();
 	}
 
 	@Override

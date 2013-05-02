@@ -1,10 +1,13 @@
 package homework5.processing.test;
 
+import homework5.processing.core.BoundaryRectangle;
 import homework5.processing.core.WindowGroup;
 import homework5.processing.graphicalobject.FilledRect;
 import homework5.processing.graphicalobject.OutlineRect;
 
 import java.awt.Color;
+
+import processing.core.PApplet;
 
 
 
@@ -55,5 +58,7 @@ public class TestRect extends WindowGroup {
 		
 	}
 	
-
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestRect" });
+	}
 }

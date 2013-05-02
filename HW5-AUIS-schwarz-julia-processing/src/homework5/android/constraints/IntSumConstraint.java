@@ -13,7 +13,6 @@ public class IntSumConstraint extends Constraint {
 			Variable<Integer>... factors){
 		m_sum = product;
 		m_addends = factors;
-		evaluate();
 	}
 	@Override
 	public void evaluate() {

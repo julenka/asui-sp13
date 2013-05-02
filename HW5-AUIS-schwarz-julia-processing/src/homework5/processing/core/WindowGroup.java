@@ -11,36 +11,41 @@ import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.core.PImage;
 import processing.core.PMatrix2D;
 
 public class WindowGroup extends PApplet implements Group  {
-	boolean m_screenDirty = true;
+	boolean m_screenDirty = false;
 	Rectangle m_clipShape;
 	protected LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
 
-	Rectangle m_damagedRegion = new Rectangle();
+	Rectangle m_damagedRegion = new Rectangle(0,0,-1,-1);
+	
+	Object m_dirtyLock = new Object();
 	@Override
 	public void setup() {
 		// TODO update back buffer when the size of the screen changes.
 		size(720, 1080, JAVA2D);
-		background(255);
 		m_clipShape = new Rectangle(0, 0, width, height);
+		background(255);			
 	}
 
 	@Override
 	public void draw() {
 		// TODO (extra) If the screen is damaged, redraw all parts that intersect clipping rect
-		if(m_screenDirty) {
-			fill(g.backgroundColor);
-			noStroke();
-			rect(m_damagedRegion.x, m_damagedRegion.y, m_damagedRegion.width, m_damagedRegion.height);
-			pushStyle();
-			draw(g, m_clipShape);
-			popStyle();
-			m_screenDirty = false;
-			m_damagedRegion = null;
+		synchronized (m_dirtyLock) {
+			if(m_screenDirty) {
+				fill(g.backgroundColor);
+				noStroke();
+				rect(m_damagedRegion.x, m_damagedRegion.y, m_damagedRegion.width, m_damagedRegion.height);
+				pushStyle();
+				draw(g, m_clipShape);
+				popStyle();
+				m_damagedRegion = new Rectangle(0,0,-1,-1);
+				m_screenDirty = false;
+			}
+
 		}
+		
 	}
 
 	/// Group interface
@@ -109,10 +114,8 @@ public class WindowGroup extends PApplet implements Group  {
 
 	@Override
 	public void damage(BoundaryRectangle rectangle) {
-		if(!m_screenDirty){
-			m_screenDirty = true;
-			m_damagedRegion = new Rectangle(rectangle);
-		} else {
+		synchronized (m_dirtyLock) {
+			m_screenDirty = true;			
 			m_damagedRegion.add(rectangle);
 		}
 	}
