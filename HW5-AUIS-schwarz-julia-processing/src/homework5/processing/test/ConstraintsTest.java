@@ -1,5 +1,6 @@
 package homework5.processing.test;
 
+import homework5.android.constraints.Constraint;
 import homework5.android.constraints.EqualConstraint;
 import homework5.android.constraints.GraphicalObjectHorizontalCenterConstraint;
 import homework5.android.constraints.GraphicalObjectProperty;
@@ -21,6 +22,8 @@ import processing.core.PApplet;
 
 public class ConstraintsTest extends InteractiveWindowGroup {
 
+	Constraint vc;
+	Constraint hc;
 	@Override
 	public void setup() {
 		super.setup();
@@ -66,8 +69,10 @@ public class ConstraintsTest extends InteractiveWindowGroup {
 		new IntProductConstraint(redWidth, blueWidth, new IntVariable(2) ).activate();
 		new IntProductConstraint(redHeight, blueHeight, new IntVariable(2) ).activate();
 		// center blue in red
-		//new GraphicalObjectHorizontalCenterConstraint(blueRect, redRect).activate();
-		new GraphicalObjectVerticalCenterConstraint(blueRect, redRect).activate();
+		hc = new GraphicalObjectHorizontalCenterConstraint(blueRect, redRect);
+		hc.activate();
+		vc = new GraphicalObjectVerticalCenterConstraint(blueRect, redRect);
+		vc.activate();
 		// tie sliders to variable values 
 		new EqualConstraint(redX, new GraphicalObjectProperty<Integer>(s3, "Value")).activate();
 		new EqualConstraint(redY, new GraphicalObjectProperty<Integer>(s4, "Value")).activate();

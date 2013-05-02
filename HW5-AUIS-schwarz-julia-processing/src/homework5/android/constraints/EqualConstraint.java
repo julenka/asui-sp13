@@ -14,7 +14,6 @@ public class EqualConstraint<E> extends Constraint {
 	public EqualConstraint(Variable<E> dependent, Variable<E> independent)
 	{
 		m_dep = dependent;
-		
 		m_indep = independent;
 	}
 	
