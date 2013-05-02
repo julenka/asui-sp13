@@ -1,7 +1,7 @@
 package homework5.processing.test;
 
-import homework5.android.constraints.IPropertyChangedListener;
 import homework5.processing.behavior.MoveBehavior;
+import homework5.processing.constraints.IPropertyChangedListener;
 import homework5.processing.core.InteractiveWindowGroup;
 import homework5.processing.graphicalobject.OutlineRect;
 import homework5.processing.graphicalobject.Text;

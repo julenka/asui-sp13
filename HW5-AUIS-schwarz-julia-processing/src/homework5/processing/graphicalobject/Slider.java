@@ -1,7 +1,7 @@
 package homework5.processing.graphicalobject;
 
-import homework5.android.constraints.EqualConstraint;
-import homework5.android.constraints.GraphicalObjectProperty;
+import homework5.processing.constraints.EqualConstraint;
+import homework5.processing.constraints.GraphicalObjectProperty;
 
 import java.awt.Color;
 

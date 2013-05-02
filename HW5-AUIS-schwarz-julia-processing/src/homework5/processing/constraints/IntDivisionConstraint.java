@@ -1,4 +1,4 @@
-package homework5.android.constraints;
+package homework5.processing.constraints;
 /**
  * Constraints that sets a quotient to be the division of a numerator and denominator.
  * @author julenka

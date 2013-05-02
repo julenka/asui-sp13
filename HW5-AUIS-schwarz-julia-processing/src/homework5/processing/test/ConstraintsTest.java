@@ -1,14 +1,14 @@
 package homework5.processing.test;
 
-import homework5.android.constraints.Constraint;
-import homework5.android.constraints.EqualConstraint;
-import homework5.android.constraints.GraphicalObjectHorizontalCenterConstraint;
-import homework5.android.constraints.GraphicalObjectProperty;
-import homework5.android.constraints.GraphicalObjectVerticalCenterConstraint;
-import homework5.android.constraints.IntProductConstraint;
-import homework5.android.constraints.IntVariable;
-import homework5.android.constraints.Variable;
 import homework5.processing.behavior.MoveXBehavior;
+import homework5.processing.constraints.Constraint;
+import homework5.processing.constraints.EqualConstraint;
+import homework5.processing.constraints.GraphicalObjectHorizontalCenterConstraint;
+import homework5.processing.constraints.GraphicalObjectProperty;
+import homework5.processing.constraints.GraphicalObjectVerticalCenterConstraint;
+import homework5.processing.constraints.IntProductConstraint;
+import homework5.processing.constraints.IntVariable;
+import homework5.processing.constraints.Variable;
 import homework5.processing.core.InteractiveWindowGroup;
 import homework5.processing.graphicalobject.LayoutGroup;
 import homework5.processing.graphicalobject.OutlineRect;

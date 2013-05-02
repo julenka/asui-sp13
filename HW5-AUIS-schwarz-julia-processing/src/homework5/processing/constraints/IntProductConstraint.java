@@ -1,27 +1,30 @@
-package homework5.android.constraints;
+package homework5.processing.constraints;
+
+import java.util.List;
 
 /**
- * Constraint that sets a dependent variable to be the difference of an arbitrary number of variables
+ * Algorithm that sets a product variable to the the product of an arbitrary number of factors 
  * @author julenka
  *
  */
-public class IntDifferenceConstraint extends Constraint {
-	Variable <Integer> m_difference;
+public class IntProductConstraint extends Constraint {
+
+	Variable <Integer> m_product;
 	Variable<Integer>[] m_factors;
 	
-	public IntDifferenceConstraint(Variable< Integer> product, 
+	public IntProductConstraint(Variable< Integer> product, 
 			Variable<Integer>... factors){
-		m_difference = product;
+		m_product = product;
 		m_factors = factors;
 	}
+	
 	@Override
 	public void evaluate() {
-		Integer difference = m_factors[0].getValue();
+		Integer product = 1;
 		for (Variable<Integer> v : m_factors) {
-			difference = difference + v.getValue();
+			product = product * v.getValue();
 		}
-		m_difference.setValue(difference);
-
+		m_product.setValue(product);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package homework5.android.constraints;
+package homework5.processing.constraints;
 
 /**
  * Sets one object to be equal to another object. One-way. Dependent variable is 

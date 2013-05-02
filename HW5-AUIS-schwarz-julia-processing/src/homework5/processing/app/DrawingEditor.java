@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import processing.core.PApplet;
+
 import sun.jkernel.Bundle;
 
 public class DrawingEditor extends InteractiveWindowGroup {
@@ -102,4 +104,9 @@ public class DrawingEditor extends InteractiveWindowGroup {
 		}
 	}
 
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.app.DrawingEditor" });
+	}
+	
+	
 }

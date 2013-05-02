@@ -1,7 +1,7 @@
 package homework5.processing.graphicalobject;
 
-import homework5.android.constraints.IPropertyChangedListener;
-import homework5.android.constraints.IPropertyChangedNotifier;
+import homework5.processing.constraints.IPropertyChangedListener;
+import homework5.processing.constraints.IPropertyChangedNotifier;
 import homework5.processing.core.BoundaryRectangle;
 
 import java.awt.Graphics2D;

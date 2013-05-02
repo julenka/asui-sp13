@@ -1,4 +1,4 @@
-package homework5.android.constraints;
+package homework5.processing.constraints;
 
 /**
  * Constraint that sets a sum variable to be te sum of an arbitrary number of addends

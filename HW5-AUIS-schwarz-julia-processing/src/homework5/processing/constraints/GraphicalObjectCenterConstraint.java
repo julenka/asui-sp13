@@ -1,4 +1,4 @@
-package homework5.android.constraints;
+package homework5.processing.constraints;
 
 import homework5.processing.graphicalobject.GraphicalObjectBase;
 
