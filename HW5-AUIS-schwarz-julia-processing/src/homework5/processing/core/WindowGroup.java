@@ -17,7 +17,7 @@ import processing.core.PMatrix2D;
 public class WindowGroup extends PApplet implements Group  {
 	boolean m_screenDirty = true;
 	Rectangle m_clipShape;
-	LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
+	protected LinkedList<GraphicalObject> children = new LinkedList<GraphicalObject> ();
 
 	Rectangle m_damagedRegion = new Rectangle();
 	@Override

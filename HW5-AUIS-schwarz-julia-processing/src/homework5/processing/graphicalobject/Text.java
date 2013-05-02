@@ -32,14 +32,15 @@ public class Text extends GraphicalObjectBase {
 		this("", 0, 0, new PFont(new Font("Arial", Font.PLAIN, 12), true), 12, Color.BLACK);
 	}
 
-
 	@Override
 	public void moveTo(int x, int y) {
 		// move the upper left corner
 		int oldX = m_x;
 		int oldY = m_y;
-		m_x = x;
-		m_y = y;
+		int dx = x - m_boundaryRect.x;
+		int dy = y - m_boundaryRect.y;
+		m_x += dx;
+		m_y += dy;
 		boundsChanged();
 		notifyPropertyChanged("X", oldX, x);
 		notifyPropertyChanged("Y", oldY, y);

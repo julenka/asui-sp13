@@ -16,9 +16,24 @@ public class TestText extends WindowGroup {
 	public void setup() {
 		super.setup();
 		println("creating Text");
+		int x = 0; 
+		int y = 0;
+		int h = 0;
+		while(y < height)
+		{
+			while(x < width)
+			{
+				
+				Text toAdd = new Text("going", x, y, createFont("Helvetica", 24), 24, Color.BLACK);
+				addChild(toAdd);
+				x+= toAdd.getBoundingBox().width;
+				h = toAdd.getBoundingBox().height;
+			}
+			y+=h;
+			x = 0;
+		}
 		m_text = new Text("going", 10, 350, createFont("Helvetica", 24), 24, Color.BLACK);
-		addChild(m_text);
-		println("Click to move text with setX(), setY()");
+		println("Click to test changing propertiesmove text with setX(), setY()");
 	}
 
 	@Override
@@ -28,8 +43,9 @@ public class TestText extends WindowGroup {
 		m_step++;
 		if (m_step == 1)
 		{
-			m_text.setX(100);
-			m_text.setY(300);	
+			children.clear();
+			damage(getBoundingBox());
+			addChild(m_text);
 			println("Click to move text with moveTo()");
 		} else if (m_step == 2)
 		{
