@@ -92,15 +92,22 @@ public class SelectionHandles extends SimpleGroup implements Selectable {
 	private void fitToChildren()
 	{
 		m_childrenBoundaryRect.x = Integer.MAX_VALUE;
-		m_childrenBoundaryRect.x = Integer.MAX_VALUE;
+		m_childrenBoundaryRect.y = Integer.MAX_VALUE;
 		m_childrenBoundaryRect.width = 0;
 		m_childrenBoundaryRect.height = 0;
 		for (GraphicalObject child : getChildren()) {
 			BoundaryRectangle br = child.getBoundingBox();
 			if(br.x < m_childrenBoundaryRect.x) m_childrenBoundaryRect.x = br.x;
-			if(br.width > m_childrenBoundaryRect.width) m_childrenBoundaryRect.width = br.width;
 			if(br.y < m_childrenBoundaryRect.y) m_childrenBoundaryRect.y = br.y;
-			if(br.height > m_childrenBoundaryRect.height) m_childrenBoundaryRect.height = br.y + br.height;
+		}
+		
+		for (GraphicalObject child : getChildren()) {
+			BoundaryRectangle br = child.getBoundingBox();
+			float right = br.x + br.width;
+			float bottom = br.y + br.height;
+					
+			if(right > m_childrenBoundaryRect.x + m_childrenBoundaryRect.width) m_childrenBoundaryRect.width = (int)right - br.x;
+			if(bottom > m_childrenBoundaryRect.y + m_childrenBoundaryRect.height) m_childrenBoundaryRect.height = (int)bottom - br.y;
 		}
 	}
 	
