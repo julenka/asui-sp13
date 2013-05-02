@@ -135,6 +135,7 @@ public class Text extends GraphicalObjectBase {
 		canvas.fill(m_color.getRed(), m_color.getGreen(), m_color.getBlue());
 		canvas.textFont(m_font);
 		canvas.textSize(m_fontSize);
+		canvas.textAlign(PGraphics.BOTTOM);
 		canvas.text(m_text, m_x, m_y );
 	}
 

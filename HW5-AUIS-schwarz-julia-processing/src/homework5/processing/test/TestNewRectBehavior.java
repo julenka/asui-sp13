@@ -10,7 +10,7 @@ public class TestNewRectBehavior extends InteractiveWindowGroup {
 	public void setup() {
 		// TODO make it so that you don't have to call super.setup()!
 		super.setup();
-		m_behaviors.add(new NewRectBehavior(Color.BLACK, 6, this));
+		m_behaviors.add(new NewRectBehavior(Color.BLACK, 5, this));
 	}
 
 }
