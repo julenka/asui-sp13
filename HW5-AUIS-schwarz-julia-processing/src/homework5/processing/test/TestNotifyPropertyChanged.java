@@ -8,6 +8,8 @@ import homework5.processing.graphicalobject.Text;
 
 import java.awt.Color;
 
+import processing.core.PApplet;
+
 public class TestNotifyPropertyChanged extends InteractiveWindowGroup {
 
 	@Override
@@ -39,6 +41,10 @@ public class TestNotifyPropertyChanged extends InteractiveWindowGroup {
 		});
 	}
 	
-	
+
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestNotifyPropertyChanged" });
+	}
+
 
 }

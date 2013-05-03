@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PGraphicsJava2D;
 
@@ -32,6 +33,11 @@ public class TestWindowGroupClip extends WindowGroup {
 		
 		graphics.fill(255, 0, 0);
 		graphics.ellipse(10,10, 40, 40);
+	}
+
+
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestWindowGroupClip" });
 	}
 
 }

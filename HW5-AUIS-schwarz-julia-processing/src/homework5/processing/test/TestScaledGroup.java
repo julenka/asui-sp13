@@ -10,6 +10,8 @@ import homework5.processing.graphicalobject.SimpleGroup;
 
 import java.awt.Color;
 
+import processing.core.PApplet;
+
 public class TestScaledGroup extends WindowGroup{
 	int m_step = 0;
 	SimpleGroup m_root;
@@ -98,6 +100,10 @@ public class TestScaledGroup extends WindowGroup{
 		} else {
 			exit();
 		}
-		
 	}
+
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestScaledGroup" });
+	}
+
 }

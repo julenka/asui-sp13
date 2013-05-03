@@ -16,6 +16,8 @@ import homework5.processing.graphicalobject.Text;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import processing.core.PApplet;
+
 // Base class for testing interactive windows
 public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 	ChoiceBehavior m_choiceBehavior;
@@ -78,6 +80,11 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 			m_choiceBehavior.setFirstOnly(!m_choiceBehavior.isFirstOnly());
 			println("first only is " + m_choiceBehavior.isFirstOnly());
 		}
+	}
+	
+
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestInteractiveWindowGroup" });
 	}
 
 }

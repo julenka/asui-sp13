@@ -5,6 +5,8 @@ import homework5.processing.graphicalobject.Text;
 
 import java.awt.Color;
 
+import processing.core.PApplet;
+
 
 
 public class TestText extends WindowGroup {
@@ -63,6 +65,10 @@ public class TestText extends WindowGroup {
 		}
 		
 	}
-	
+
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestText" });
+	}
+
 
 }

@@ -8,6 +8,8 @@ import homework5.processing.graphicalobject.SimpleGroup;
 
 import java.awt.Color;
 
+import processing.core.PApplet;
+
 
 
 public class TestSimpleGroup extends WindowGroup {
@@ -102,5 +104,9 @@ public class TestSimpleGroup extends WindowGroup {
 		}
 	}
 	
+
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestSimpleGroup" });
+	}
 
 }

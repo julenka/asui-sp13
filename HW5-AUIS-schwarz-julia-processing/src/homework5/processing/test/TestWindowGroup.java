@@ -10,6 +10,8 @@ import homework5.processing.graphicalobject.Text;
 import java.awt.Color;
 import java.io.IOException;
 
+import processing.core.PApplet;
+
 public class TestWindowGroup extends WindowGroup {
 
 	@Override
@@ -30,8 +32,11 @@ public class TestWindowGroup extends WindowGroup {
 		addChild(new Text("going", 70, 350, createFont("Helvetica", 24), 14, Color.RED));
 		addChild(new Text("gone", 140, 350, createFont("Helvetica", 24), 24, Color.BLACK)); 				
 		addChild(new Line(10, 350, 250, 350, Color.BLACK, 1));
-
-		
-		println("hit back key to exit");
 	}
 }
+
+
+public static void main(String args[]) {
+	PApplet.main(new String[] { "homework5.processing.test.TestWindowGroup" });
+}
+

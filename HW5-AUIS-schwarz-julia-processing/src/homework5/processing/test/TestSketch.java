@@ -26,4 +26,9 @@ public class TestSketch extends PApplet{
 		PApplet.main(new String[] { "homework5.processing.test.TestSketch" });
 	}
 
+
+	public static void main(String args[]) {
+		PApplet.main(new String[] { "homework5.processing.test.TestSketch" });
+	}
+
 }
