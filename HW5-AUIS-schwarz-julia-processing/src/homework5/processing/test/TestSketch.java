@@ -22,13 +22,9 @@ public class TestSketch extends PApplet{
 		}
 	}
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		PApplet.main(new String[] { "homework5.processing.test.TestSketch" });
 	}
 
-
-	public static void main(String args[]) {
-		PApplet.main(new String[] { "homework5.processing.test.TestSketch" });
-	}
 
 }

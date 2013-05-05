@@ -9,10 +9,11 @@ import homework5.processing.graphicalobject.OutlineRect;
 import homework5.processing.graphicalobject.SimpleGroup;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 
 import processing.core.PApplet;
 
-public class TestLayoutGroup extends WindowGroup{
+public class TestLayoutGroup extends TestBase {
 	int m_step = 0;
 	SimpleGroup m_root;
 	Color[] colors = { Color.BLACK, Color.RED, Color.BLUE };
@@ -21,11 +22,11 @@ public class TestLayoutGroup extends WindowGroup{
 	int m_counter = Integer.MAX_VALUE;
 	GraphicalObject[] m_toMove = new GraphicalObject[N_OBJECTS]; 
 	LayoutGroup m_layout;
-	public void setup() {
-		super.setup();
-		addChild(new OutlineRect(9, 9, 481, 181, Color.BLACK, 1));
+	
+	public void setupTest() {
+		testFrame.addChild(new OutlineRect(9, 9, 481, 181, Color.BLACK, 1));
 		m_layout = new LayoutGroup(10, 10, 480, 180, Group.HORIZONTAL, 0);
-		addChild(m_layout);
+		testFrame.addChild(m_layout);
 
 		m_toMove = new GraphicalObject[N_OBJECTS];
 		for (int i = 0; i < N_OBJECTS; ++i) {
@@ -39,7 +40,6 @@ public class TestLayoutGroup extends WindowGroup{
 	
 	@Override
 	public void mouseClicked() {
-		// TODO Auto-generated method stub
 		super.mouseClicked();
 		m_step++;
 		

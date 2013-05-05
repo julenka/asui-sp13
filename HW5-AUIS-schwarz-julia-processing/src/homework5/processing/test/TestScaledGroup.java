@@ -12,7 +12,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 
-public class TestScaledGroup extends WindowGroup{
+public class TestScaledGroup extends TestBase{
 	int m_step = 0;
 	SimpleGroup m_root;
 	Color[] colors = { Color.BLACK, Color.RED, Color.BLUE };
@@ -20,10 +20,9 @@ public class TestScaledGroup extends WindowGroup{
 	
 	ScaledGroup m_group1;
 	
-	public void setup() {
-		super.setup();
+	protected void setupTest() {
 		SimpleGroup root = new SimpleGroup(0,0, width, height);
-		addChild(root);
+		testFrame.addChild(root);
 		
 		int nObjects = 10;
 		
@@ -83,7 +82,7 @@ public class TestScaledGroup extends WindowGroup{
 			int levels = 20;
 			int step = 10;
 			SimpleGroup cur = nested;
-			addChild(cur);
+			testFrame.addChild(cur);
 			for (int i = 0; i < levels; i++) {
 				// Add and outlinerect in this group
 				cur.addChild(new FilledRect(0,0, cur.getWidth(), cur.getHeight(), colors[i % colors.length]));

@@ -11,20 +11,19 @@ import processing.core.PApplet;
 
 
 
-public class TestRect extends WindowGroup {
+public class TestRect extends TestBase {
 	
 	int m_step = 0;
 	FilledRect m_rect;
 	OutlineRect m_outlineRect;
 	
 	@Override
-	public void setup() {
-		super.setup();
+	protected void setupTest() {
 		println("creating FilledRect, OutlineRect (click to continue)");
 		m_rect = new FilledRect(10, 10, 50, 50, Color.RED);
 		m_outlineRect = new OutlineRect(10, 300, 40,40, Color.GREEN, 2);
-		addChild(m_rect);
-		addChild(m_outlineRect);
+		testFrame.addChild(m_rect);
+		testFrame.addChild(m_outlineRect);
 		println("Click to move rectangle with setX(), setY()");
 	}
 

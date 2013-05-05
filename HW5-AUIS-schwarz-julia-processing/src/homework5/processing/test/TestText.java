@@ -9,14 +9,13 @@ import processing.core.PApplet;
 
 
 
-public class TestText extends WindowGroup {
+public class TestText extends TestBase {
 	
 	int m_step = 0;
 	Text m_text; 
 	
 	@Override
-	public void setup() {
-		super.setup();
+	public void setupTest() {
 		println("creating Text");
 		int x = 0; 
 		int y = 0;
@@ -27,7 +26,7 @@ public class TestText extends WindowGroup {
 			{
 				
 				Text toAdd = new Text("going", x, y, createFont("Helvetica", 24), 24, Color.BLACK);
-				addChild(toAdd);
+				testFrame.addChild(toAdd);
 				x+= toAdd.getBoundingBox().width;
 				h = toAdd.getBoundingBox().height;
 			}
@@ -45,9 +44,8 @@ public class TestText extends WindowGroup {
 		m_step++;
 		if (m_step == 1)
 		{
-			children.clear();
-			damage(getBoundingBox());
-			addChild(m_text);
+			testFrame.clearChildren();
+			testFrame.addChild(m_text);
 			println("Click to move text with moveTo()");
 		} else if (m_step == 2)
 		{

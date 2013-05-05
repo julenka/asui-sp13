@@ -12,7 +12,7 @@ import processing.core.PApplet;
 
 
 
-public class TestSimpleGroup extends WindowGroup {
+public class TestSimpleGroup extends TestBase {
 	
 	int m_step = 0;
 	SimpleGroup m_root;
@@ -22,13 +22,11 @@ public class TestSimpleGroup extends WindowGroup {
 	int m_counter = Integer.MAX_VALUE;
 	GraphicalObject[] m_toMove = new GraphicalObject[N_OBJECTS]; 
 	
-	@Override
-	public void setup() {
-		super.setup();
+	public void setupTest() {
 		
 		println("creating SimpleGroup");
 		m_root = new SimpleGroup(0,0, width, height);
-		addChild(m_root);
+		testFrame.addChild(m_root);
 		println("creating black frame");
 		m_root.addChild(new OutlineRect(9, 9, 182, 182, Color.BLACK, 1));
 		println("creating SimpleGroup inside black frame");
@@ -73,7 +71,7 @@ public class TestSimpleGroup extends WindowGroup {
 			int levels = 10;
 			int step = 10;
 			SimpleGroup cur = nested;
-			addChild(cur);
+			testFrame.addChild(cur);
 			for (int i = 0; i < levels; i++) {
 				// Add and outlinerect in this group
 				cur.addChild(new FilledRect(0,0, cur.getWidth(), cur.getHeight(), colors[i % colors.length]));
@@ -93,7 +91,6 @@ public class TestSimpleGroup extends WindowGroup {
 	}
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
 		super.draw();
 		int timesToMove = 50;
 		if(m_step == 4 && m_counter < timesToMove)
