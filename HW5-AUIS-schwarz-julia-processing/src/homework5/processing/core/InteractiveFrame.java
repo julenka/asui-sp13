@@ -5,51 +5,95 @@ import homework5.processing.behavior.BehaviorEvent;
 import homework5.processing.graphicalobject.Group;
 
 import java.awt.Point;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class InteractiveWindowGroup extends WindowGroup {
+import processing.core.PApplet;
+import processing.core.PConstants;
+import processing.event.Event;
+import processing.event.KeyEvent;
+import processing.event.MouseEvent;
+
+public class InteractiveFrame extends GraphicalObjectFrame implements PConstants {
 	float m_lastX;
 	float m_lastY;
 	protected List<Behavior> m_behaviors = new ArrayList<Behavior>();
 	Behavior m_currentBehavior;
 	int m_modifier = 0x0;
 
-	private void dispatchMouseEvent(int bEventId)
+	public InteractiveFrame(PApplet parent) {
+		super(parent);
+		// register for mouse and key events
+		parent.registerMethod("mouseEvent", this);
+		parent.registerMethod("keyEvent", this);
+	}
+
+	/**
+	 * Gets called when a mouse event occurs in the parent PApplet
+	 * @param e
+	 */
+	public void mouseEvent(MouseEvent e)
 	{
-		m_lastX = mouseX;
-		m_lastY = mouseY;
-		// TODO suport right mouse key
+		int bEventId = 0;
+		switch(e.getAction())
+		{
+		case MouseEvent.PRESSED:
+			bEventId = BehaviorEvent.MOUSE_DOWN_ID;
+			break;
+		case MouseEvent.RELEASED:
+			bEventId = BehaviorEvent.MOUSE_UP_ID;
+			break;
+		case MouseEvent.DRAGGED:
+		case MouseEvent.MOVED:
+			bEventId = BehaviorEvent.MOUSE_MOVE_ID;
+			break;
+		default:
+//			System.out.println("mouse event " + e.getAction() + " not supported!");
+			return;
+		}
+		int mouseKey = BehaviorEvent.LEFT_MOUSE_KEY;
+		if(e.getButton() == RIGHT) mouseKey = BehaviorEvent.RIGHT_MOUSE_KEY;
+
+		m_lastX = e.getX();
+		m_lastY = e.getY();
+		updateKeyModifier(e);
 		dispatchBehaviorEvent(new BehaviorEvent(bEventId, m_modifier, BehaviorEvent.LEFT_MOUSE_KEY, 
 				(int)m_lastX, (int)m_lastY));
 		onDispatchCompleted();
 	}
-	
-	@Override
-	public void mousePressed() {
-		super.mousePressed();
-		dispatchMouseEvent(BehaviorEvent.MOUSE_DOWN_ID);
+
+	/**
+	 * Gets called when a keyboard event occurs in the parent PApplet
+	 * @param e
+	 */
+	public void keyEvent(KeyEvent e)
+	{
+		int bEventId = 0;
+		switch(e.getAction())
+		{
+		case KeyEvent.PRESSED:
+			bEventId = BehaviorEvent.KEY_DOWN_ID;
+			break;
+		case KeyEvent.RELEASED:
+			bEventId = BehaviorEvent.KEY_UP_ID;
+			break;
+		default:
+//			System.out.println("key event id " + e.getAction() + " not supported");
+			return;
+		}
+		updateKeyModifier(e);
+		BehaviorEvent toDispatch = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_modifier, e.getKeyCode(), (int)m_lastX, (int)m_lastY);
+		dispatchBehaviorEvent(toDispatch);
+		onDispatchCompleted();
 	}
-	
-	@Override
-	public void mouseReleased() {
-		super.mouseReleased();
- 		dispatchMouseEvent(BehaviorEvent.MOUSE_UP_ID);
-	}
-	
-//	@Override
-//	public void mouseMoved() {
-//		super.mouseMoved();
-//		dispatchMouseEvent(BehaviorEvent.MOUSE_MOVE_ID);
-//	}
-	
-	@Override
-	public void mouseDragged() {
-		super.mouseDragged();
-		dispatchMouseEvent(BehaviorEvent.MOUSE_MOVE_ID);
-	}
-	
+
+
+	/**
+	 * Converts a mouse event to the coordinate space of a particular group
+	 * @param in
+	 * @param g
+	 * @return
+	 */
 	private BehaviorEvent behaviorEventToGroup(BehaviorEvent in, Group g)
 	{
 		Point parentSpace = new Point(in.getX(), in.getY());
@@ -62,13 +106,13 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 			curParent = curParent.getGroup();
 		}
 		Point childSpace = parentSpace; // g.parentToChild(parentSpace);
-		
+
 		for (int i = parents.size() - 1; i >=0; i--) {
 			childSpace = parents.get(i).parentToChild(childSpace);
 		}
-		
+
 		childSpace = g.parentToChild(childSpace);
-		
+
 		return new BehaviorEvent(in.getID(), in.getModifiers(), in.getKey(), childSpace.x, childSpace.y);
 	}
 
@@ -125,8 +169,8 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 				m_currentBehavior.cancel(childSpace);
 			} else if
 			// TODO make canceling work if go outside of window
-			((bEvent.getX() > width || bEvent.getX() < 0 ||
-					bEvent.getY() > height || bEvent.getY() < 0)
+			((bEvent.getX() > parent.width || bEvent.getX() < 0 ||
+					bEvent.getY() > parent.height || bEvent.getY() < 0)
 					&& bEvent.getID() == BehaviorEvent.MOUSE_UP_ID 
 					)
 			{
@@ -154,11 +198,12 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		// check if we have damaged the screen
 		if(m_screenDirty)
 		{
-			redraw();
+			parent.redraw();
 		}
 	}
 
-	void updateKeyModifier(KeyEvent event)
+	
+	void updateKeyModifier(Event event)
 	{
 		// TODO: add function key modifier
 		m_modifier = 0x0;
@@ -167,26 +212,6 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 		if(event.isMetaDown()) m_modifier |= BehaviorEvent.COMMAND_KEY_MODIFIER;
 		if(event.isAltDown()) m_modifier |= BehaviorEvent.ALT_MODIFIER;
 	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		super.keyPressed(e);
-		updateKeyModifier(e);
-		BehaviorEvent toDispatch = new BehaviorEvent(BehaviorEvent.KEY_DOWN_ID, m_modifier, keyCode, (int)m_lastX, (int)m_lastY);
-		dispatchBehaviorEvent(toDispatch);
-		onDispatchCompleted();
-	}
-	
-	@Override
-	public void keyReleased(KeyEvent e) {
-		super.keyReleased(e);
-		// TODO make this a key release not key down
-		updateKeyModifier(e);
-		BehaviorEvent toDispatch = new BehaviorEvent(BehaviorEvent.KEY_UP_ID, m_modifier, keyCode, (int)m_lastX, (int)m_lastY);
-		dispatchBehaviorEvent(toDispatch);
-		onDispatchCompleted();
-	}
-
 	public void addBehavior (Behavior inter)
 	{
 		m_behaviors.add(inter);
@@ -200,6 +225,11 @@ public abstract class InteractiveWindowGroup extends WindowGroup {
 			m_currentBehavior = null;
 		}
 	}
+	
+	public void clearBehaviors()
+	{
+		m_currentBehavior = null;
+		m_behaviors.clear();
+	}
+
 }
-
-

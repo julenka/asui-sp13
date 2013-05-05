@@ -1,16 +1,16 @@
 package homework5.processing.test;
 
-import homework5.processing.core.UIFrame;
+import homework5.processing.core.GraphicalObjectFrame;
 import processing.core.PApplet;
 
-public  abstract class TestBase extends PApplet {
-	protected UIFrame testFrame;
+public  abstract class BaseGraphicalTest extends PApplet {
+	protected GraphicalObjectFrame testFrame;
 
 	@Override
 	public void setup() {
 		size(720, 1080, JAVA2D);
 		background(255);
-		testFrame = new UIFrame(this);
+		testFrame = new GraphicalObjectFrame(this);
 		setupTest();
 	}
 	
@@ -21,10 +21,6 @@ public  abstract class TestBase extends PApplet {
 	@Override
 	public void draw() {
 		testFrame.draw();
-	}
-
-	public static void main(String args[]) {
-		PApplet.main(new String[] { "homework5.processing.test.TestBase" });
 	}
 
 

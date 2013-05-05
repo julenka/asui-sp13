@@ -1,6 +1,5 @@
 package homework5.processing.test;
 
-import homework5.processing.core.WindowGroup;
 import homework5.processing.graphicalobject.FilledRect;
 import homework5.processing.graphicalobject.Icon;
 import homework5.processing.graphicalobject.Line;
@@ -12,7 +11,7 @@ import java.awt.Color;
 import processing.core.PApplet;
 
 
-public class TestAllObjects extends TestBase {
+public class TestAllObjects extends BaseGraphicalTest {
 
 	@Override
 	protected void setupTest() {

@@ -13,7 +13,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PMatrix2D;
 
-public class UIFrame implements Group {
+public class GraphicalObjectFrame implements Group {
 	PApplet parent;
 	
 	boolean m_screenDirty = false;
@@ -24,7 +24,7 @@ public class UIFrame implements Group {
 	
 	Object m_dirtyLock = new Object();
 	
-	public UIFrame(PApplet parent) {
+	public GraphicalObjectFrame(PApplet parent) {
 		this.parent = parent;
 		m_boundaryRectangle = new Rectangle(0, 0, parent.width, parent.height);
 	}
@@ -58,7 +58,9 @@ public class UIFrame implements Group {
 		damage(getBoundingBox());
 	}
 	
-	/// Group interface
+	//
+	// BEGIN GROUP INTERFACE
+	//
 	@Override
 	public void draw(PGraphics graphics, Shape clipShape) {
 		for (GraphicalObject child : children) {
@@ -150,6 +152,8 @@ public class UIFrame implements Group {
 		int relx = x - m_boundaryRectangle.x;
 		int rely = y - m_boundaryRectangle.y;
 		
-		return relx >= 0 && rely >= 0 && relx < m_boundaryRectangle.width && rely < m_boundaryRectangle.height;	}
+		return relx >= 0 && rely >= 0 && relx < m_boundaryRectangle.width && rely < m_boundaryRectangle.height;	
+	}
+	
 
 }

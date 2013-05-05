@@ -2,7 +2,6 @@ package homework5.processing.test;
 
 import homework5.processing.behavior.MoveBehavior;
 import homework5.processing.constraints.IPropertyChangedListener;
-import homework5.processing.core.InteractiveWindowGroup;
 import homework5.processing.graphicalobject.OutlineRect;
 import homework5.processing.graphicalobject.Text;
 
@@ -10,19 +9,18 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 
-public class TestNotifyPropertyChanged extends InteractiveWindowGroup {
+public class TestNotifyPropertyChanged extends BaseInteractiveTest {
 
 	@Override
-	public void setup() {
-		super.setup();
+	public void setupTest() {
 		final OutlineRect r = new OutlineRect(20, 20, 100, 100, Color.BLUE, 5);
-		addChild(r);
+		testFrame.addChild(r);
 		
 		// add a rectangle
-		addBehavior(new MoveBehavior(this));
+		testFrame.addBehavior(new MoveBehavior(testFrame));
 		
 		final Text t = new Text("box location goes here", 10, 20, createFont("Helvetica", 24), 18, Color.BLACK);
-		addChild(t);
+		testFrame.addChild(t);
 		r.addPropertyChangedListener("Y", new IPropertyChangedListener<Integer>() {
 			
 			@Override

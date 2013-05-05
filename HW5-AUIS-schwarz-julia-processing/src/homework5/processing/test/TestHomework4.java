@@ -8,16 +8,13 @@ import homework5.processing.constraints.GraphicalObjectVerticalCenterConstraint;
 import homework5.processing.constraints.IntProductConstraint;
 import homework5.processing.constraints.IntVariable;
 import homework5.processing.constraints.Variable;
-import homework5.processing.core.WindowGroup;
-import homework5.processing.graphicalobject.Group;
 import homework5.processing.graphicalobject.OutlineRect;
-import homework5.processing.graphicalobject.SimpleGroup;
 
 import java.awt.Color;
 
 import processing.core.PApplet;
 
-public class TestHomework4 extends WindowGroup {
+public class TestHomework4 extends BaseInteractiveTest {
 	int m_clickCount = 0;
 	OutlineRect blueRect;
 	OutlineRect redRect;
@@ -26,7 +23,6 @@ public class TestHomework4 extends WindowGroup {
 	
 	@Override
 	public void mouseClicked() {
-		super.mouseClicked();
 		m_clickCount++;
 
 		if(m_clickCount==1)
@@ -66,13 +62,12 @@ public class TestHomework4 extends WindowGroup {
 	Constraint red2xBlueHeight;
 	Constraint centerHorizBlueInRed; 
 	Constraint centerVertBlueInRed; 
-	public void setup(){
-		super.setup();
+	public void setupTest(){
 		println("Initial setup...");
 		blueRect = new OutlineRect (40, 40, 50, 80, Color.BLUE, 5);
 		redRect = new OutlineRect (100, 100, 50, 160, Color.RED, 1);
-		addChild (blueRect);
-		addChild (redRect);
+		testFrame.addChild (blueRect);
+		testFrame.addChild (redRect);
 		
 		Variable<Integer> redY = new GraphicalObjectProperty<Integer>(redRect, "Y");
 		Variable<Integer> blueY = new GraphicalObjectProperty<Integer>(blueRect, "Y");

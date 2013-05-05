@@ -1,6 +1,5 @@
 package homework5.processing.test;
 
-import homework5.processing.core.WindowGroup;
 import homework5.processing.graphicalobject.FilledRect;
 import homework5.processing.graphicalobject.GraphicalObject;
 import homework5.processing.graphicalobject.OutlineRect;
@@ -12,7 +11,7 @@ import processing.core.PApplet;
 
 
 
-public class TestSimpleGroup extends TestBase {
+public class TestSimpleGroup extends BaseGraphicalTest {
 	
 	int m_step = 0;
 	SimpleGroup m_root;

@@ -3,7 +3,7 @@ package homework5.processing.app;
 import homework5.processing.behavior.MoveBehavior;
 import homework5.processing.constraints.Constraint;
 import homework5.processing.constraints.GraphicalObjectCenterConstraint;
-import homework5.processing.core.InteractiveWindowGroup;
+import homework5.processing.core.InteractiveFrame;
 import homework5.processing.graphicalobject.FilledRect;
 import homework5.processing.graphicalobject.GraphicalObject;
 import homework5.processing.graphicalobject.Line;
@@ -18,7 +18,7 @@ import java.util.Set;
 
 import processing.core.PApplet;
 
-public class NodeEdgeEditor extends InteractiveWindowGroup {
+public class NodeEdgeEditor extends PApplet {
 
 	class NodePair 
 	{
@@ -50,22 +50,30 @@ public class NodeEdgeEditor extends InteractiveWindowGroup {
 	FilledRect m_startRect;
 	List<Constraint> m_constraints = new ArrayList<Constraint>();
 
+	InteractiveFrame frame;
 	@Override
 	public void setup() {
-		super.setup();
+		size(720, 1080, JAVA2D);
+		background(255);
+		frame = new InteractiveFrame(this);
 		println("Press 'n' to create nodes");
 		println("Press 'e' to create edges");
 		println("Press 'm' to move nodes");
 		println("Currently creating nodes");
 		
 		m_nodeLayer = new SimpleGroup(0,0,width, height);
-		addChild(m_nodeLayer);
+		frame.addChild(m_nodeLayer);
 		
 		m_edgeLayer = new SimpleGroup(0,0, width, height);
-		addChild(m_edgeLayer);
+		frame.addChild(m_edgeLayer);
 		
 		m_moveNodes = new MoveBehavior(m_nodeLayer);
 		
+	}
+	
+	@Override
+	public void draw() {
+		frame.draw();
 	}
 	
 	private void activateConstraints()
@@ -88,13 +96,13 @@ public class NodeEdgeEditor extends InteractiveWindowGroup {
 		super.keyPressed();
 		if(!( keyCode == KeyEvent.VK_E || keyCode == KeyEvent.VK_M || keyCode == KeyEvent.VK_N))
 			return;
-		m_behaviors.clear();
+		frame.clearBehaviors();
 		m_startRect = null;
 		if(keyCode == KeyEvent.VK_M)
 		{
 			println("currently moving nodes");
 			m_mode = EditorMode.Move;
-			m_behaviors.add(m_moveNodes);
+			frame.addBehavior(m_moveNodes);
 		} else if (keyCode == KeyEvent.VK_E)
 		{
 			m_mode = EditorMode.Edge;
@@ -109,17 +117,12 @@ public class NodeEdgeEditor extends InteractiveWindowGroup {
 	
 	@Override
 	public void mousePressed() {
-		super.mousePressed();
-		
-		boolean handled = false;
-				
 		if(m_mode == EditorMode.Move) return;
 		
 		switch (m_mode) {
 		case Node:
 			FilledRect addMe = new FilledRect((int)mouseX, (int)mouseY, 30, 30, Color.BLACK);
 			m_nodeLayer.addChild(addMe);
-			handled = true;
 			break;
 		case Edge:
 			// find a node that you hit

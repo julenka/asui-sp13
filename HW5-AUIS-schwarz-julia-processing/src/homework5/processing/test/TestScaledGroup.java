@@ -1,9 +1,7 @@
 package homework5.processing.test;
 
-import homework5.processing.core.WindowGroup;
 import homework5.processing.graphicalobject.FilledRect;
 import homework5.processing.graphicalobject.GraphicalObject;
-import homework5.processing.graphicalobject.LayoutGroup;
 import homework5.processing.graphicalobject.OutlineRect;
 import homework5.processing.graphicalobject.ScaledGroup;
 import homework5.processing.graphicalobject.SimpleGroup;
@@ -12,7 +10,7 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 
-public class TestScaledGroup extends TestBase{
+public class TestScaledGroup extends BaseGraphicalTest{
 	int m_step = 0;
 	SimpleGroup m_root;
 	Color[] colors = { Color.BLACK, Color.RED, Color.BLUE };

@@ -3,7 +3,6 @@ package homework5.processing.test;
 import homework5.processing.behavior.ChoiceBehavior;
 import homework5.processing.behavior.MoveBehavior;
 import homework5.processing.behavior.NewLineBehavior;
-import homework5.processing.core.InteractiveWindowGroup;
 import homework5.processing.graphicalobject.FilledRect;
 import homework5.processing.graphicalobject.GraphicalObject;
 import homework5.processing.graphicalobject.Group;
@@ -19,7 +18,7 @@ import java.awt.event.KeyEvent;
 import processing.core.PApplet;
 
 // Base class for testing interactive windows
-public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
+public class TestInteractiveFrame extends BaseInteractiveTest {
 	ChoiceBehavior m_choiceBehavior;
 	
 	private SelectionHandles makeSelectableObject(GraphicalObject child)
@@ -40,30 +39,29 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 	}
 	
 	@Override
-	public void setup()
+	public void setupTest()
 	{
-		super.setup();
 		Group layoutRoot = new LayoutGroup(0, 0, width, height, LayoutGroup.VERTICAL, 10);
-		addChild(layoutRoot);
+		testFrame.addChild(layoutRoot);
 		
 		Group lineGroup = new SimpleGroup(0,0,width, 300);
 		addLabelToGroup(lineGroup, "create lines in root");
-		m_behaviors.add(new NewLineBehavior(Color.MAGENTA, 5, lineGroup));
+		testFrame.addBehavior(new NewLineBehavior(Color.MAGENTA, 5, lineGroup));
 		layoutRoot.addChild(lineGroup);
 		
 		Group moveGroup = new SimpleGroup(0, 100, width, 300);
 		addLabelToGroup(moveGroup, "move objects");
 		moveGroup.addChild(new Text("This is just a test", 20, 50, createFont("Helvetica", 24), 22, Color.GREEN));
 		layoutRoot.addChild(moveGroup);
-		m_behaviors.add(new MoveBehavior(moveGroup));
+		testFrame.addBehavior(new MoveBehavior(moveGroup));
 		
-		LayoutGroup buttons = new LayoutGroup(10, 10, 700, 400 , HORIZONTAL, 10);
+		LayoutGroup buttons = new LayoutGroup(10, 10, 700, 400 , LayoutGroup.HORIZONTAL, 10);
 		for (int i = 0; i < 5; i++) {
 			buttons.addChild(makeSelectableObject(new FilledRect(0,0,50,50, Color.RED)));
 		}
 		
 		layoutRoot.addChild(buttons);
-		m_behaviors.add(new ChoiceBehavior(buttons));
+		testFrame.addBehavior(new ChoiceBehavior(buttons));
 		
 	}
 	
@@ -84,7 +82,7 @@ public class TestInteractiveWindowGroup extends InteractiveWindowGroup {
 	
 
 	public static void main(String args[]) {
-		PApplet.main(new String[] { "homework5.processing.test.TestInteractiveWindowGroup" });
+		PApplet.main(new String[] { "homework5.processing.test.TestInteractiveFrame" });
 	}
 
 }

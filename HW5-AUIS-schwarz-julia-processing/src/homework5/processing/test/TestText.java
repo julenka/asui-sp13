@@ -1,15 +1,12 @@
 package homework5.processing.test;
 
-import homework5.processing.core.WindowGroup;
 import homework5.processing.graphicalobject.Text;
 
 import java.awt.Color;
 
 import processing.core.PApplet;
 
-
-
-public class TestText extends TestBase {
+public class TestText extends BaseGraphicalTest {
 	
 	int m_step = 0;
 	Text m_text; 

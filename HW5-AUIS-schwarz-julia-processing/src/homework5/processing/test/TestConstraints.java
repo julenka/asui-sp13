@@ -9,7 +9,6 @@ import homework5.processing.constraints.GraphicalObjectVerticalCenterConstraint;
 import homework5.processing.constraints.IntProductConstraint;
 import homework5.processing.constraints.IntVariable;
 import homework5.processing.constraints.Variable;
-import homework5.processing.core.InteractiveWindowGroup;
 import homework5.processing.graphicalobject.LayoutGroup;
 import homework5.processing.graphicalobject.OutlineRect;
 import homework5.processing.graphicalobject.SimpleGroup;
@@ -20,32 +19,31 @@ import java.awt.Color;
 
 import processing.core.PApplet;
 
-public class ConstraintsTest extends InteractiveWindowGroup {
+public class TestConstraints extends BaseInteractiveTest {
 
 	Constraint vc;
 	Constraint hc;
 	@Override
-	public void setup() {
-		super.setup();
+	public void setupTest() {
 		// make the UI
 		LayoutGroup root = new LayoutGroup(0, 0, width, height, LayoutGroup.VERTICAL , 5);
 		root.addChild(new Text("width:", 0, 0,createFont("Helvetica",24), 18, Color.BLACK));
 		
 		Slider s1 = new Slider(0, 0, width, 30, 30, Color.BLACK, 20);
 		root.addChild(s1);
-		m_behaviors.add(new MoveXBehavior(s1.getSlider()));
+		testFrame.addBehavior(new MoveXBehavior(s1.getSlider()));
 		root.addChild(new Text("height:", 0, 0,createFont("Helvetica",24), 18, Color.BLACK));
 		Slider s2 = new Slider(0, 0, width, 30, 30, Color.BLACK, 20);
 		root.addChild(s2);
-		m_behaviors.add(new MoveXBehavior(s2.getSlider()));
+		testFrame.addBehavior(new MoveXBehavior(s2.getSlider()));
 		root.addChild(new Text("x:", 0, 0,createFont("Helvetica",24), 18, Color.BLACK));
 		Slider s3 = new Slider(0, 0, width, 30, 30, Color.BLACK, 50);
 		root.addChild(s3);
-		m_behaviors.add(new MoveXBehavior(s3.getSlider()));
+		testFrame.addBehavior(new MoveXBehavior(s3.getSlider()));
 		root.addChild(new Text("y:", 0, 0,createFont("Helvetica",24), 18, Color.BLACK));
 		Slider s4 = new Slider(0, 0, width, 30, 30, Color.BLACK, 20);
 		root.addChild(s4);
-		m_behaviors.add(new MoveXBehavior(s4.getSlider()));
+		testFrame.addBehavior(new MoveXBehavior(s4.getSlider()));
 		
 		SimpleGroup sg = new SimpleGroup(0,0,width, height);
 		root.addChild(sg);
@@ -78,14 +76,14 @@ public class ConstraintsTest extends InteractiveWindowGroup {
 		new EqualConstraint(redY, new GraphicalObjectProperty<Integer>(s4, "Value")).activate();
 		new EqualConstraint(blueWidth, new GraphicalObjectProperty<Integer>(s1, "Value")).activate();
 		new EqualConstraint(blueHeight, new GraphicalObjectProperty<Integer>(s2, "Value")).activate();
-		addChild(root);
+		testFrame.addChild(root);
 		
 		println("adjust the sliders to change properties of the rectangles");
 		println("blue rectangle will always stay in the center of red rectangle");
 	}
 
 	public static void main(String args[]) {
-		PApplet.main(new String[] { "homework5.processing.test.ConstraintsTest" });
+		PApplet.main(new String[] { "homework5.processing.test.TestConstraints" });
 	}
 	
 }
