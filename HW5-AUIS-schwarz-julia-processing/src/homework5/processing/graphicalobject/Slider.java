@@ -34,7 +34,6 @@ public class Slider extends SimpleGroup
 		new EqualConstraint(sliderPos, sliderValue).activate();
 		
 		setValue(value);
-		
 	}
 	
 	public SimpleGroup getSlider()

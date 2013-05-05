@@ -5,6 +5,7 @@ import homework5.processing.behavior.ChoiceBehavior;
 import homework5.processing.behavior.MoveBehavior;
 import homework5.processing.behavior.NewLineBehavior;
 import homework5.processing.behavior.NewRectBehavior;
+import homework5.processing.core.BoundaryRectangle;
 import homework5.processing.core.InteractiveFrame;
 import homework5.processing.graphicalobject.GraphicalObject;
 import homework5.processing.graphicalobject.SelectionHandles;
@@ -47,6 +48,7 @@ public class DrawingEditor extends PApplet {
 	@Override
 	public void draw() {
 		interactiveFrame.draw();
+		
 	}
 
 	private SelectionHandles makeSelectableObject(GraphicalObject child)
