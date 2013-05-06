@@ -1,7 +1,5 @@
 package homework5.processing.app;
 
-import java.awt.Color;
-
 import homework5.processing.behavior.MoveXBehavior;
 import homework5.processing.constraints.IPropertyChangedListener;
 import homework5.processing.core.BoundaryRectangle;
@@ -9,6 +7,9 @@ import homework5.processing.core.InteractiveFrame;
 import homework5.processing.graphicalobject.LayoutGroup;
 import homework5.processing.graphicalobject.Slider;
 import homework5.processing.graphicalobject.Text;
+
+import java.awt.Color;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -34,6 +35,10 @@ import processing.core.PImage;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor,                          *
  * Boston, MA  02110-1301, USA.                                                *
  *                                                                             *
+ ******************************************************************************/
+
+/*****************************************************************************
+ * Snow courtesy of Adelaide Cole                                             *
  ******************************************************************************/
 
 public class CherryBlossom extends PApplet {
@@ -65,6 +70,8 @@ public class CherryBlossom extends PApplet {
 		noStroke();
 		setupSnow();
 		setupUI();
+		println("press spacebar or U to toggle UI");
+		println("press s to toggle snow");
 	}
 	
 	void setupUI(){

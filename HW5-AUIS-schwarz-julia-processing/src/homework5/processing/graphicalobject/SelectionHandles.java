@@ -2,8 +2,6 @@ package homework5.processing.graphicalobject;
 
 import homework5.processing.core.BoundaryRectangle;
 
-import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Rectangle;
 
 import processing.core.PGraphics;

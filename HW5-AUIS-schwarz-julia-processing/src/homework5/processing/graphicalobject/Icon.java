@@ -1,7 +1,5 @@
 package homework5.processing.graphicalobject;
 
-import java.awt.Shape;
-
 import processing.core.PGraphics;
 import processing.core.PImage;
 

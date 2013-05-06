@@ -14,6 +14,12 @@ import processing.event.Event;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
+/**
+ * Frame that contains an interactive graphical object system.
+ * Equivalent to InteractiveWindowGroup in HW2-HW4
+ * @author julenka
+ *
+ */
 public class InteractiveFrame extends GraphicalObjectFrame implements PConstants {
 	float m_lastX;
 	float m_lastY;

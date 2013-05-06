@@ -1,7 +1,5 @@
 package homework5.processing.constraints;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents an simple int value, isn't tied to a constant

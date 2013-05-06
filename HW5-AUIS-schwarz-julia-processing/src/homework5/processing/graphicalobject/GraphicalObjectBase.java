@@ -13,7 +13,6 @@ import java.util.Map;
 
 import processing.core.PGraphics;
 import processing.core.PGraphicsJava2D;
-import processing.core.PMatrix;
 import processing.core.PMatrix2D;
 
 /**

@@ -16,6 +16,10 @@ public  abstract class BaseGraphicalTest extends PApplet {
 	
 	int count = 0;
 	
+	/**
+	 * Add UI elements to testFrame here, e.g:
+	 * testFrame.addChild(new Text...);
+	 */
 	protected abstract void setupTest();
 	
 	@Override

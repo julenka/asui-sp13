@@ -1,6 +1,5 @@
 package homework5.processing.constraints;
 
-import java.util.List;
 
 /**
  * Algorithm that sets a product variable to the the product of an arbitrary number of factors 

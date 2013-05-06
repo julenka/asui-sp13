@@ -13,6 +13,12 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PMatrix2D;
 
+/**
+ * Frame that contains a graphical objects system.
+ * Equivalent to "WindowGroup" in  HW2-HW4
+ * @author julenka
+ *
+ */
 public class GraphicalObjectFrame implements Group {
 	PApplet parent;
 	
