@@ -43,14 +43,14 @@ public class InteractiveFrame extends GraphicalObjectFrame implements PConstants
 		int bEventId = 0;
 		switch(e.getAction())
 		{
-		case MouseEvent.PRESSED:
+		case MouseEvent.PRESS:
 			bEventId = BehaviorEvent.MOUSE_DOWN_ID;
 			break;
-		case MouseEvent.RELEASED:
+		case MouseEvent.RELEASE:
 			bEventId = BehaviorEvent.MOUSE_UP_ID;
 			break;
-		case MouseEvent.DRAGGED:
-		case MouseEvent.MOVED:
+		case MouseEvent.DRAG:
+		case MouseEvent.MOVE:
 			bEventId = BehaviorEvent.MOUSE_MOVE_ID;
 			break;
 		default:
@@ -77,10 +77,10 @@ public class InteractiveFrame extends GraphicalObjectFrame implements PConstants
 		int bEventId = 0;
 		switch(e.getAction())
 		{
-		case KeyEvent.PRESSED:
+		case KeyEvent.PRESS:
 			bEventId = BehaviorEvent.KEY_DOWN_ID;
 			break;
-		case KeyEvent.RELEASED:
+		case KeyEvent.RELEASE:
 			bEventId = BehaviorEvent.KEY_UP_ID;
 			break;
 		default:
