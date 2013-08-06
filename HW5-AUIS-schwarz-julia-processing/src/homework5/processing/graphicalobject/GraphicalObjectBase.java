@@ -48,7 +48,6 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 	
 	protected void restoreClipShape(PGraphics pg)
 	{
-		// TODO throw error if null?
 		setClipShape(pg, m_savedClipShape);
 	}
 	
@@ -103,7 +102,6 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 
 	@Override
 	public void draw(PGraphics graphics, Shape clipShape) {
-		// TODO do not draw if the boundaryrect is completely out of the clipShape
 		saveClipShape(graphics);
 		setClipShape(graphics, clipShape);
 		
@@ -123,7 +121,6 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 
 	@Override
 	public void moveTo(int x, int y) {
-		// TODO: error/notify here
 	}
 
 	@Override
@@ -167,7 +164,6 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 		List<IPropertyChangedListener<Object>> lst = m_propertyChangedListeners.get(propertyName);
 		
 		lst.add((IPropertyChangedListener<Object>)listener);
-		// TODO: log
 		// Log.v(LOG_TAG, "added listener for property" + propertyName );
 	}
 
@@ -183,7 +179,6 @@ public abstract class GraphicalObjectBase implements GraphicalObject, IPropertyC
 		List<IPropertyChangedListener<Object>> lst = m_propertyChangedListeners.get(propertyName);
 		if(lst == null)
 		{
-			// TODO: error message!
 			// Log.v(LOG_TAG, "notifyPropertyChanged: no listeners for property name " + propertyName + " registered!");
 			return;
 		}

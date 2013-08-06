@@ -41,7 +41,6 @@ public class GraphicalObjectFrame implements Group {
 	 */
 	public void draw() {
 		PGraphics g = parent.g;
-		// TODO verify that this lock is actually necessary
 		synchronized (m_dirtyLock) {
 			if(m_screenDirty) {
 				g.fill(g.backgroundColor);

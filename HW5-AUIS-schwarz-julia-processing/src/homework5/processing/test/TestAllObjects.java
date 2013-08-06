@@ -27,7 +27,6 @@ public class TestAllObjects extends BaseGraphicalTest {
 		testFrame.addChild(new Line(20, 130, 60, 130, Color.RED, 3));
 		testFrame.addChild(new Line(70, 130, 120, 180, Color.BLUE, 10));
 
-		// TODO make sure that the data directory is in bin directoy of output sketch
 		testFrame.addChild(new Icon(loadImage("duke.gif"), 10, 200));
 		testFrame.addChild(new Icon(loadImage("dog.gif"), 80, 200));
 

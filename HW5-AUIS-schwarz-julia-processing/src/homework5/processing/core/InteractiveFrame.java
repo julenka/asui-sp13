@@ -174,7 +174,6 @@ public class InteractiveFrame extends GraphicalObjectFrame implements PConstants
 			{
 				m_currentBehavior.cancel(childSpace);
 			} else if
-			// TODO make canceling work if go outside of window
 			((bEvent.getX() > parent.width || bEvent.getX() < 0 ||
 					bEvent.getY() > parent.height || bEvent.getY() < 0)
 					&& bEvent.getID() == BehaviorEvent.MOUSE_UP_ID 
@@ -211,7 +210,6 @@ public class InteractiveFrame extends GraphicalObjectFrame implements PConstants
 	
 	void updateKeyModifier(Event event)
 	{
-		// TODO: add function key modifier
 		m_modifier = 0x0;
 		if(event.isShiftDown()) m_modifier |= BehaviorEvent.SHIFT_MODIFIER;
 		if(event.isControlDown()) m_modifier |= BehaviorEvent.CONTROL_MODIFIER;

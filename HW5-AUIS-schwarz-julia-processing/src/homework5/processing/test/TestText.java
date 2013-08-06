@@ -36,7 +36,6 @@ public class TestText extends BaseGraphicalTest {
 
 	@Override
 	public void mouseClicked() {
-		// TODO Auto-generated method stub
 		super.mouseClicked();
 		m_step++;
 		if (m_step == 1)

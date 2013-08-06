@@ -51,7 +51,6 @@ public class TestSimpleGroup extends BaseGraphicalTest {
 
 	@Override
 	public void mouseClicked() {
-		// TODO Auto-generated method stub
 		super.mouseClicked();
 		m_step++;
 		

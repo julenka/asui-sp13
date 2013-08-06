@@ -78,7 +78,6 @@ public class TestHomework2 extends BaseGraphicalTest {
 		}
 	}
 	
-// TODO Add all the tests below according to pattern above
 	
 //		println("8. Creating Filled Yellow Rect");
 //		GraphicalObject r3 = new FilledRect (30, 40, 100, 20, Color.YELLOW);
