@@ -1,6 +1,7 @@
 package homework5.processing.test;
 
 import homework5.processing.graphicalobject.Text;
+import homework5.processing.test.BaseGraphicalTest;
 
 import java.awt.Color;
 
